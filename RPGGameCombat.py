@@ -8,6 +8,7 @@ def tutorial():
     print("All classes have 2 attacks: attack1, and attack2")
     print("To input an attack, simply say attack1 or attack2")
     print("God help us")
+    print("a")
 
 
 def combat():
