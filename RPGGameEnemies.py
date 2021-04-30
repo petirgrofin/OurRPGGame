@@ -11,8 +11,8 @@ class Marauder:
     }
 
     marauder_attacks = {
-        "marauder_sword_swing": (50 + marauder_stats["marauder_damage"]),
-        "marauder_ballista_shot": (marauder_stats["marauder_damage"] + 30)
+        "marauder_sword_swing": 50 + marauder_stats["marauder_damage"],
+        "marauder_ballista_shot": marauder_stats["marauder_damage"] + 30
     }
 
 
@@ -25,8 +25,8 @@ class Ectoplasm:
     }
 
     ectoplasm_attacks = {
-        "ectoplasm_bounce_attack": (50 + ectoplasm_stats["ectoplasm_damage"]),
-        "ectoplasm_pistol_shot": (40 + ectoplasm_stats["ectoplasm_damage"])
+        "ectoplasm_bounce_attack": 50 + ectoplasm_stats["ectoplasm_damage"],
+        "ectoplasm_pistol_shot": 40 + ectoplasm_stats["ectoplasm_damage"]
     }
 
 
