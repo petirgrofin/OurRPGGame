@@ -40,3 +40,5 @@ def combat():
 
     else:
         print("You have lost")
+        
+        print("hola")
