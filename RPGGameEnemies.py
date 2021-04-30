@@ -17,7 +17,6 @@ class Marauder:
 
 
 class Ectoplasm:
-
     ectoplasm_stats = {
         "ectoplasm_health": 200,
         "ectoplasm_damage": 50,

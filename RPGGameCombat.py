@@ -1,7 +1,6 @@
 import MainCharacterClasses as MainClasses
 import RPGGameEnemies as Enemies
 
-
 def tutorial():
     print("Welcome to the tutorial")
     print("All classes have 2 attacks: attack1, and attack2")
@@ -13,6 +12,8 @@ def combat():
     enemy_name = Enemies.random_enemy.enemy_name
 
     character_health_total = MainClasses.chosen_class.picked_class_health
+    character_defense = MainClasses.chosen_class.picked_class_defense
+
     enemy_health_left = Enemies.random_enemy.picked_enemy_health
 
     print(f"You are fighting against the {enemy_name}")
@@ -32,7 +33,7 @@ def combat():
 
         Enemies.random_enemy.enemy_attack_chooser()
 
-        character_health_total -= Enemies.random_enemy.enemy_attack
+        character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
 
         print(f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack} damage")
         print(f"You have {character_health_total} health left")

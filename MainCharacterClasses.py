@@ -66,11 +66,12 @@ class ChosenClass:
             self.picked_class = Ranged
             print("You have chosen the Ranged class")
             self.picked_class_health = Ranged.ranged_stats["ranged_health"]
+            self.picked_class_defense = Ranged.ranged_stats["ranged_defense"]
         elif choose_a_class_question == "swordsman".lower():
             self.picked_class = Swordsman
             print("You have chosen the Swordsman")
             self.picked_class_health = Swordsman.swordsman_stats["swordsman_health"]
-        return self.picked_class, self.picked_class_health
+            self.picked_class_defense = Swordsman.swordsman_stats["swordsman_defense"]
 
     def attack_choose(self, choose_an_attack_question):
         if self.picked_class == Mage:  # block of code to define chosen_attack
