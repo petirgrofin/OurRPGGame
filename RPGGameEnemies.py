@@ -1,5 +1,4 @@
 import random
-import MainCharacterClasses as MainClasses
 
 
 class Marauder:
