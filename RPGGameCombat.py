@@ -2,8 +2,11 @@ import MainCharacterClasses as MainClasses
 import RPGGameEnemies as Enemies
 
 
-def combat():
+def tutorial():
+    pass
 
+
+def combat():
     Enemies.random_enemy.enemy_choose()
     enemy_name = Enemies.random_enemy.enemy_name
 
@@ -34,5 +37,3 @@ def combat():
 
     else:
         print("You have lost")
-
-
