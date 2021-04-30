@@ -4,6 +4,8 @@ import RPGGameEnemies as Enemies
 
 def tutorial():
     print("Welcome to the tutorial")
+    print("All classes have 2 attacks: attack1, and attack2")
+    print("To input an attack, simply say attack1 or attack2")
 
 
 def combat():
