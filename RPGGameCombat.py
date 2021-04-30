@@ -3,7 +3,7 @@ import RPGGameEnemies as Enemies
 
 
 def tutorial():
-    pass
+    print("Welcome to the tutorial")
 
 
 def combat():
