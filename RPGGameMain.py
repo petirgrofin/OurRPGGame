@@ -9,7 +9,7 @@ def introduction():
         print(f"Your character will be named {character_name}")
         tutorial_question = input("Do you wish to see the tutorial?: ")
         if tutorial_question == "yes".lower():
-            print("Lorem ipsum")
+            Combat.tutorial()
         elif tutorial_question == "no".lower():
             Combat.combat()
 

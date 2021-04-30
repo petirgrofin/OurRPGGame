@@ -17,6 +17,7 @@ class Marauder:
 
 
 class Ectoplasm:
+
     ectoplasm_stats = {
         "ectoplasm_health": 200,
         "ectoplasm_damage": 50,
@@ -47,17 +48,15 @@ class RandomEnemy:
         elif self.picked_enemy == Ectoplasm:
             self.enemy_name = "Ectoplasm"
             self.picked_enemy_health = Ectoplasm.ectoplasm_stats["ectoplasm_health"]
-        self.enemy_already_chosen = True
-        return self.picked_enemy, self.enemy_name, self.enemy_already_chosen, self.picked_enemy_health
 
     def enemy_attack_chooser(self):
+
         if self.picked_enemy == Marauder:
             self.enemy_attack = random.choice([Marauder.marauder_attacks["marauder_sword_swing"],
                                                Marauder.marauder_attacks["marauder_ballista_shot"]])
         elif self.picked_enemy == Ectoplasm:
             self.enemy_attack = random.choice([Ectoplasm.ectoplasm_attacks["ectoplasm_bounce_attack"],
                                                Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]])
-        return self.enemy_attack
 
 
 random_enemy = RandomEnemy()
