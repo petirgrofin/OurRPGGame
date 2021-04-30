@@ -9,6 +9,7 @@ def tutorial():
     print("To input an attack, simply say attack1 or attack2")
     print("God help us")
     print("ab")
+    print("Test test test")
 
 
 def combat():
