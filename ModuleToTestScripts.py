@@ -1,16 +1,26 @@
-# This is a sample Python script.
+# diccionarios y listas
 
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+my_list = [10, 20, 30, 40]
+# print(my_list)
 
+# -----------------------------------------------------------------------------
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# diccionarios
 
+my_dictionary = {"casa": "mi casa está en San Sebastián",
+                 "número_telefónico": 321}  # para asignar valores que van en pareja, Keyvalue y Keyvalue Pair
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# print(my_dictionary["casa"])
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# ------------------------------------------------------------------------------
+
+# for loops, strings, lists, dictionaries
+
+for variable in my_list:
+    variable -= 10
+    print(variable)
+
+# 0 - primer loop
+# 10 - segundo loop
+# 20 - tercer loop
+# 30 - cuarto loop
