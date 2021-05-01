@@ -2,6 +2,7 @@ import MainCharacterClasses as MainClasses
 import RPGGameEnemies as Enemies
 
 
+
 def tutorial():
 
     print("Welcome to the tutorial")
@@ -58,7 +59,9 @@ def tutorial():
 
     else:
         print("You have lost")
-        break
+
+
+
 
 def combat():
 

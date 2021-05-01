@@ -15,5 +15,5 @@ def introduction():
 
 
 MainClasses.chosen_class.class_choose(input("Select a class: "))
-print("Hello, welcome to my game.")
+print("Hello, welcome to our game.")
 introduction()
