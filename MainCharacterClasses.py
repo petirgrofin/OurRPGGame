@@ -9,8 +9,8 @@ class Mage:
     }
 
     mage_attacks = {
-        "mage_attack1": 40 + mage_stats["mage_damage"],
-        "mage_attack2": 50 + mage_stats["mage_damage"]
+        "mage_blizzard": 40 + mage_stats["mage_damage"],
+        "mage_lightning": 20 + mage_stats["mage_damage"]
     }
 
 
@@ -20,7 +20,7 @@ class Swordsman:
         "swordsman_damage": 20,
         "swordsman_health": 40,
         "swordsman_defense": 100,
-        "swordsman_ speed": 10
+        "swordsman_speed": 10
     }
 
     swordsman_attacks = {
@@ -54,6 +54,8 @@ class ChosenClass:
         self.picked_class_health = None
         self.picked_class_defense = None
 
+        self.stun_capable_attack = None
+
     def class_choose(self, choose_a_class_question):  # It wasn't working previously because by defining 2 instances
         # of the class, we are calling __init__ again, so it gets returned to None value, and therefore
         # chosen_attack couldn't be found and would return its __init__ value (None)
@@ -76,9 +78,9 @@ class ChosenClass:
     def attack_choose(self, choose_an_attack_question):
         if self.picked_class == Mage:  # block of code to define chosen_attack
             if choose_an_attack_question == "attack1".lower():
-                self.chosen_attack = Mage.mage_attacks["mage_attack1"]
+                self.chosen_attack = Mage.mage_attacks["mage_blizzard"]
             elif choose_an_attack_question == "attack2".lower():
-                self.chosen_attack = Mage.mage_attacks["mage_attack2"]
+                self.chosen_attack = Mage.mage_attacks["mage_lightning"]
         if self.picked_class == Swordsman:
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Swordsman.swordsman_attacks["swordsman_axe_swing"]
@@ -90,6 +92,12 @@ class ChosenClass:
             elif choose_an_attack_question == "attack2".lower():
                 self.chosen_attack = Ranged.ranged_attacks["ranged_crossbow_attack"]
         return self.chosen_attack
+
+    def stun_debuffs(self):
+        if self.picked_class == Mage:
+            if self.chosen_attack == Mage.mage_attacks["mage_lightning"]:
+                self.stun_capable_attack = True
+
 
 
 chosen_class = ChosenClass()
