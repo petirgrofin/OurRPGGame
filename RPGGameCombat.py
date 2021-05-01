@@ -3,7 +3,6 @@ import RPGGameEnemies as Enemies
 
 
 def tutorial():
-
     print("All classes have 2 attacks: attack1, and attack2.")
     print("To input an attack, simply say attack1 or attack2.")
     print("The enemy will attack you too. If your health goes down to 0, you'll lose.")
@@ -15,7 +14,6 @@ def tutorial():
 
 
 def combat():
-
     Enemies.random_enemy.enemy_choose()
     enemy_name = Enemies.random_enemy.enemy_name
 
@@ -34,14 +32,33 @@ def combat():
         MainClasses.chosen_class.stun_debuffs()
 
         if MainClasses.chosen_class.stun_capable_attack:
-            print("The enemy has been stunned, and will skip a turn")
+
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
-            if enemy_health_left < 0 or 0:
-                print(f"The {enemy_name} has died")
-                break
+
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist: # checking for stun resistance
+
+                print("The enemy has been stunned, and will skip a turn")
+                if enemy_health_left < 0 or 0:
+                    print(f"The {enemy_name} has died")
+                    break
+                else:
+                    print(f"The enemy has {enemy_health_left} health left")
+                    continue
             else:
+
+                print("Stun failed")
+                if enemy_health_left < 0 or 0:
+                    print(f"The {enemy_name} has died")
+                    break
                 print(f"The enemy has {enemy_health_left} health left")
-                continue
+
+                Enemies.random_enemy.enemy_attack_chooser()
+
+                character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
+
+                print(
+                    f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
+                print(f"You have {character_health_total} health left")
 
         else:  # enemy turn
 
@@ -57,9 +74,9 @@ def combat():
 
             character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
 
-            print(f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
+            print(
+                f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
             print(f"You have {character_health_total} health left")
 
     else:
         print("You have lost")
-

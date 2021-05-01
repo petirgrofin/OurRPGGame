@@ -55,6 +55,7 @@ class ChosenClass:
         self.picked_class_defense = None
 
         self.stun_capable_attack = None
+        self.stun_chance = None
 
     def class_choose(self, choose_a_class_question):  # It wasn't working previously because by defining 2 instances
         # of the class, we are calling __init__ again, so it gets returned to None value, and therefore
@@ -97,6 +98,7 @@ class ChosenClass:
         if self.picked_class == Mage:
             if self.chosen_attack == Mage.mage_attacks["mage_lightning"]:
                 self.stun_capable_attack = True
+                self.stun_chance = 50
             else:
                 self.stun_capable_attack = False
 
