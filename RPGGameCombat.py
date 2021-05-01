@@ -15,7 +15,6 @@ def tutorial():
 
 
 def combat():
-
     Enemies.random_enemy.enemy_choose()
     enemy_name = Enemies.random_enemy.enemy_name
 
@@ -37,7 +36,8 @@ def combat():
 
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
-            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0,
+                                                                                                          100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
 
                 print("The enemy has been stunned, and will skip a turn")
                 if enemy_health_left < 0 or 0:
@@ -45,24 +45,8 @@ def combat():
                     break
                 else:
                     print(f"The enemy has {enemy_health_left} health left")
+                    Enemies.random_enemy.stun_resist += 50  # desarrollar alguna manera de que sea temporal
                     continue
-
-            elif MainClasses.chosen_class.stun_chance < Enemies.random_enemy.stun_resist:
-
-                print("Stun failed")
-                if enemy_health_left < 0 or 0:
-                    print(f"The {enemy_name} has died")
-                    break
-                print(f"The enemy has {enemy_health_left} health left")
-
-                Enemies.random_enemy.enemy_attack_chooser()
-
-                character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
-
-                print(
-                    f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with "
-                    f"his {Enemies.random_enemy.enemy_attack_name}")
-                print(f"You have {character_health_total} health left")
 
             else:
 
