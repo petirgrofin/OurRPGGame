@@ -26,12 +26,11 @@ class Debuffs:
             if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
                 # el chance de aturdir siempre es de base 100: por ello, se genera un número entre 0 y 100,
                 # que si es mayor que la diferencia del chance de aturdir y la resistencia, se cumple que se aturde.
-                if Enemies.random_enemy.stun_resist > MainClasses.chosen_class.stun_chance:
-                    if random.randint(0, 100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
-                        print("The enemy is stunned, and will skip a turn.")
-                        enemy_is_stunned = True
-                        Enemies.random_enemy.stun_resist += 50
-                        self.enemy_stun_resistance_increased = True
+                print("The enemy is stunned, and will skip a turn.")
+                enemy_is_stunned = True
+                Enemies.random_enemy.stun_resist += 50
+                self.enemy_stun_resistance_increased = True
+
             elif MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist and self.enemy_stun_resistance_increased:
                 print("The enemy was stunned again, and will skip a turn.")
                 enemy_is_stunned = True
