@@ -17,13 +17,12 @@ class Marauder:
 
 
 class Ectoplasm:
-
     ectoplasm_stats = {
         "ectoplasm_health": 200,
         "ectoplasm_damage": 50,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
-        "ectoplasm_stun_resistance": 10
+        "ectoplasm_stun_resistance": 20
     }
 
     ectoplasm_attacks = {
@@ -34,7 +33,7 @@ class Ectoplasm:
 
 class CavernEnemies:
 
-    stun_resistance = 0.5  # 50%, quite resistant to stun.
+    stun_resistance = 90  # 50%, quite resistant to stun.
 
 
 class RandomEnemy:

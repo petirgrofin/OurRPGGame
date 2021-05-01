@@ -44,8 +44,7 @@ def combat():
                     break
                 else:
                     print(f"The enemy has {enemy_health_left} health left")
-                    Enemies.random_enemy.stun_resist += 50  # desarrollar alguna manera de que sea temporal
-                    continue
+                continue
 
             else:
 
