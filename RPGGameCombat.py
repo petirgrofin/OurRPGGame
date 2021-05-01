@@ -31,7 +31,7 @@ def combat():
         MainClasses.chosen_class.stun_debuffs()
 
         if MainClasses.chosen_class.stun_capable_attack:
-            print("The enemy has been stunned. and will skip a turn")
+            print("The enemy has been stunned, and will skip a turn")
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
             if enemy_health_left < 0 or 0:
                 print(f"The {enemy_name} has died")
