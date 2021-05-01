@@ -23,12 +23,14 @@ class Debuffs:
         MainClasses.chosen_class.stun_debuffs()
         enemy_is_stunned = False
         if MainClasses.chosen_class.stun_capable_attack:
-            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
-                print("The enemy is stunned, and will skip a turn.")
-                enemy_is_stunned = True
-                Enemies.random_enemy.stun_resist += 50
-                self.enemy_stun_resistance_increased = True
-            elif MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance and self.enemy_stun_resistance_increased:
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
+                if Enemies.random_enemy.stun_resist > MainClasses.chosen_class.stun_chance:
+                    if random.randint(0, 100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
+                        print("The enemy is stunned, and will skip a turn.")
+                        enemy_is_stunned = True
+                        Enemies.random_enemy.stun_resist += 50
+                        self.enemy_stun_resistance_increased = True
+            elif MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist and self.enemy_stun_resistance_increased:
                 print("The enemy was stunned again, and will skip a turn.")
                 enemy_is_stunned = True
                 Enemies.random_enemy.stun_resist += 50

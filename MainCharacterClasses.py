@@ -10,7 +10,8 @@ class Mage:
 
     mage_attacks = {
         "mage_blizzard": 40 + mage_stats["mage_damage"],
-        "mage_lightning": 20 + mage_stats["mage_damage"]
+        "mage_lightning": 20 + mage_stats["mage_damage"],
+        "mage_attack3": 50 + mage_stats["mage_damage"]
     }
 
 
@@ -98,7 +99,7 @@ class ChosenClass:
         if self.picked_class == Mage:
             if self.chosen_attack == Mage.mage_attacks["mage_lightning"]:
                 self.stun_capable_attack = True
-                self.stun_chance = 50
+                self.stun_chance = 100
             else:
                 self.stun_capable_attack = False
 
