@@ -39,6 +39,7 @@ class RandomEnemy:
         self.enemy_attack = None
         self.picked_enemy_health = None
         self.enemy_already_chosen = None
+        self.enemy_attack_name = None
 
     def enemy_choose(self):
         self.picked_enemy = random.choice([Marauder, Ectoplasm])
@@ -54,9 +55,18 @@ class RandomEnemy:
         if self.picked_enemy == Marauder:
             self.enemy_attack = random.choice([Marauder.marauder_attacks["marauder_sword_swing"],
                                                Marauder.marauder_attacks["marauder_ballista_shot"]])
+            if self.enemy_attack == Marauder.marauder_attacks["marauder_sword_swing"]:
+                self.enemy_attack_name = "Sword Swing"
+            elif self.enemy_attack == Marauder.marauder_attacks["marauder_ballista_shot"]:
+                self.enemy_attack_name = "Ballista Shot"
+
         elif self.picked_enemy == Ectoplasm:
             self.enemy_attack = random.choice([Ectoplasm.ectoplasm_attacks["ectoplasm_bounce_attack"],
                                                Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]])
+            if self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_bounce_attack"]:
+                self.enemy_attack_name = "Bounce Attack"
+            elif self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
+                self.enemy_attack_name = "Pistol Shot"
 
 
 random_enemy = RandomEnemy()
