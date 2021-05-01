@@ -97,7 +97,8 @@ class ChosenClass:
         if self.picked_class == Mage:
             if self.chosen_attack == Mage.mage_attacks["mage_lightning"]:
                 self.stun_capable_attack = True
-
+            else:
+                self.stun_capable_attack = False
 
 
 chosen_class = ChosenClass()
