@@ -10,6 +10,7 @@ def tutorial():
     print("God help us")
     print("ab")
     print("Test test test")
+    print("Help us god")
 
 
 def combat():
