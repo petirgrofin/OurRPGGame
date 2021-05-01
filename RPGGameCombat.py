@@ -11,6 +11,7 @@ def tutorial():
     print("ab")
     print("Test test test")
     print("Help us god")
+    print("Help help help help help help")
 
 
 def combat():
