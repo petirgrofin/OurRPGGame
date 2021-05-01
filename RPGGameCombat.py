@@ -32,15 +32,14 @@ def combat():
         if MainClasses.chosen_class.stun_capable_attack:
             print("The enemy has been stunned!")
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
-            print(f"The enemy has {enemy_health_left} health left")
             if enemy_health_left < 0 or 0:
                 print(f"The {enemy_name} has died")
                 break
-
             else:
+                print(f"The enemy has {enemy_health_left} health left")
                 continue
 
-        else:
+        else:  # enemy turn
 
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
