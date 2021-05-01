@@ -36,7 +36,7 @@ def combat():
 
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
-            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0,100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > Enemies.random_enemy.stun_resist - MainClasses.chosen_class.stun_chance:
 
                 print("The enemy has been stunned, and will skip a turn")
                 if enemy_health_left < 0 or 0:
