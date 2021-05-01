@@ -27,20 +27,35 @@ def combat():
         MainClasses.chosen_class.attack_choose(input("Select an attack: "))  # choose an attack
         print(f"You have dealt {MainClasses.chosen_class.chosen_attack} damage")
 
-        enemy_health_left -= MainClasses.chosen_class.chosen_attack
+        MainClasses.chosen_class.stun_debuffs()
 
-        if enemy_health_left < 0:
-            print(f"The {enemy_name} has died")
-            break
+        if MainClasses.chosen_class.stun_capable_attack:
+            print("The enemy has been stunned!")
+            enemy_health_left -= MainClasses.chosen_class.chosen_attack
+            print(f"The enemy has {enemy_health_left} health left")
+            if enemy_health_left < 0 or 0:
+                print(f"The {enemy_name} has died")
+                break
 
-        print(f"The enemy has {enemy_health_left} health left")
+            else:
+                continue
 
-        Enemies.random_enemy.enemy_attack_chooser()
+        else:
 
-        character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
+            enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
-        print(f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage")
-        print(f"You have {character_health_total} health left")
+            if enemy_health_left < 0 or 0:
+                print(f"The {enemy_name} has died")
+                break
+
+            print(f"The enemy has {enemy_health_left} health left")
+
+            Enemies.random_enemy.enemy_attack_chooser()
+
+            character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
+
+            print(f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage")
+            print(f"You have {character_health_total} health left")
 
     else:
         print("You have lost")
