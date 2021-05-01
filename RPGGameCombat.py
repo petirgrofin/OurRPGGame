@@ -37,6 +37,7 @@ def tutorial():
             else:
                 print(f"The enemy has {enemy_health_left} health left")
                 continue
+
         else:  # enemy turn
 
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
