@@ -33,6 +33,7 @@ class Debuffs:
                 print("The enemy was stunned again, and will skip a turn.")
                 enemy_is_stunned = True
                 Enemies.random_enemy.stun_resist += 50
+
             else:
                 print("Stun failed")
                 if self.enemy_stun_resistance_increased:
