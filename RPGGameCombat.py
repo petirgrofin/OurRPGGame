@@ -10,7 +10,7 @@ def tutorial():
     print("To input an attack, simply say attack1 or attack2.")
     print("The enemy will attack you too. If your health goes down to 0, you'll lose.")
     print("If the enemy health goes down to 0, the enemy will die.")
-    print("You can debuff an enemy, but this mechanic is completely random.")
+    print("You can debuff an enemy, but this mechanic is entirely random.")
     print("Try it yourself:")
 
     Enemies.random_enemy.enemy_choose()
