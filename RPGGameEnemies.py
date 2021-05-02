@@ -2,6 +2,7 @@ import random
 
 
 class Marauder:
+
     marauder_stats = {
         "marauder_health": 1000,
         "marauder_damage": 80,
