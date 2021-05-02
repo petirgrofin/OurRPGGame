@@ -61,7 +61,10 @@ class Debuffs:
                     if not self.enemy_is_bleeding:
                         self.enemy_is_bleeding = True
                     elif self.enemy_is_bleeding:
+
                         MainClasses.chosen_class.bleed_damage += self.original_bleed_damage
+                        MainClasses.chosen_class.bleed_damage += MainClasses.chosen_class.bleed_damage
+
 
                 else:
                     print("The enemy resisted against the hemorrhage")
@@ -69,6 +72,7 @@ class Debuffs:
                 print("Bleed ineffective because enemy bleed resistance is too high")
 
         return self.enemy_is_bleeding
+
 
     def poison_check(self):
         pass
@@ -78,7 +82,11 @@ def combat():
 
     debuffs = Debuffs()
 
+
     Enemies.random_enemy.enemy_choose()
+
+
+    Enemies.random_enemy.cavern_enemy_choose()
 
     enemy_name = Enemies.random_enemy.enemy_name
 
