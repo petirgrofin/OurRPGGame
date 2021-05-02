@@ -45,15 +45,18 @@ class CavernEnemies:
         "cavern_enemies_bleed_resistance": 30
     }
 
+
+class AssassinWorm(CavernEnemies):
     cavern_enemies_assassin_worm_attack = {
-        "cavern_enemies_assassin_worm_pounce": 30 + cavern_enemies_stats["cavern_enemies_damage"],
-        "cavern_enemies_assassin_worm_pistol_attack": cavern_enemies_stats["cavern_enemies_damage"] + 20,
+        "cavern_enemies_assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
+        "cavern_enemies_assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
     }
 
-    cavern_enemies_cave_spider_attack ={
-        "cavern_enemies_cave_spider_bite": 20 + cavern_enemies_stats["cavern_enemies_damage"],
-        "cavern_enemies_cave_spider_venom_sting": cavern_enemies_stats["cavern_enemies_damage"] + 40,
+    cavern_enemies_cave_spider_attack = {
+        "cavern_enemies_cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
+        "cavern_enemies_cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40,
     }
+
 
 class RandomEnemy:
 
@@ -113,8 +116,9 @@ class RandomEnemy:
                 self.enemy_attack_name = "Pistol Shot"
 
         elif self.picked_enemy == CavernEnemies:
-            self.enemy_attack = random.choice([CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
-                                               CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]])
+            self.enemy_attack = random.choice(
+                [CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
+                 CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]])
             if self.enemy_attack == CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
                 self.enemy_attack_name = "Pounce"
             elif self.enemy_attack == CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
@@ -122,7 +126,8 @@ class RandomEnemy:
 
         elif self.picked_enemy == CavernEnemies:
             self.enemy_attack = random.choice([CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_bite"],
-                                               CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_venom_sting"]])
+                                               CavernEnemies.cavern_enemies_cave_spider_attack[
+                                                   "cave_spider_venom_sting"]])
             if self.enemy_attack == CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_bite"]:
                 self.enemy_attack_name = "Bite"
             elif self.enemy_attack == CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_venom_sting"]:
