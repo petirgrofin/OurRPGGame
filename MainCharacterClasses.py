@@ -11,7 +11,7 @@ class Mage:
     mage_attacks = {
         "mage_blizzard": 40 + mage_stats["mage_damage"],
         "mage_lightning": 20 + mage_stats["mage_damage"],
-        "mage_attack3": 50 + mage_stats["mage_damage"]
+        "mage_stab": 50 + mage_stats["mage_damage"]
     }
 
 
@@ -58,6 +58,10 @@ class ChosenClass:
         self.stun_capable_attack = None
         self.stun_chance = None
 
+        self.bleed_capable_attack = None
+        self.bleed_chance = None
+        self.bleed_damage = None
+
     def class_choose(self, choose_a_class_question):  # It wasn't working previously because by defining 2 instances
         # of the class, we are calling __init__ again, so it gets returned to None value, and therefore
         # chosen_attack couldn't be found and would return its __init__ value (None)
@@ -83,6 +87,8 @@ class ChosenClass:
                 self.chosen_attack = Mage.mage_attacks["mage_blizzard"]
             elif choose_an_attack_question == "attack2".lower():
                 self.chosen_attack = Mage.mage_attacks["mage_lightning"]
+            elif choose_an_attack_question == "attack3".lower():
+                self.chosen_attack = Mage.mage_attacks["mage_stab"]
         if self.picked_class == Swordsman:
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Swordsman.swordsman_attacks["swordsman_axe_swing"]
@@ -96,10 +102,21 @@ class ChosenClass:
         return self.chosen_attack
 
     def stun_debuffs(self):
+
         if self.picked_class == Mage:
             if self.chosen_attack == Mage.mage_attacks["mage_lightning"]:
                 self.stun_capable_attack = True
                 self.stun_chance = 100
+            else:
+                self.stun_capable_attack = False
+
+    def bleed_debuffs(self):
+
+        if self.picked_class == Mage:
+            if self.chosen_attack == Mage.mage_attacks["mage_stab"]:
+                self.bleed_capable_attack = True
+                self.bleed_chance = 100
+                self.bleed_damage = 50
             else:
                 self.stun_capable_attack = False
 

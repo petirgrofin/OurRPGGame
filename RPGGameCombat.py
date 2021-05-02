@@ -46,7 +46,16 @@ class Debuffs:
         return enemy_is_stunned
 
     def bleed_check(self):
-        pass
+
+        MainClasses.chosen_class.bleed_debuffs()
+        probability = random.randint(0, 100)
+
+        if MainClasses.chosen_class.bleed_capable_attack:
+            if MainClasses.chosen_class.bleed_chance > Enemies.random_enemy.bleed_resist:
+                if probability < MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
+                    print(f"The enemy is bleeding, and will take {MainClasses.chosen_class.bleed_damage} damage per turn")
+                else:
+                    print("Bleed ineffective")
 
     def poison_check(self):
         pass
@@ -74,6 +83,13 @@ def combat():
         if debuffs.stuns_check():
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
             if enemy_health_left < 0 or 0:
+                print(f"The {enemy_name} has died")
+                break
+            print(f"The enemy has {enemy_health_left} health left")
+            continue
+
+        if debuffs.bleed_check():
+            if enemy_health_left < 0:
                 print(f"The {enemy_name} has died")
                 break
             print(f"The enemy has {enemy_health_left} health left")
