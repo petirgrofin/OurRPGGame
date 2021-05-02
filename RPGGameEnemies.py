@@ -3,11 +3,12 @@ import random
 
 class Marauder:
     marauder_stats = {
-        "marauder_health": 300,
-        "marauder_damage": 30,
+        "marauder_health": 500,
+        "marauder_damage": 80,
         "marauder_speed": 40,
         "marauder_defense": 50,
-        "marauder_stun_resistance": 10
+        "marauder_stun_resistance": 10,
+        "marauder_bleed_resistance": 10
     }
 
     marauder_attacks = {
@@ -17,13 +18,13 @@ class Marauder:
 
 
 class Ectoplasm:
-
     ectoplasm_stats = {
-        "ectoplasm_health": 200,
-        "ectoplasm_damage": 50,
+        "ectoplasm_health": 500,
+        "ectoplasm_damage": 60,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
-        "ectoplasm_stun_resistance": 50
+        "ectoplasm_stun_resistance": 10,
+        "ectoplasm_bleed_resistance": 10
     }
 
     ectoplasm_attacks = {
@@ -34,12 +35,13 @@ class Ectoplasm:
 
 class CavernEnemies:
 
-    stun_resistance = 0.5  # 50%, quite resistant to stun.
+    stun_resistance = 90  # 50%, quite resistant to stun.
 
 
 class RandomEnemy:
 
     def __init__(self):
+
         self.picked_enemy = None
         self.enemy_name = None
         self.enemy_attack = None
@@ -47,6 +49,7 @@ class RandomEnemy:
         self.enemy_already_chosen = None
         self.enemy_attack_name = None
         self.stun_resist = None
+        self.bleed_resist = None
 
     def enemy_choose(self):
         self.picked_enemy = random.choice([Marauder, Ectoplasm])
@@ -54,10 +57,12 @@ class RandomEnemy:
             self.enemy_name = "Marauder"
             self.picked_enemy_health = Marauder.marauder_stats["marauder_health"]
             self.stun_resist = Marauder.marauder_stats["marauder_stun_resistance"]
+            self.bleed_resist = Marauder.marauder_stats["marauder_bleed_resistance"]
         elif self.picked_enemy == Ectoplasm:
             self.enemy_name = "Ectoplasm"
             self.picked_enemy_health = Ectoplasm.ectoplasm_stats["ectoplasm_health"]
             self.stun_resist = Ectoplasm.ectoplasm_stats["ectoplasm_stun_resistance"]
+            self.bleed_resist = Ectoplasm.ectoplasm_stats["ectoplasm_bleed_resistance"]
 
     def enemy_attack_chooser(self):
 

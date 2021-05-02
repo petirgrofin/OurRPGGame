@@ -1,19 +1,83 @@
 import MainCharacterClasses as MainClasses
 import RPGGameEnemies as Enemies
+import random
 
 
 def tutorial():
+
     print("All classes have 2 attacks: attack1, and attack2.")
     print("To input an attack, simply say attack1 or attack2.")
     print("The enemy will attack you too. If your health goes down to 0, you'll lose.")
     print("If the enemy health goes down to 0, the enemy will die.")
-    print("You can debuff an enemy, but this mechanic is entirely random.")
+    print("You can debuff an enemy, but this mechanic depends on several factors.")
     print("Try it yourself:")
 
     combat()
 
 
+class Debuffs:
+
+    def __init__(self):
+        self.enemy_stun_resistance_increased = None
+        self.original_stun_resistance = Enemies.random_enemy.stun_resist
+        self.enemy_is_stunned = None
+
+        self.enemy_is_bleeding = None
+
+    def stuns_check(self):
+
+        MainClasses.chosen_class.stun_debuffs()
+        self.enemy_is_stunned = False
+        probability = random.randint(0, 100)
+
+        if MainClasses.chosen_class.stun_capable_attack:
+
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist:
+
+                if probability < MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
+                    print("The enemy is stunned, and will skip a turn.")
+                    self.enemy_is_stunned = True
+                    Enemies.random_enemy.stun_resist += 50
+                    self.enemy_stun_resistance_increased = True
+
+                else:
+                    print("Stun failed because the enemy resisted")
+
+            else:
+                print("Stun failed because stun chance is lower than stun resist")
+
+        return self.enemy_is_stunned
+
+    def bleed_check(self):
+
+        MainClasses.chosen_class.bleed_debuffs()
+        self.enemy_is_bleeding = False
+        probability = random.randint(0, 100)
+
+        if MainClasses.chosen_class.bleed_capable_attack:
+            if MainClasses.chosen_class.bleed_chance > Enemies.random_enemy.bleed_resist:
+
+                if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist and not MainClasses.chosen_class.bleed_duration == 0:
+                    print(f"The enemy is bleeding, and will take {MainClasses.chosen_class.bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
+                    self.enemy_is_bleeding = True
+
+                else:
+                    if MainClasses.chosen_class.bleed_duration == 0:
+                        print("The enemy has stopped bleeding")
+                    else:
+                        print("The enemy resisted against the hemorrhage")
+            else:
+                print("Bleed ineffective because enemy bleed resistance is too high")
+
+        return self.enemy_is_bleeding
+
+    def poison_check(self):
+        pass
+
+
 def combat():
+
+    debuffs = Debuffs()
 
     Enemies.random_enemy.enemy_choose()
     enemy_name = Enemies.random_enemy.enemy_name
@@ -28,59 +92,42 @@ def combat():
     while character_health_total > 0:
 
         MainClasses.chosen_class.attack_choose(input("Select an attack: "))  # choose an attack
+        if MainClasses.chosen_class.chosen_attack is None:
+            print("Invalid attack")
+            continue
+
         print(f"You have dealt {MainClasses.chosen_class.chosen_attack} damage")
 
-        MainClasses.chosen_class.stun_debuffs()
+        debuffs.stuns_check()
+        debuffs.bleed_check()
 
-        if MainClasses.chosen_class.stun_capable_attack:
+        if debuffs.enemy_is_stunned:
 
-            enemy_health_left -= MainClasses.chosen_class.chosen_attack
-
-            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist: # checking for stun
-                # resistance
-
-                print("The enemy has been stunned, and will skip a turn")
-                if enemy_health_left < 0 or 0:
-                    print(f"The {enemy_name} has died")
-                    break
-                else:
-                    print(f"The enemy has {enemy_health_left} health left")
-                    continue
-
-            elif MainClasses.chosen_class.stun_chance < Enemies.random_enemy.stun_resist:
-
-                print("Stun failed")
-                if enemy_health_left < 0 or 0:
-                    print(f"The {enemy_name} has died")
-                    break
-                print(f"The enemy has {enemy_health_left} health left")
-
-                Enemies.random_enemy.enemy_attack_chooser()
-
-                character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
-
-                print(
-                    f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with "
-                    f"his {Enemies.random_enemy.enemy_attack_name}")
-                print(f"You have {character_health_total} health left")
-
+            if debuffs.enemy_is_bleeding:
+                enemy_health_left -= MainClasses.chosen_class.chosen_attack + MainClasses.chosen_class.bleed_damage
             else:
+                enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
-                print("Stun failed")
-                if enemy_health_left < 0 or 0:
-                    print(f"The {enemy_name} has died")
-                    break
-                print(f"The enemy has {enemy_health_left} health left")
+            MainClasses.chosen_class.bleed_duration -= 1
 
-                Enemies.random_enemy.enemy_attack_chooser()
+            if enemy_health_left < 0 or 0:
+                print(f"The {enemy_name} has died")
+                break
+            print(f"The enemy has {enemy_health_left} health left")
+            continue
 
-                character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
+        if debuffs.enemy_is_bleeding:
 
-                print(
-                    f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
-                print(f"You have {character_health_total} health left")
+            enemy_health_left -= MainClasses.chosen_class.bleed_damage
+            if enemy_health_left < 0:
+                print(f"The {enemy_name} has died")
+                break
+            MainClasses.chosen_class.bleed_duration -= 1
+            if MainClasses.chosen_class.bleed_duration == 0:
+                print("The enemy has stopped bleeding")
+                debuffs.enemy_is_bleeding = False
 
-        else:  # enemy turn
+        if not debuffs.enemy_is_stunned:  # enemy turn
 
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
@@ -98,5 +145,11 @@ def combat():
                 f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
             print(f"You have {character_health_total} health left")
 
+            if debuffs.enemy_stun_resistance_increased:
+                Enemies.random_enemy.stun_resist -= 50
+                if Enemies.random_enemy.stun_resist == debuffs.original_stun_resistance:
+                    debuffs.enemy_stun_resistance_increased = False
+
     else:
+
         print("You have lost")
