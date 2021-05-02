@@ -4,6 +4,7 @@ import random
 
 
 def tutorial():
+
     print("All classes have 2 attacks: attack1, and attack2.")
     print("To input an attack, simply say attack1 or attack2.")
     print("The enemy will attack you too. If your health goes down to 0, you'll lose.")
@@ -20,25 +21,27 @@ class Debuffs:
         self.enemy_stun_resistance_increased = None
 
     def stuns_check(self):
+
         MainClasses.chosen_class.stun_debuffs()
         enemy_is_stunned = False
-        if MainClasses.chosen_class.stun_capable_attack:
-            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:  # will conflict if stun chance is higher than 150
-                print("The enemy is stunned, and will skip a turn.")
-                enemy_is_stunned = True
-                Enemies.random_enemy.stun_resist += 50
-                self.enemy_stun_resistance_increased = True
+        probability = random.randint(0, 100)
 
-            elif MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist and self.enemy_stun_resistance_increased:
-                print("The enemy was stunned again, and will skip a turn.")
-                enemy_is_stunned = True
-                Enemies.random_enemy.stun_resist += 50
+        if MainClasses.chosen_class.stun_capable_attack:
+
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist:
+
+                if probability < MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
+
+                    print("The enemy is stunned, and will skip a turn.")
+                    enemy_is_stunned = True
+                    Enemies.random_enemy.stun_resist += 50
+                    self.enemy_stun_resistance_increased = True
+
+                else:
+                    print("Stun failed because probability failed")
 
             else:
-                print("Stun failed")
-                if self.enemy_stun_resistance_increased:
-                    Enemies.random_enemy.stun_resist -= 50
-                    self.enemy_stun_resistance_increased = False
+                print("Stun failed because stun chance is lower than stun resist")
 
         return enemy_is_stunned
 
@@ -94,5 +97,9 @@ def combat():
                 f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
             print(f"You have {character_health_total} health left")
 
+            if debuffs.enemy_stun_resistance_increased:
+                Enemies.random_enemy.stun_resist -= 50
+
     else:
+
         print("You have lost")

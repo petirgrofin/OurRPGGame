@@ -22,7 +22,7 @@ class Ectoplasm:
         "ectoplasm_damage": 60,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
-        "ectoplasm_stun_resistance": 20
+        "ectoplasm_stun_resistance": 10
     }
 
     ectoplasm_attacks = {
@@ -39,6 +39,7 @@ class CavernEnemies:
 class RandomEnemy:
 
     def __init__(self):
+
         self.picked_enemy = None
         self.enemy_name = None
         self.enemy_attack = None

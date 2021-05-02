@@ -1,2 +1,2 @@
 import random
-print(random.randint(200, 150))
+print(random.random())
