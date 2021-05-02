@@ -24,6 +24,7 @@ class Debuffs:
 
         self.enemy_is_bleeding = None
         self.original_bleed_duration = MainClasses.chosen_class.bleed_duration
+        self.original_bleed_damage = MainClasses.chosen_class.bleed_damage
 
     def stuns_check(self):
 
@@ -57,7 +58,11 @@ class Debuffs:
             if MainClasses.chosen_class.bleed_chance > Enemies.random_enemy.bleed_resist:
 
                 if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist:
-                    self.enemy_is_bleeding = True
+                    if not self.enemy_is_bleeding:
+                        self.enemy_is_bleeding = True
+                    elif self.enemy_is_bleeding:
+                        MainClasses.chosen_class.bleed_damage += MainClasses.chosen_class.bleed_damage
+
 
                 else:
                     print("The enemy resisted against the hemorrhage")
@@ -65,6 +70,7 @@ class Debuffs:
                 print("Bleed ineffective because enemy bleed resistance is too high")
 
         return self.enemy_is_bleeding
+
 
     def poison_check(self):
         pass
