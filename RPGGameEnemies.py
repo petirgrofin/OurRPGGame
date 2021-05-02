@@ -3,8 +3,8 @@ import random
 
 class Marauder:
     marauder_stats = {
-        "marauder_health": 300,
-        "marauder_damage": 30,
+        "marauder_health": 500,
+        "marauder_damage": 80,
         "marauder_speed": 40,
         "marauder_defense": 50,
         "marauder_stun_resistance": 10
@@ -17,13 +17,12 @@ class Marauder:
 
 
 class Ectoplasm:
-
     ectoplasm_stats = {
-        "ectoplasm_health": 200,
-        "ectoplasm_damage": 50,
+        "ectoplasm_health": 700,
+        "ectoplasm_damage": 60,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
-        "ectoplasm_stun_resistance": 50
+        "ectoplasm_stun_resistance": 10
     }
 
     ectoplasm_attacks = {
@@ -34,12 +33,13 @@ class Ectoplasm:
 
 class CavernEnemies:
 
-    stun_resistance = 0.5  # 50%, quite resistant to stun.
+    stun_resistance = 90  # 50%, quite resistant to stun.
 
 
 class RandomEnemy:
 
     def __init__(self):
+
         self.picked_enemy = None
         self.enemy_name = None
         self.enemy_attack = None
