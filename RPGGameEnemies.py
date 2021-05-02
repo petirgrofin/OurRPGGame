@@ -34,9 +34,26 @@ class Ectoplasm:
 
 
 class CavernEnemies:
+    cavern_enemies_stats = {
+        "cavern_enemies_assassin_worm_name": "Assassin Worm",
+        "cavern_enemies_cave_spider": "Cave Spider",
+        "cavern_enemies_health": 1300,
+        "cavern_enemies_damage": 90,
+        "cavern_enemies_speed": 20,
+        "cavern_enemies_defense": 60,
+        "cavern_enemies_stun_resistance": 10,
+        "cavern_enemies_bleed_resistance": 30
+    }
 
-    stun_resistance = 90  # 50%, quite resistant to stun.
+    cavern_enemies_assassin_worm_attack = {
+        "cavern_enemies_assassin_worm_pounce": 30 + cavern_enemies_stats["cavern_enemies_damage"],
+        "cavern_enemies_assassin_worm_pistol_attack": cavern_enemies_stats["cavern_enemies_damage"] + 20,
+    }
 
+    cavern_enemies_cave_spider_attack ={
+        "cavern_enemies_cave_spider_bite": 20 + cavern_enemies_stats["cavern_enemies_damage"],
+        "cavern_enemies_cave_spider_venom_sting": cavern_enemies_stats["cavern_enemies_damage"] + 40,
+    }
 
 class RandomEnemy:
 
@@ -58,11 +75,24 @@ class RandomEnemy:
             self.picked_enemy_health = Marauder.marauder_stats["marauder_health"]
             self.stun_resist = Marauder.marauder_stats["marauder_stun_resistance"]
             self.bleed_resist = Marauder.marauder_stats["marauder_bleed_resistance"]
+
         elif self.picked_enemy == Ectoplasm:
             self.enemy_name = "Ectoplasm"
             self.picked_enemy_health = Ectoplasm.ectoplasm_stats["ectoplasm_health"]
             self.stun_resist = Ectoplasm.ectoplasm_stats["ectoplasm_stun_resistance"]
             self.bleed_resist = Ectoplasm.ectoplasm_stats["ectoplasm_bleed_resistance"]
+
+        elif self.picked_enemy == CavernEnemies:
+            self.enemy_name = "Assassin Worm"
+            self.picked_enemy_health = CavernEnemies.cavern_enemies_stats["cavern_enemies_health"]
+            self.stun_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_stun_resistance"]
+            self.bleed_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
+
+        elif self.picked_enemy == CavernEnemies:
+            self.enemy_name = "Cave Spider"
+            self.picked_enemy_health = CavernEnemies.cavern_enemies_stats["cavern_enemies_health"]
+            self.stun_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_stun_resistance"]
+            self.bleed_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
 
     def enemy_attack_chooser(self):
 
@@ -81,6 +111,22 @@ class RandomEnemy:
                 self.enemy_attack_name = "Bounce Attack"
             elif self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.enemy_attack_name = "Pistol Shot"
+
+        elif self.picked_enemy == CavernEnemies:
+            self.enemy_attack = random.choice([CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
+                                               CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]])
+            if self.enemy_attack == CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
+                self.enemy_attack_name = "Pounce"
+            elif self.enemy_attack == CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
+                self.enemy_attack_name = "Pistol Attack"
+
+        elif self.picked_enemy == CavernEnemies:
+            self.enemy_attack = random.choice([CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_bite"],
+                                               CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_venom_sting"]])
+            if self.enemy_attack == CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_bite"]:
+                self.enemy_attack_name = "Bite"
+            elif self.enemy_attack == CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_venom_sting"]:
+                self.enemy_attack_name = "Venom Sting"
 
 
 random_enemy = RandomEnemy()
