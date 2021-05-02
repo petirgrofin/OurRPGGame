@@ -55,19 +55,15 @@ class AssassinWorm(CavernEnemies):
 
     cavern_enemies_cave_spider_attack = {
         "cavern_enemies_cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
-        "cavern_enemies_cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40,
-=======
-class AssassinWorm(CavernEnemies):
-    cavern_enemies_assassin_worm_attack = {
-        "assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
-        "assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
-    }
+        "cavern_enemies_cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40}
+
 
 class CaveSpider(CavernEnemies):
     cavern_enemies_cave_spider_attack = {
         "cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
         "cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40,
     }
+
 
 class Choletinia(CavernEnemies):
     cavern_enemies_choletinia_attack = {
@@ -136,7 +132,6 @@ class RandomEnemy:
             self.stun_resist = CaveSpider.cavern_enemies_stats["cavern_enemies_stun_resistance"]
             self.bleed_resist = CaveSpider.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
 
-
         if self.picked_enemy == Choletinia:
             self.enemy_name = "Choletinia"
             self.picked_enemy_health = Choletinia.cavern_enemies_stats["cavern_enemies_health"]
@@ -160,7 +155,6 @@ class RandomEnemy:
                 self.enemy_attack_name = "Bounce Attack"
             elif self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.enemy_attack_name = "Pistol Shot"
-
 
         elif self.picked_enemy == AssassinWorm:
             self.enemy_attack = random.choice([AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
