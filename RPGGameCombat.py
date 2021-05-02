@@ -74,7 +74,7 @@ def combat():
 
     debuffs = Debuffs()
 
-    Enemies.random_enemy.enemy_choose()
+    Enemies.random_enemy.cavern_enemy_choose()
     enemy_name = Enemies.random_enemy.enemy_name
 
     character_health_total = MainClasses.chosen_class.picked_class_health
