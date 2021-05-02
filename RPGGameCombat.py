@@ -23,6 +23,7 @@ class Debuffs:
         self.enemy_is_stunned = None
 
         self.enemy_is_bleeding = None
+        self.original_bleed_duration = MainClasses.chosen_class.bleed_duration
 
     def stuns_check(self):
 
@@ -35,7 +36,6 @@ class Debuffs:
             if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist:
 
                 if probability < MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
-                    print("The enemy is stunned, and will skip a turn.")
                     self.enemy_is_stunned = True
                     Enemies.random_enemy.stun_resist += 50
                     self.enemy_stun_resistance_increased = True
@@ -43,29 +43,24 @@ class Debuffs:
                 else:
                     print("Stun failed because the enemy resisted")
 
-            else:
-                print("Stun failed because stun chance is lower than stun resist")
-
         return self.enemy_is_stunned
 
     def bleed_check(self):
 
         MainClasses.chosen_class.bleed_debuffs()
-        self.enemy_is_bleeding = False
         probability = random.randint(0, 100)
 
         if MainClasses.chosen_class.bleed_capable_attack:
+
+            print("A bleed capable attack was chosen")
+
             if MainClasses.chosen_class.bleed_chance > Enemies.random_enemy.bleed_resist:
 
-                if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist and not MainClasses.chosen_class.bleed_duration == 0:
-                    print(f"The enemy is bleeding, and will take {MainClasses.chosen_class.bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
+                if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist:
                     self.enemy_is_bleeding = True
 
                 else:
-                    if MainClasses.chosen_class.bleed_duration == 0:
-                        print("The enemy has stopped bleeding")
-                    else:
-                        print("The enemy resisted against the hemorrhage")
+                    print("The enemy resisted against the hemorrhage")
             else:
                 print("Bleed ineffective because enemy bleed resistance is too high")
 
@@ -92,6 +87,7 @@ def combat():
     while character_health_total > 0:
 
         MainClasses.chosen_class.attack_choose(input("Select an attack: "))  # choose an attack
+
         if MainClasses.chosen_class.chosen_attack is None:
             print("Invalid attack")
             continue
@@ -103,12 +99,27 @@ def combat():
 
         if debuffs.enemy_is_stunned:
 
-            if debuffs.enemy_is_bleeding:
-                enemy_health_left -= MainClasses.chosen_class.chosen_attack + MainClasses.chosen_class.bleed_damage
+            print("The enemy is stunned, and will skip a turn.")
+
+            if debuffs.enemy_is_bleeding:  # since stunning skips a turn, have to check and apply bleed damage here
+
+                if MainClasses.chosen_class.bleed_duration > 0:
+                    print(f"The enemy is bleeding, and will take {MainClasses.chosen_class.bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
+
+                MainClasses.chosen_class.bleed_duration -= 1
+                enemy_health_left -= MainClasses.chosen_class.bleed_damage + MainClasses.chosen_class.chosen_attack
+
+                if MainClasses.chosen_class.bleed_duration < 0:
+                    print("The enemy has stopped bleeding")
+                    debuffs.enemy_is_bleeding = False
+                    MainClasses.chosen_class.bleed_duration = debuffs.original_bleed_duration
+
+                if enemy_health_left < 0:
+                    print(f"The {enemy_name} has died")
+                    break
+
             else:
                 enemy_health_left -= MainClasses.chosen_class.chosen_attack
-
-            MainClasses.chosen_class.bleed_duration -= 1
 
             if enemy_health_left < 0 or 0:
                 print(f"The {enemy_name} has died")
@@ -118,14 +129,21 @@ def combat():
 
         if debuffs.enemy_is_bleeding:
 
+            if MainClasses.chosen_class.bleed_duration > 0:
+
+                print(f"The enemy is bleeding, and will take {MainClasses.chosen_class.bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
+
+            MainClasses.chosen_class.bleed_duration -= 1
             enemy_health_left -= MainClasses.chosen_class.bleed_damage
+
+            if MainClasses.chosen_class.bleed_duration < 0:
+                print("The enemy has stopped bleeding")
+                debuffs.enemy_is_bleeding = False
+                MainClasses.chosen_class.bleed_duration = debuffs.original_bleed_duration
+
             if enemy_health_left < 0:
                 print(f"The {enemy_name} has died")
                 break
-            MainClasses.chosen_class.bleed_duration -= 1
-            if MainClasses.chosen_class.bleed_duration == 0:
-                print("The enemy has stopped bleeding")
-                debuffs.enemy_is_bleeding = False
 
         if not debuffs.enemy_is_stunned:  # enemy turn
 
