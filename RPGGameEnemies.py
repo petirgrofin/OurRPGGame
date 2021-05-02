@@ -115,23 +115,5 @@ class RandomEnemy:
             elif self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.enemy_attack_name = "Pistol Shot"
 
-        elif self.picked_enemy == CavernEnemies:
-            self.enemy_attack = random.choice(
-                [CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
-                 CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]])
-            if self.enemy_attack == CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
-                self.enemy_attack_name = "Pounce"
-            elif self.enemy_attack == CavernEnemies.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
-                self.enemy_attack_name = "Pistol Attack"
-
-        elif self.picked_enemy == CavernEnemies:
-            self.enemy_attack = random.choice([CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_bite"],
-                                               CavernEnemies.cavern_enemies_cave_spider_attack[
-                                                   "cave_spider_venom_sting"]])
-            if self.enemy_attack == CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_bite"]:
-                self.enemy_attack_name = "Bite"
-            elif self.enemy_attack == CavernEnemies.cavern_enemies_cave_spider_attack["cave_spider_venom_sting"]:
-                self.enemy_attack_name = "Venom Sting"
-
 
 random_enemy = RandomEnemy()
