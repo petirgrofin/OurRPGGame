@@ -58,13 +58,14 @@ class Debuffs:
             if MainClasses.chosen_class.bleed_chance > Enemies.random_enemy.bleed_resist:
 
                 if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist:
+
                     if not self.enemy_is_bleeding:
                         self.enemy_is_bleeding = True
+
                     elif self.enemy_is_bleeding:
 
                         MainClasses.chosen_class.bleed_damage += self.original_bleed_damage
                         MainClasses.chosen_class.bleed_damage += MainClasses.chosen_class.bleed_damage
-
 
                 else:
                     print("The enemy resisted against the hemorrhage")
@@ -82,11 +83,7 @@ def combat():
 
     debuffs = Debuffs()
 
-
     Enemies.random_enemy.enemy_choose()
-
-
-    Enemies.random_enemy.cavern_enemy_choose()
 
     enemy_name = Enemies.random_enemy.enemy_name
 
