@@ -3,7 +3,7 @@ class Mage:
     mage_stats = {
         "mage_damage": 80,
         "mage_speed": 50,
-        "mage_health": 500,
+        "mage_health": 10000,
         "mage_defense": 50,
         "mage_class_name": "Mage"
     }
@@ -61,6 +61,7 @@ class ChosenClass:
         self.bleed_capable_attack = None
         self.bleed_chance = None
         self.bleed_damage = None
+        self.bleed_duration = None
 
     def class_choose(self, choose_a_class_question):  # It wasn't working previously because by defining 2 instances
         # of the class, we are calling __init__ again, so it gets returned to None value, and therefore
@@ -89,16 +90,22 @@ class ChosenClass:
                 self.chosen_attack = Mage.mage_attacks["mage_lightning"]
             elif choose_an_attack_question == "attack3".lower():
                 self.chosen_attack = Mage.mage_attacks["mage_stab"]
+            else:
+                self.chosen_attack = None
         if self.picked_class == Swordsman:
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Swordsman.swordsman_attacks["swordsman_axe_swing"]
             elif choose_an_attack_question == "attack2".lower():
                 self.chosen_attack = Swordsman.swordsman_attacks["swordsman_arrow"]
+            else:
+                self.chosen_attack = None
         if self.picked_class == Ranged:
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Ranged.ranged_attacks["ranged_bullet_attack"]
             elif choose_an_attack_question == "attack2".lower():
                 self.chosen_attack = Ranged.ranged_attacks["ranged_crossbow_attack"]
+            else:
+                self.chosen_attack = None
         return self.chosen_attack
 
     def stun_debuffs(self):
@@ -117,6 +124,7 @@ class ChosenClass:
                 self.bleed_capable_attack = True
                 self.bleed_chance = 100
                 self.bleed_damage = 50
+                self.bleed_duration = 3 # turns
             else:
                 self.stun_capable_attack = False
 

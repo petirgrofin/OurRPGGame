@@ -3,12 +3,12 @@ import random
 
 class Marauder:
     marauder_stats = {
-        "marauder_health": 500,
+        "marauder_health": 10000,
         "marauder_damage": 80,
         "marauder_speed": 40,
         "marauder_defense": 50,
         "marauder_stun_resistance": 10,
-        "marauder_bleed_resistance": 230
+        "marauder_bleed_resistance": 10
     }
 
     marauder_attacks = {
@@ -19,12 +19,12 @@ class Marauder:
 
 class Ectoplasm:
     ectoplasm_stats = {
-        "ectoplasm_health": 700,
+        "ectoplasm_health": 10000,
         "ectoplasm_damage": 60,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
         "ectoplasm_stun_resistance": 10,
-        "ectoplasm_bleed_resistance": 230
+        "ectoplasm_bleed_resistance": 10
     }
 
     ectoplasm_attacks = {
