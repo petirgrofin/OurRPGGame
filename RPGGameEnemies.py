@@ -3,7 +3,7 @@ import random
 
 class Marauder:
     marauder_stats = {
-        "marauder_health": 10000,
+        "marauder_health": 500,
         "marauder_damage": 80,
         "marauder_speed": 40,
         "marauder_defense": 50,
@@ -19,7 +19,7 @@ class Marauder:
 
 class Ectoplasm:
     ectoplasm_stats = {
-        "ectoplasm_health": 10000,
+        "ectoplasm_health": 500,
         "ectoplasm_damage": 60,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,

@@ -3,7 +3,7 @@ class Mage:
     mage_stats = {
         "mage_damage": 80,
         "mage_speed": 50,
-        "mage_health": 10000,
+        "mage_health": 500,
         "mage_defense": 50,
         "mage_class_name": "Mage"
     }
