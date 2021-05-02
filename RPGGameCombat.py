@@ -61,6 +61,8 @@ class Debuffs:
                     if not self.enemy_is_bleeding:
                         self.enemy_is_bleeding = True
                     elif self.enemy_is_bleeding:
+
+                        MainClasses.chosen_class.bleed_damage += self.original_bleed_damage
                         MainClasses.chosen_class.bleed_damage += MainClasses.chosen_class.bleed_damage
 
 
@@ -80,7 +82,12 @@ def combat():
 
     debuffs = Debuffs()
 
+
+    Enemies.random_enemy.enemy_choose()
+
+
     Enemies.random_enemy.cavern_enemy_choose()
+
     enemy_name = Enemies.random_enemy.enemy_name
 
     character_health_total = MainClasses.chosen_class.picked_class_health

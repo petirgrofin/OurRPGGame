@@ -45,6 +45,18 @@ class CavernEnemies:
         "cavern_enemies_bleed_resistance": 30
     }
 
+
+
+class AssassinWorm(CavernEnemies):
+    cavern_enemies_assassin_worm_attack = {
+        "cavern_enemies_assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
+        "cavern_enemies_assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
+    }
+
+    cavern_enemies_cave_spider_attack = {
+        "cavern_enemies_cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
+        "cavern_enemies_cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40,
+=======
 class AssassinWorm(CavernEnemies):
     cavern_enemies_assassin_worm_attack = {
         "assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
@@ -61,7 +73,9 @@ class Choletinia(CavernEnemies):
     cavern_enemies_choletinia_attack = {
         "choletinia_massive_antennas": 10 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
         "choletinia_screech": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 30,
+
     }
+
 
 class RandomEnemy:
 
@@ -147,6 +161,7 @@ class RandomEnemy:
             elif self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.enemy_attack_name = "Pistol Shot"
 
+
         elif self.picked_enemy == AssassinWorm:
             self.enemy_attack = random.choice([AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
                                                AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]])
@@ -170,5 +185,6 @@ class RandomEnemy:
                 self.enemy_attack_name = "Massive Antennas"
             elif self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]:
                 self.enemy_attack_name = "Screech"
+
 
 random_enemy = RandomEnemy()
