@@ -23,7 +23,7 @@ class Debuffs:
         MainClasses.chosen_class.stun_debuffs()
         enemy_is_stunned = False
         if MainClasses.chosen_class.stun_capable_attack:
-            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
+            if MainClasses.chosen_class.stun_chance > Enemies.random_enemy.stun_resist and random.randint(0, 100) > MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:  # will conflict if stun chance is higher than 150
                 print("The enemy is stunned, and will skip a turn.")
                 enemy_is_stunned = True
                 Enemies.random_enemy.stun_resist += 50
