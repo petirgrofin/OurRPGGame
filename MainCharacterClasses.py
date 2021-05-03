@@ -60,7 +60,7 @@ class ChosenClass:
 
         self.bleed_capable_attack = None
         self.bleed_chance = None
-        self.bleed_damage = None
+        self.base_bleed_damage = None
         self.bleed_duration = None
 
     def class_choose(self, choose_a_class_question):  # It wasn't working previously because by defining 2 instances
@@ -123,10 +123,11 @@ class ChosenClass:
             if self.chosen_attack == Mage.mage_attacks["mage_stab"]:
                 self.bleed_capable_attack = True
                 self.bleed_chance = 100
-                self.bleed_damage = 50
+                self.base_bleed_damage = 50
                 self.bleed_duration = 3  # turns
             else:
                 self.bleed_capable_attack = False
+        return self.base_bleed_damage
 
 
 chosen_class = ChosenClass()
