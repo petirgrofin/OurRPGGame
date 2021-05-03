@@ -24,7 +24,7 @@ class Debuffs:
         self.enemy_is_bleeding = None
         self.original_bleed_duration = MainClasses.chosen_class.bleed_duration
         self.can_accumulate_bleed = None
-        self.accumulative_bleed_damage = 0  # initial value, MainClasses.chosen_class.bleed_damage is added later
+        self.accumulative_bleed_damage = 0  # initial value, MainClasses.chosen_class.base_bleed_damage is added later
 
     def stuns_check(self):
 
@@ -134,7 +134,7 @@ def combat():
         if debuffs.enemy_is_bleeding:
 
             if MainClasses.chosen_class.bleed_capable_attack:
-                debuffs.accumulative_bleed_damage += MainClasses.chosen_class.bleed_damage
+                debuffs.accumulative_bleed_damage += MainClasses.chosen_class.base_bleed_damage
 
             if MainClasses.chosen_class.bleed_duration > 0:
                 print(
