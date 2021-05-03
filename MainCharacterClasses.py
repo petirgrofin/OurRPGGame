@@ -127,6 +127,7 @@ class ChosenClass:
                 self.bleed_duration = 3  # turns
             else:
                 self.bleed_capable_attack = False
+        return self.bleed_damage
 
 
 chosen_class = ChosenClass()

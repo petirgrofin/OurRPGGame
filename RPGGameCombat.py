@@ -23,7 +23,8 @@ class Debuffs:
 
         self.enemy_is_bleeding = None
         self.original_bleed_duration = MainClasses.chosen_class.bleed_duration
-        self.accumulative_bleed_damage = 50  # limited, has to be MainClasses.chosen_class.bleed_damage
+        self.can_accumulate_bleed = None
+        self.accumulative_bleed_damage = 0  # initial value, MainClasses.chosen_class.bleed_damage is added later
 
     def stuns_check(self):
 
@@ -48,7 +49,7 @@ class Debuffs:
 
     def bleed_check(self):
 
-        MainClasses.chosen_class.bleed_debuffs()  # resets bleed_damage to __init__ value (none) every time it runs
+        MainClasses.chosen_class.bleed_debuffs()
 
         probability = random.randint(0, 100)
 
@@ -58,13 +59,9 @@ class Debuffs:
 
             if MainClasses.chosen_class.bleed_chance > Enemies.random_enemy.bleed_resist:
 
-                if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist and not self.enemy_is_bleeding:
+                if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist:
 
                     self.enemy_is_bleeding = True
-
-                elif self.enemy_is_bleeding:
-
-                    self.accumulative_bleed_damage += 50
 
                 else:
                     print("The enemy resisted against the hemorrhage")
@@ -136,6 +133,9 @@ def combat():
 
         if debuffs.enemy_is_bleeding:
 
+            if MainClasses.chosen_class.bleed_capable_attack:
+                debuffs.accumulative_bleed_damage += MainClasses.chosen_class.bleed_damage
+
             if MainClasses.chosen_class.bleed_duration > 0:
                 print(
                     f"The enemy is bleeding, and will take {debuffs.accumulative_bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
@@ -174,6 +174,8 @@ def combat():
                 Enemies.random_enemy.stun_resist -= 50
                 if Enemies.random_enemy.stun_resist == debuffs.original_stun_resistance:
                     debuffs.enemy_stun_resistance_increased = False
+            if not debuffs.enemy_is_bleeding:
+                debuffs.accumulative_bleed_damage = 0  # initial value
 
     else:
 
