@@ -19,7 +19,7 @@ class Marauder:
 
 class Ectoplasm:
     ectoplasm_stats = {
-        "ectoplasm_health": 500,
+        "ectoplasm_health": 1000,
         "ectoplasm_damage": 60,
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
@@ -44,7 +44,6 @@ class CavernEnemies:
         "cavern_enemies_stun_resistance": 10,
         "cavern_enemies_bleed_resistance": 30
     }
-
 
 
 class AssassinWorm(CavernEnemies):
@@ -158,7 +157,8 @@ class RandomEnemy:
 
         elif self.picked_enemy == AssassinWorm:
             self.enemy_attack = random.choice([AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
-                                               AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]])
+                                               AssassinWorm.cavern_enemies_assassin_worm_attack[
+                                                   "assassin_worm_pistol_attack"]])
             if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
                 self.enemy_attack_name = "Pounce"
             elif self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
@@ -173,8 +173,9 @@ class RandomEnemy:
                 self.enemy_attack_name = "Venom Sting"
 
         elif self.picked_enemy == Choletinia:
-            self.enemy_attack = random.choice([Choletinia.cavern_enemies_choletinia_attack["choletinia_massive_antennas"],
-                                               Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]])
+            self.enemy_attack = random.choice(
+                [Choletinia.cavern_enemies_choletinia_attack["choletinia_massive_antennas"],
+                 Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]])
             if self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_massive_antennas"]:
                 self.enemy_attack_name = "Massive Antennas"
             elif self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]:
