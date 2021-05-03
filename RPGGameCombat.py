@@ -23,6 +23,7 @@ class Debuffs:
 
         self.enemy_is_bleeding = None
         self.original_bleed_duration = original_bleed_duration
+        self.enemy_resisted_bleed = None
         self.accumulative_bleed_damage = 0  # initial value, MainClasses.chosen_class.base_bleed_damage is added later
 
     def stuns_check(self):
@@ -63,6 +64,7 @@ class Debuffs:
 
                 else:
                     print("The enemy resisted against the hemorrhage")
+                    self.enemy_resisted_bleed = True
             else:
                 print("Bleed ineffective because enemy bleed resistance is too high")
 
@@ -131,8 +133,9 @@ def combat():
 
         if debuffs.enemy_is_bleeding:
 
-            if MainClasses.chosen_class.bleed_capable_attack:  # accumulative property
+            if MainClasses.chosen_class.bleed_capable_attack and not debuffs.enemy_resisted_bleed:  # accumulative property
                 debuffs.accumulative_bleed_damage += MainClasses.chosen_class.base_bleed_damage
+                debuffs.enemy_resisted_bleed = False
 
             if MainClasses.chosen_class.bleed_duration > 0:
                 print(
