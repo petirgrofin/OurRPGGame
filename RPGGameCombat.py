@@ -17,7 +17,6 @@ def tutorial():
 class Debuffs:
 
     def __init__(self):
-        self.enemy_stun_resistance_increased = None
         self.original_stun_resistance = Enemies.random_enemy.stun_resist
         self.enemy_is_stunned = None
 
@@ -40,7 +39,6 @@ class Debuffs:
                 if probability < MainClasses.chosen_class.stun_chance - Enemies.random_enemy.stun_resist:
                     self.enemy_is_stunned = True
                     Enemies.random_enemy.stun_resist += 50
-                    self.enemy_stun_resistance_increased = True
 
                 else:
                     print("Stun failed because the enemy resisted")
@@ -170,10 +168,8 @@ def combat():
                 f"The {enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
             print(f"You have {character_health_total} health left")
 
-            if debuffs.enemy_stun_resistance_increased:
+            if Enemies.random_enemy.stun_resist != debuffs.original_stun_resistance: # original value
                 Enemies.random_enemy.stun_resist -= 50
-                if Enemies.random_enemy.stun_resist == debuffs.original_stun_resistance:
-                    debuffs.enemy_stun_resistance_increased = False
             if not debuffs.enemy_is_bleeding:
                 debuffs.accumulative_bleed_damage = 0  # initial value
 
