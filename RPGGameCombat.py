@@ -23,7 +23,7 @@ class Debuffs:
 
         self.enemy_is_bleeding = None
         self.original_bleed_duration = MainClasses.chosen_class.bleed_duration
-        self.accumulative_bleed_damage = 50
+        self.accumulative_bleed_damage = 50  # limited, has to be MainClasses.chosen_class.bleed_damage
 
     def stuns_check(self):
 
@@ -48,7 +48,7 @@ class Debuffs:
 
     def bleed_check(self):
 
-        MainClasses.chosen_class.bleed_debuffs()
+        MainClasses.chosen_class.bleed_debuffs()  # resets bleed_damage to __init__ value (none) every time it runs
 
         probability = random.randint(0, 100)
 
