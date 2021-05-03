@@ -8,7 +8,7 @@ class Marauder:
         "marauder_speed": 40,
         "marauder_defense": 50,
         "marauder_stun_resistance": 10,
-        "marauder_bleed_resistance": 10
+        "marauder_bleed_resistance": 40
     }
 
     marauder_attacks = {
@@ -24,7 +24,7 @@ class Ectoplasm:
         "ectoplasm_speed": 50,
         "ectoplasm_defense": 20,
         "ectoplasm_stun_resistance": 10,
-        "ectoplasm_bleed_resistance": 10
+        "ectoplasm_bleed_resistance": 40
     }
 
     ectoplasm_attacks = {
