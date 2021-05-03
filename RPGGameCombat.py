@@ -133,9 +133,8 @@ def combat():
 
         if debuffs.enemy_is_bleeding:
 
-            if MainClasses.chosen_class.bleed_capable_attack and not debuffs.enemy_resisted_bleed:  # accumulative property
+            if MainClasses.chosen_class.bleed_capable_attack:  # accumulative property
                 debuffs.accumulative_bleed_damage += MainClasses.chosen_class.base_bleed_damage
-                debuffs.enemy_resisted_bleed = False
 
             if MainClasses.chosen_class.bleed_duration > 0:
                 print(
