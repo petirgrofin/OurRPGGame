@@ -33,9 +33,9 @@ class Hamlet:
 
     def hamlet_guild(self):
 
-        test = list(MainClasses.Mage.mage_attacks.keys())
+        attacks = list(MainClasses.Mage.mage_attacks.keys())
         print("You have the following attacks:")
-        for keys in test:
+        for keys in attacks:
             print(keys)
 
 
