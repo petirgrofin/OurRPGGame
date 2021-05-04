@@ -233,10 +233,12 @@ def combat(enemy_group, enemy_number):
 
                 if targeted_first_enemy:
                     bleed_dot_damage_first_enemy += MainClasses.chosen_class.base_bleed_damage
+                    bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
                     debuffs.first_enemy_is_bleeding = True
 
                 elif targeted_additional_enemy:
                     bleed_dot_damage_second_enemy += MainClasses.chosen_class.base_bleed_damage
+                    bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
                     debuffs.second_enemy_is_bleeding = True
 
             if bleed_dot_duration_for_first_enemy == 0:
