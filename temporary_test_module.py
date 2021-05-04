@@ -1,4 +1,7 @@
-import MainCharacterClasses as MainClasses
+import RPGGameEnemies as Enemies
 
-test = MainClasses.chosen_class.class_choose(input("Choose a class: "))  # choose a class
-test1 = MainClasses.chosen_class.attack_choose(input("Choose an attack: "))  # then an attack
+Enemies.random_enemy.enemy_choose()
+Enemies.random_enemy.enemy_attack_chooser()
+
+print(Enemies.random_enemy.additional_enemy_attack)
+print(Enemies.random_enemy.enemy_attack)
