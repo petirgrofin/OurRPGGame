@@ -112,8 +112,10 @@ def combat(enemy_group, enemy_number):
     additional_enemy_is_dead = None
     first_enemy_is_dead = None
     untargeted_enemy_name = None
-    first_enemy_is_stunned = None
-    additional_enemy_is_stunned = None
+    bleed_dot_for_first_enemy = 0
+    bleed_dot_for_second_enemy = 0
+    bleed_dot_duration_for_first_enemy = None
+    bleed_dot_duration_for_second_enemy = None
 
     if enemy_group == "Tutorial":
 
@@ -219,6 +221,7 @@ def combat(enemy_group, enemy_number):
                     first_enemy_is_dead = True
                     if enemy_number == 1:
                         break
+
                 if enemy_number > 1 and additional_enemy_health_left < 0:
                     print(f"The {additional_enemy_name} has died")
                     additional_enemy_is_dead = True
@@ -229,16 +232,16 @@ def combat(enemy_group, enemy_number):
             else:
                 if targeted_first_enemy:
                     enemy_health_left -= MainClasses.chosen_class.chosen_attack
-                    first_enemy_is_stunned = True
+
                 elif targeted_additional_enemy:
                     additional_enemy_health_left -= MainClasses.chosen_class.chosen_attack
-                    additional_enemy_is_stunned = True
 
             if enemy_health_left < 0:
                 print(f"The {first_enemy_name} has died")
                 first_enemy_is_dead = True
                 if enemy_number == 1:
                     break
+
             if enemy_number > 1 and additional_enemy_health_left < 0:
                 print(f"The {additional_enemy_name} has died")
                 additional_enemy_is_dead = True
@@ -256,21 +259,52 @@ def combat(enemy_group, enemy_number):
         if debuffs.first_enemy_is_bleeding:
 
             if MainClasses.chosen_class.bleed_capable_attack:  # accumulative property
-                debuffs.accumulative_bleed_damage += MainClasses.chosen_class.base_bleed_damage
 
-            if MainClasses.chosen_class.bleed_duration > 0:
+                if targeted_first_enemy:
+                    bleed_dot_for_first_enemy += MainClasses.chosen_class.base_bleed_damage
+                    debuffs.first_enemy_is_bleeding = True
+                    bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
+
+                elif targeted_additional_enemy:
+                    bleed_dot_for_second_enemy += MainClasses.chosen_class.base_bleed_damage
+                    debuffs.second_enemy_is_bleeding = True
+                    bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
+
+            if debuffs.first_enemy_is_bleeding > 0:
                 print(
-                    f"The enemy is bleeding, and will take {debuffs.accumulative_bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
+                    f"The {first_enemy_name} is bleeding, and will take {bleed_dot_for_first_enemy} damage for {bleed_dot_duration_for_first_enemy} turns")
 
-            MainClasses.chosen_class.bleed_duration -= 1
-            enemy_health_left -= debuffs.accumulative_bleed_damage
+            if debuffs.second_enemy_is_bleeding > 0:
+                print(f"The {additional_enemy_name} is bleeding, and will take {bleed_dot_for_second_enemy} damage for {bleed_dot_duration_for_second_enemy} turns")
 
-            if MainClasses.chosen_class.bleed_duration < 0:
-                print("The enemy has stopped bleeding")
+            if debuffs.first_enemy_is_bleeding:
+                enemy_health_left -= bleed_dot_for_first_enemy
+                bleed_dot_duration_for_first_enemy -= 1
+
+            if debuffs.second_enemy_is_bleeding:
+                additional_enemy_health_left -= bleed_dot_for_second_enemy
+                bleed_dot_duration_for_second_enemy -= 1
+
+            if bleed_dot_duration_for_first_enemy < 0:
+                print(f"The {Enemies.random_enemy.enemy_name} has stopped bleeding")
                 debuffs.first_enemy_is_bleeding = False
+
+            elif bleed_dot_duration_for_second_enemy < 0:
+                print(f"The {Enemies.random_enemy.additional_enemy_name} has stopped bleeding")
+                debuffs.second_enemy_is_bleeding = False
 
             if enemy_health_left < 0:
                 print(f"The {first_enemy_name} has died")
+                first_enemy_is_dead = True
+                if enemy_number == 1:
+                    break
+
+            if enemy_number > 1 and additional_enemy_health_left < 0:
+                print(f"The {additional_enemy_name} has died")
+                additional_enemy_is_dead = True
+
+            if additional_enemy_is_dead and first_enemy_is_dead:
+                print("You have killed the enemies")
                 break
 
         if enemy_number > 1:

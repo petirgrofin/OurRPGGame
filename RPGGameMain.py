@@ -11,7 +11,7 @@ def introduction():
         if tutorial_question == "yes".lower():
             Combat.tutorial()
         elif tutorial_question == "no".lower():
-            Combat.combat("Tutorial", 1)
+            Combat.combat("Tutorial", 2)
 
 
 MainClasses.chosen_class.class_choose(input("Select a class: "))
