@@ -38,6 +38,4 @@ class Hamlet:
         for keys in attacks:
             print(keys)
 
-
 hamlet = Hamlet()
-hamlet.hamlet_guild()
