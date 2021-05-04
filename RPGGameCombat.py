@@ -111,12 +111,14 @@ def combat(enemy_group, enemy_number):
     debuffs = None
     additional_enemy_is_dead = None
     first_enemy_is_dead = None
-    untargeted_enemy_name = None
     bleed_dot_duration_for_first_enemy = None
     bleed_dot_duration_for_second_enemy = None
     have_to_register_bleed_properties = True
     bleed_dot_damage_first_enemy = 0
     bleed_dot_damage_second_enemy = 0
+    first_enemy_is_stunned = None
+    second_enemy_is_stunned = None
+    character_dead = False
 
     if enemy_group == "Tutorial":
 
@@ -168,7 +170,6 @@ def combat(enemy_group, enemy_number):
                 MainClasses.chosen_class.attack_choose(input("Select an attack: "))
 
                 targeted_enemy_name = first_enemy_name
-                untargeted_enemy_name = additional_enemy_name
 
                 targeted_first_enemy = True
                 targeted_additional_enemy = False
@@ -178,7 +179,6 @@ def combat(enemy_group, enemy_number):
                 MainClasses.chosen_class.attack_choose(input("Select an attack: "))
 
                 targeted_enemy_name = additional_enemy_name
-                untargeted_enemy_name = first_enemy_name
 
                 targeted_additional_enemy = True
                 targeted_first_enemy = False
@@ -200,67 +200,31 @@ def combat(enemy_group, enemy_number):
 
             print(f"The {targeted_enemy_name} is stunned, and will skip a turn.")
 
-            if debuffs.first_enemy_is_bleeding: # since stunning skips a turn, have to check and apply bleed damage here
+            if targeted_first_enemy:
+                enemy_health_left -= MainClasses.chosen_class.chosen_attack
+                first_enemy_is_stunned = True
 
-                if MainClasses.chosen_class.bleed_duration > 0:
-                    print(
-                        f"The {targeted_enemy_name} is bleeding, and will take {debuffs.accumulative_bleed_damage} damage for {MainClasses.chosen_class.bleed_duration} turns")
+            elif targeted_additional_enemy:
+                additional_enemy_health_left -= MainClasses.chosen_class.chosen_attack
+                second_enemy_is_stunned = True
 
-                MainClasses.chosen_class.bleed_duration -= 1
-
-                if targeted_first_enemy:
-                    enemy_health_left -= debuffs.accumulative_bleed_damage + MainClasses.chosen_class.chosen_attack
-                elif targeted_additional_enemy:
-                    additional_enemy_health_left -= debuffs.accumulative_bleed_damage + MainClasses.chosen_class.chosen_attack
-
-                if MainClasses.chosen_class.bleed_duration < 0:
-                    print("The enemy has stopped bleeding")
-                    debuffs.first_enemy_is_bleeding = False
-
-                if enemy_health_left < 0:
-                    print(f"The {first_enemy_name} has died")
-                    first_enemy_is_dead = True
-                    if enemy_number == 1:
-                        break
-
-                if enemy_number > 1 and additional_enemy_health_left < 0:
-                    print(f"The {additional_enemy_name} has died")
-                    additional_enemy_is_dead = True
-                if additional_enemy_is_dead and first_enemy_is_dead:
-                    print("You have killed the enemies")
-                    break
-
-            else:
-                if targeted_first_enemy:
-                    enemy_health_left -= MainClasses.chosen_class.chosen_attack
-
-                elif targeted_additional_enemy:
-                    additional_enemy_health_left -= MainClasses.chosen_class.chosen_attack
-
-            if enemy_health_left < 0:
+            if enemy_health_left < 0:  # check if first enemy is dead
                 print(f"The {first_enemy_name} has died")
                 first_enemy_is_dead = True
                 if enemy_number == 1:
                     break
 
-            if enemy_number > 1 and additional_enemy_health_left < 0:
+            if enemy_number > 1 and additional_enemy_health_left < 0:  # check if second enemy is dead
                 print(f"The {additional_enemy_name} has died")
                 additional_enemy_is_dead = True
-            if additional_enemy_is_dead and first_enemy_is_dead:
+
+            if additional_enemy_is_dead and first_enemy_is_dead: # check if both dead
                 print("You have killed the enemies")
                 break
-
-            if enemy_number == 2:
-                print(f"The {targeted_enemy_name} has {enemy_health_left} health left, and the {untargeted_enemy_name} has {additional_enemy_health_left} health left")
-            elif enemy_number == 1:
-                print(f"The {Enemies.random_enemy.enemy_name} has {enemy_health_left} health left")
-
-            continue
 
         if debuffs.first_enemy_is_bleeding:
 
             if have_to_register_bleed_properties:
-
                 bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
                 bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
                 have_to_register_bleed_properties = False
@@ -275,31 +239,33 @@ def combat(enemy_group, enemy_number):
                     bleed_dot_damage_second_enemy += MainClasses.chosen_class.base_bleed_damage
                     debuffs.second_enemy_is_bleeding = True
 
-            if debuffs.first_enemy_is_bleeding:
+            if bleed_dot_duration_for_first_enemy == 0:
+                print(f"The {Enemies.random_enemy.enemy_name} has stopped bleeding")
+                debuffs.first_enemy_is_bleeding = False
+                bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
+                bleed_dot_damage_first_enemy = MainClasses.chosen_class.base_bleed_damage
+
+            elif bleed_dot_duration_for_second_enemy == 0:
+                print(f"The {Enemies.random_enemy.additional_enemy_name} has stopped bleeding")
+                debuffs.second_enemy_is_bleeding = False
+                bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
+                bleed_dot_damage_second_enemy = MainClasses.chosen_class.base_bleed_damage
+
+            if debuffs.first_enemy_is_bleeding and bleed_dot_duration_for_first_enemy != 0:
                 print(
                     f"The {first_enemy_name} is bleeding, and will take {bleed_dot_damage_first_enemy} damage for {bleed_dot_duration_for_first_enemy} turns")
 
-            if debuffs.second_enemy_is_bleeding:
-                print(f"The {additional_enemy_name} is bleeding, and will take {bleed_dot_damage_second_enemy} damage for {bleed_dot_duration_for_second_enemy} turns")
+            if debuffs.second_enemy_is_bleeding and bleed_dot_duration_for_second_enemy != 0:
+                print(
+                    f"The {additional_enemy_name} is bleeding, and will take {bleed_dot_damage_second_enemy} damage for {bleed_dot_duration_for_second_enemy} turns")
 
-            if debuffs.first_enemy_is_bleeding:
+            if debuffs.first_enemy_is_bleeding and bleed_dot_duration_for_first_enemy != 0:
                 enemy_health_left -= bleed_dot_damage_first_enemy
                 bleed_dot_duration_for_first_enemy -= 1
 
-            if debuffs.second_enemy_is_bleeding:
+            if debuffs.second_enemy_is_bleeding and bleed_dot_duration_for_second_enemy != 0:
                 additional_enemy_health_left -= bleed_dot_damage_second_enemy
                 bleed_dot_duration_for_second_enemy -= 1
-
-            if bleed_dot_duration_for_first_enemy < 0:
-                print(f"The {Enemies.random_enemy.enemy_name} has stopped bleeding")
-                debuffs.first_enemy_is_bleeding = False
-
-            elif bleed_dot_duration_for_second_enemy < 0:
-                print(f"The {Enemies.random_enemy.additional_enemy_name} has stopped bleeding")
-                debuffs.second_enemy_is_bleeding = False
-
-            if not debuffs.second_enemy_is_bleeding and not debuffs.first_enemy_is_bleeding:
-                have_to_register_bleed_properties = True
 
             if enemy_health_left < 0:
                 print(f"The {first_enemy_name} has died")
@@ -314,6 +280,9 @@ def combat(enemy_group, enemy_number):
             if additional_enemy_is_dead and first_enemy_is_dead:
                 print("You have killed the enemies")
                 break
+
+            if not debuffs.second_enemy_is_bleeding and not debuffs.first_enemy_is_bleeding:
+                have_to_register_bleed_properties = True
 
         if enemy_number > 1:
 
@@ -344,37 +313,41 @@ def combat(enemy_group, enemy_number):
             print("You have killed the enemies")
             break
 
-        if enemy_number > 1:
+        if enemy_number > 1 and not first_enemy_is_dead:
             print(
                 f"The {first_enemy_name} has {enemy_health_left} health left, and the {additional_enemy_name} has {additional_enemy_health_left} health left")
 
+        elif enemy_number > 1 and first_enemy_is_dead:
+            print(
+                f"The {additional_enemy_name} has {additional_enemy_health_left} health left")
+
         Enemies.random_enemy.enemy_attack_chooser()
 
-        character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
+        if not first_enemy_is_stunned:
 
-        print(
-            f"The {first_enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
-
-        character_health_total -= Enemies.random_enemy.additional_enemy_attack - character_defense
-
-        if enemy_number > 1:
+            character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
 
             print(
-                f"The {additional_enemy_name} has also dealt {Enemies.random_enemy.additional_enemy_attack - character_defense} damage with his {Enemies.random_enemy.additional_enemy_attack_name}")
+                f"The {first_enemy_name} has dealt {Enemies.random_enemy.enemy_attack - character_defense} damage with his {Enemies.random_enemy.enemy_attack_name}")
+
+        if not second_enemy_is_stunned:
+
+            character_health_total -= Enemies.random_enemy.additional_enemy_attack - character_defense
+
+            if enemy_number > 1:
+                print(
+                    f"The {additional_enemy_name} has dealt {Enemies.random_enemy.additional_enemy_attack - character_defense} damage with his {Enemies.random_enemy.additional_enemy_attack_name}")
+
         print(f"You have {character_health_total} health left")
 
-        if Enemies.random_enemy.stun_resist != debuffs.first_enemy_original_stun_resistance:
-            Enemies.random_enemy.stun_resist -= 50
+        if Enemies.random_enemy.stun_resist != debuffs.first_enemy_original_stun_resistance and not first_enemy_is_stunned:
+            Enemies.random_enemy.first_enemy_original_stun_resistance -= 50
 
-        elif Enemies.random_enemy.additional_enemy_stun_resist != debuffs.additional_enemy_original_stun_resistance:
+        if Enemies.random_enemy.stun_resist != debuffs.additional_enemy_original_stun_resistance and not second_enemy_is_stunned:
             Enemies.random_enemy.additional_enemy_stun_resist -= 50
-
-        if not debuffs.first_enemy_is_bleeding:
-            debuffs.accumulative_bleed_damage = 0  # initial value
-
-        if not debuffs.second_enemy_is_bleeding:
-            pass
 
     else:
 
         print("You have lost")
+        character_dead = True
+        return character_dead
