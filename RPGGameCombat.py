@@ -112,13 +112,11 @@ def combat(enemy_group, enemy_number):
     additional_enemy_is_dead = None
     first_enemy_is_dead = None
     untargeted_enemy_name = None
-    bleed_dot_for_first_enemy = 0
-    bleed_dot_for_second_enemy = 0
     bleed_dot_duration_for_first_enemy = None
     bleed_dot_duration_for_second_enemy = None
     have_to_register_bleed_properties = True
-    bleed_dot_damage_first_enemy = None
-    bleed_dot_damage_second_enemy = None
+    bleed_dot_damage_first_enemy = 0
+    bleed_dot_damage_second_enemy = 0
 
     if enemy_group == "Tutorial":
 
@@ -265,10 +263,7 @@ def combat(enemy_group, enemy_number):
 
                 bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
                 bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
-                bleed_dot_damage_first_enemy = MainClasses.chosen_class.base_bleed_damage
-                bleed_dot_damage_second_enemy = MainClasses.chosen_class.base_bleed_damage
                 have_to_register_bleed_properties = False
-                print("Finished registering bleed properties")
 
             if MainClasses.chosen_class.bleed_capable_attack:  # accumulative property
 
@@ -282,17 +277,17 @@ def combat(enemy_group, enemy_number):
 
             if debuffs.first_enemy_is_bleeding:
                 print(
-                    f"The {first_enemy_name} is bleeding, and will take {bleed_dot_for_first_enemy} damage for {bleed_dot_duration_for_first_enemy} turns")
+                    f"The {first_enemy_name} is bleeding, and will take {bleed_dot_damage_first_enemy} damage for {bleed_dot_duration_for_first_enemy} turns")
 
             if debuffs.second_enemy_is_bleeding:
-                print(f"The {additional_enemy_name} is bleeding, and will take {bleed_dot_for_second_enemy} damage for {bleed_dot_duration_for_second_enemy} turns")
+                print(f"The {additional_enemy_name} is bleeding, and will take {bleed_dot_damage_second_enemy} damage for {bleed_dot_duration_for_second_enemy} turns")
 
             if debuffs.first_enemy_is_bleeding:
-                enemy_health_left -= bleed_dot_for_first_enemy
+                enemy_health_left -= bleed_dot_damage_first_enemy
                 bleed_dot_duration_for_first_enemy -= 1
 
             if debuffs.second_enemy_is_bleeding:
-                additional_enemy_health_left -= bleed_dot_for_second_enemy
+                additional_enemy_health_left -= bleed_dot_damage_second_enemy
                 bleed_dot_duration_for_second_enemy -= 1
 
             if bleed_dot_duration_for_first_enemy < 0:
