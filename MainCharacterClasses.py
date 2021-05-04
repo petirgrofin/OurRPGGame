@@ -124,7 +124,7 @@ class ChosenClass:
                 self.bleed_capable_attack = True
                 self.bleed_chance = 100
                 self.base_bleed_damage = 50
-                self.bleed_duration = 3  # turns
+                self.bleed_duration = 3  # every time attack3 is chosen, this gets reset to 3, as intended.
             else:
                 self.bleed_capable_attack = False
         return self.base_bleed_damage

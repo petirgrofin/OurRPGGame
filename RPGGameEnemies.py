@@ -77,6 +77,7 @@ class RandomEnemy:
     def __init__(self):
 
         self.picked_enemy = None
+        self.additional_picked_enemy = None
         self.enemy_name = None
         self.enemy_attack = None
         self.picked_enemy_health = None
@@ -87,6 +88,8 @@ class RandomEnemy:
 
     def enemy_choose(self):
         self.picked_enemy = random.choice([Marauder, Ectoplasm])
+        self.additional_picked_enemy = random.choice([Marauder, Ectoplasm])  # starting to implement more enemies
+
         if self.picked_enemy == Marauder:
             self.enemy_name = "Marauder"
             self.picked_enemy_health = Marauder.marauder_stats["marauder_health"]
@@ -98,24 +101,6 @@ class RandomEnemy:
             self.picked_enemy_health = Ectoplasm.ectoplasm_stats["ectoplasm_health"]
             self.stun_resist = Ectoplasm.ectoplasm_stats["ectoplasm_stun_resistance"]
             self.bleed_resist = Ectoplasm.ectoplasm_stats["ectoplasm_bleed_resistance"]
-
-        elif self.picked_enemy == AssassinWorm:
-            self.enemy_name = "Assassin Worm"
-            self.picked_enemy_health = CavernEnemies.cavern_enemies_stats["cavern_enemies_health"]
-            self.stun_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_stun_resistance"]
-            self.bleed_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
-
-        elif self.picked_enemy == CaveSpider:
-            self.enemy_name = "Cave Spider"
-            self.picked_enemy_health = CavernEnemies.cavern_enemies_stats["cavern_enemies_health"]
-            self.stun_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_stun_resistance"]
-            self.bleed_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
-
-        elif self.picked_enemy == Choletinia:
-            self.enemy_name = "Choletinia"
-            self.picked_enemy_health = CavernEnemies.cavern_enemies_stats["cavern_enemies_health"]
-            self.stun_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_stun_resistance"]
-            self.bleed_resist = CavernEnemies.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
 
     def cavern_enemy_choose(self):
         self.picked_enemy = random.choice([AssassinWorm, CaveSpider, Choletinia])

@@ -16,13 +16,12 @@ def tutorial():
 
 class Debuffs:
 
-    def __init__(self, original_stun_resistance, original_bleed_duration):
+    def __init__(self, original_stun_resistance):
 
         self.enemy_is_stunned = None
         self.original_stun_resistance = original_stun_resistance
 
         self.enemy_is_bleeding = None
-        self.original_bleed_duration = original_bleed_duration
         self.accumulative_bleed_damage = 0  # initial value, MainClasses.chosen_class.base_bleed_damage is added later
 
     def stuns_check(self):
@@ -74,7 +73,7 @@ def combat():
 
     Enemies.random_enemy.enemy_choose()
 
-    debuffs = Debuffs(Enemies.random_enemy.stun_resist, MainClasses.chosen_class.bleed_duration)
+    debuffs = Debuffs(Enemies.random_enemy.stun_resist)
 
     enemy_name = Enemies.random_enemy.enemy_name
 
@@ -114,7 +113,6 @@ def combat():
                 if MainClasses.chosen_class.bleed_duration < 0:
                     print("The enemy has stopped bleeding")
                     debuffs.enemy_is_bleeding = False
-                    MainClasses.chosen_class.bleed_duration = debuffs.original_bleed_duration
 
                 if enemy_health_left < 0:
                     print(f"The {enemy_name} has died")
