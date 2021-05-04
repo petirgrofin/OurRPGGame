@@ -116,6 +116,9 @@ def combat(enemy_group, enemy_number):
     bleed_dot_for_second_enemy = 0
     bleed_dot_duration_for_first_enemy = None
     bleed_dot_duration_for_second_enemy = None
+    have_to_register_bleed_properties = True
+    bleed_dot_damage_first_enemy = None
+    bleed_dot_damage_second_enemy = None
 
     if enemy_group == "Tutorial":
 
@@ -258,23 +261,30 @@ def combat(enemy_group, enemy_number):
 
         if debuffs.first_enemy_is_bleeding:
 
+            if have_to_register_bleed_properties:
+
+                bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
+                bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
+                bleed_dot_damage_first_enemy = MainClasses.chosen_class.base_bleed_damage
+                bleed_dot_damage_second_enemy = MainClasses.chosen_class.base_bleed_damage
+                have_to_register_bleed_properties = False
+                print("Finished registering bleed properties")
+
             if MainClasses.chosen_class.bleed_capable_attack:  # accumulative property
 
                 if targeted_first_enemy:
-                    bleed_dot_for_first_enemy += MainClasses.chosen_class.base_bleed_damage
+                    bleed_dot_damage_first_enemy += MainClasses.chosen_class.base_bleed_damage
                     debuffs.first_enemy_is_bleeding = True
-                    bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
 
                 elif targeted_additional_enemy:
-                    bleed_dot_for_second_enemy += MainClasses.chosen_class.base_bleed_damage
+                    bleed_dot_damage_second_enemy += MainClasses.chosen_class.base_bleed_damage
                     debuffs.second_enemy_is_bleeding = True
-                    bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
 
-            if debuffs.first_enemy_is_bleeding > 0:
+            if debuffs.first_enemy_is_bleeding:
                 print(
                     f"The {first_enemy_name} is bleeding, and will take {bleed_dot_for_first_enemy} damage for {bleed_dot_duration_for_first_enemy} turns")
 
-            if debuffs.second_enemy_is_bleeding > 0:
+            if debuffs.second_enemy_is_bleeding:
                 print(f"The {additional_enemy_name} is bleeding, and will take {bleed_dot_for_second_enemy} damage for {bleed_dot_duration_for_second_enemy} turns")
 
             if debuffs.first_enemy_is_bleeding:
@@ -292,6 +302,9 @@ def combat(enemy_group, enemy_number):
             elif bleed_dot_duration_for_second_enemy < 0:
                 print(f"The {Enemies.random_enemy.additional_enemy_name} has stopped bleeding")
                 debuffs.second_enemy_is_bleeding = False
+
+            if not debuffs.second_enemy_is_bleeding and not debuffs.first_enemy_is_bleeding:
+                have_to_register_bleed_properties = True
 
             if enemy_health_left < 0:
                 print(f"The {first_enemy_name} has died")
