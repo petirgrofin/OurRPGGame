@@ -25,7 +25,7 @@ class Debuffs:
 
         self.first_enemy_is_bleeding = None
         self.second_enemy_is_bleeding = None
-        self.accumulative_bleed_damage = 0  # initial value, MainClasses.chosen_class.base_bleed_damage is added later
+        self.enemy_resisted_bleed = None
 
     def stuns_check(self, stun_target):
 
@@ -78,9 +78,11 @@ class Debuffs:
                     if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.bleed_resist:
 
                         self.first_enemy_is_bleeding = True
+                        self.enemy_resisted_bleed = False
 
                     else:
                         print("The enemy resisted against the hemorrhage")
+                        self.enemy_resisted_bleed = True
                 else:
                     print("Bleed ineffective because enemy bleed resistance is too high")
 
@@ -218,7 +220,7 @@ def combat(enemy_group, enemy_number):
                 bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
                 have_to_register_bleed_properties = False
 
-            if MainClasses.chosen_class.bleed_capable_attack:  # accumulative property
+            if MainClasses.chosen_class.bleed_capable_attack and not debuffs.enemy_resisted_bleed:  # accumulative property
 
                 if targeted_first_enemy:
                     bleed_dot_damage_first_enemy += MainClasses.chosen_class.base_bleed_damage
@@ -230,13 +232,13 @@ def combat(enemy_group, enemy_number):
                     bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
                     debuffs.second_enemy_is_bleeding = True
 
-            if bleed_dot_duration_for_first_enemy == 0:
+            if bleed_dot_duration_for_first_enemy == 0 and not first_enemy_is_dead:
                 print(f"The {Enemies.random_enemy.enemy_name} has stopped bleeding")
                 debuffs.first_enemy_is_bleeding = False
                 bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
                 bleed_dot_damage_first_enemy = MainClasses.chosen_class.base_bleed_damage
 
-            elif bleed_dot_duration_for_second_enemy == 0:
+            elif bleed_dot_duration_for_second_enemy == 0 and not additional_enemy_is_dead:
                 print(f"The {Enemies.random_enemy.additional_enemy_name} has stopped bleeding")
                 debuffs.second_enemy_is_bleeding = False
                 bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration

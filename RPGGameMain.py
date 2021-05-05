@@ -14,6 +14,7 @@ def introduction():
         elif tutorial_question == "no".lower():
             if not Combat.combat("Tutorial", 2):
                 Hamlet.hamlet.hamlet_introduction()
+                Hamlet.hamlet.hamlet_general()
             else:
                 print("You have lost")
 

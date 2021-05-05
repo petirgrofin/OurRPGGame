@@ -1,4 +1,5 @@
 import MainCharacterClasses as MainClasses
+import RPGGameLocations as Locations
 
 
 class Hamlet:
@@ -26,11 +27,13 @@ class Hamlet:
         moving_through_hamlet = input(">")
         if moving_through_hamlet == "guild":
             print("Welcome to the guild")
-            Hamlet().hamlet_guild()
+            hamlet.hamlet_guild()
         elif moving_through_hamlet == "sanatorium":
             print("Welcome to the sanatorium")
         elif moving_through_hamlet == "training room":
             print("Welcome to the training room")
+        elif moving_through_hamlet == "world locations":
+            hamlet.world_locations()
 
     def hamlet_guild(self):
 
@@ -49,6 +52,9 @@ class Hamlet:
               "madness and bloodshed.")
 
         location_choose = input("Where do you want to go?: ")
+        if location_choose == "The Caverns":
+            the_caverns = Locations.TheCaverns("apprentice level mission")
+            the_caverns.first_mission()
 
 
 hamlet = Hamlet()
