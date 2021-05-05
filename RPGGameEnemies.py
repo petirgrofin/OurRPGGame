@@ -96,17 +96,8 @@ class RandomEnemy:
         self.additional_enemy_bleed_resist = None
 
     def enemy_choose(self):
-
         self.picked_enemy = random.choice([Marauder, Ectoplasm])
         self.additional_picked_enemy = random.choice([Marauder, Ectoplasm])  # starting to implement more enemies
-
-        if self.picked_enemy == self.additional_picked_enemy:
-
-            if self.picked_enemy == Marauder:
-                self.additional_picked_enemy = random.choice([Ectoplasm])
-
-            elif self.picked_enemy == Ectoplasm:
-                self.additional_picked_enemy = random.choice([Marauder])
 
         if self.picked_enemy == Marauder:
             self.enemy_name = "Marauder"
