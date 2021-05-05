@@ -1,6 +1,6 @@
 import random
 
-print("welcome to enemies")
+
 class Marauder:
     marauder_stats = {
         "marauder_health": 800,
@@ -52,10 +52,6 @@ class AssassinWorm(CavernEnemies):
         "cavern_enemies_assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
     }
 
-    cavern_enemies_cave_spider_attack = {
-        "cavern_enemies_cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
-        "cavern_enemies_cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40}
-
 
 class CaveSpider(CavernEnemies):
     cavern_enemies_cave_spider_attack = {
@@ -71,6 +67,37 @@ class Choletinia(CavernEnemies):
 
     }
 
+class CastleEnemies:
+    castle_enemies_stats = {
+        "castle_enemies_skeleton": "Skeleton",
+        "castle_enemies_the_princess": "The Princess",
+        "castle_enemies_health": 2000,
+        "castle_enemies_damage": 80,
+        "castle_enemies_speed": 30,
+        "castle_enemies_defense": 50,
+        "castle_enemies_stun_resistance": 30,
+        "castle_enemies_bleed_resistance": 30
+    }
+
+class Skeleton(CastleEnemies):
+    castle_enemies_skeleton_attack = {
+        "skeleton_bow_shot": 30 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
+        "skeleton_fire_arrow": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 40,
+    }
+
+
+class ThePrincess(CastleEnemies):
+    castle_enemies_the_princess_attack = {
+        "the_princess_magic_powder": 20 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
+        "the_princess_rainbow_attack": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 50,
+    }
+
+
+class TheKing(CastleEnemies):
+    castle_enemies_the_king_attack = {
+        "the_king_knife_cut": 10 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
+        "the_king_knife_throw": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 30,
+    }
 
 class RandomEnemy:
 
@@ -142,6 +169,28 @@ class RandomEnemy:
             self.picked_enemy_health = Choletinia.cavern_enemies_stats["cavern_enemies_health"]
             self.stun_resist = Choletinia.cavern_enemies_stats["cavern_enemies_stun_resistance"]
             self.bleed_resist = Choletinia.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
+
+    def castle_enemy_choose(self):
+
+        self.picked_enemy = random.choice([Skeleton, ThePrincess, TheKing])
+        if self.picked_enemy == Skeleton:
+            self.enemy_name = "Skeleton"
+            self.picked_enemy_health = Skeleton.castle_enemies_stats["castle_enemies_health"]
+            self.stun_resist = Skeleton.castle_enemies_stats["castle_enemies_stun_resistance"]
+            self.bleed_resist = Skeleton.castle_enemies_stats["castle_enemies_bleed_resistance"]
+
+        elif self.picked_enemy == ThePrincess:
+            self.enemy_name = "The Princess"
+            self.picked_enemy_health = ThePrincess.castle_enemies_stats["castle_enemies_health"]
+            self.stun_resist = ThePrincess.castle_enemies_stats["castle_enemies_stun_resistance"]
+            self.bleed_resist = ThePrincess.castle_enemies_stats["castle_enemies_bleed_resistance"]
+
+
+        elif self.picked_enemy == TheKing:
+            self.enemy_name = "The King"
+            self.picked_enemy_health = TheKing.castle_enemies_stats["castle_enemies_health"]
+            self.stun_resist = TheKing.castle_enemies_stats["castle_enemies_stun_resistance"]
+            self.bleed_resist = TheKing.castle_enemies_stats["castle_enemies_bleed_resistance"]
 
     def enemy_attack_chooser(self):
 
