@@ -124,14 +124,14 @@ class RandomEnemy:
 
     def enemy_choose(self):
 
+        self.picked_enemy = random.choice([Marauder, Ectoplasm])
+        self.additional_picked_enemy = random.choice([Marauder, Ectoplasm])  # starting to implement more enemies
+
         if self.picked_enemy == self.additional_picked_enemy:
             if self.picked_enemy == Marauder:
                 self.additional_picked_enemy = random.choice([Ectoplasm])
             if self.picked_enemy == Ectoplasm:
                 self.additional_picked_enemy = random.choice([Marauder])
-
-        self.picked_enemy = random.choice([Marauder, Ectoplasm])
-        self.additional_picked_enemy = random.choice([Marauder, Ectoplasm])  # starting to implement more enemies
 
         if self.picked_enemy == Marauder:
             self.enemy_name = "Marauder"
@@ -160,6 +160,9 @@ class RandomEnemy:
 
     def cavern_enemy_choose(self):
 
+        self.picked_enemy = random.choice([AssassinWorm, CaveSpider, Choletinia])
+        self.additional_picked_enemy = random.choice([AssassinWorm, CaveSpider, Choletinia])
+
         if self.picked_enemy == self.additional_picked_enemy:
             if self.picked_enemy == AssassinWorm:
                 self.additional_picked_enemy = random.choice([CaveSpider, Choletinia])
@@ -168,7 +171,6 @@ class RandomEnemy:
             if self.picked_enemy == Choletinia:
                 self.additional_picked_enemy = random.choice([AssassinWorm, CaveSpider])
 
-        self.picked_enemy = random.choice([AssassinWorm, CaveSpider, Choletinia])
         if self.picked_enemy == AssassinWorm:
             self.enemy_name = "Assassin Worm"
             self.picked_enemy_health = AssassinWorm.cavern_enemies_stats["cavern_enemies_health"]
@@ -189,6 +191,9 @@ class RandomEnemy:
 
     def castle_enemy_choose(self):
 
+        self.picked_enemy = random.choice([Skeleton, ThePrincess, TheKing])
+        self.additional_picked_enemy = random.choice([Skeleton, ThePrincess, TheKing])
+
         if self.picked_enemy == self.additional_picked_enemy:
             if self.picked_enemy == Skeleton:
                 self.additional_picked_enemy = random.choice([ThePrincess, TheKing])
@@ -197,8 +202,6 @@ class RandomEnemy:
             if self.picked_enemy == TheKing:
                 self.additional_picked_enemy = random.choice([Skeleton, ThePrincess])
 
-        self.picked_enemy = random.choice([Skeleton, ThePrincess, TheKing])
-        self.additional_picked_enemy = random.choice([Skeleton, ThePrincess, TheKing])
         if self.picked_enemy == Skeleton:
             self.enemy_name = "Skeleton"
             self.picked_enemy_health = Skeleton.castle_enemies_stats["castle_enemies_health"]
