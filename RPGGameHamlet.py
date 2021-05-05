@@ -21,18 +21,16 @@ class Hamlet:
             "You may also engage in training with certain captured enemies to try different strategies and attacks \n")
         print("If you want to check this introduction during your stay at the hamlet, simply input help")
 
-    class Locations():
+class Locations():
 
-        def world_locations(self):
+    def world_locations(self):
 
-            print("There are many dangerous locations, where the monsters of the darkness live.")
-            print("You may kill every monster in the dungeons and caverns.")
-            print("Here you got some of the locations where some people have been sighting these creatures")
-            caverns = input("Where do you want to go?: ")
-            castle = input("Where do you want to go?: ")
-            swamp = input("Where do you want to go?: ")
-
-
+        print("There are many dangerous locations, where the monsters of the darkness live.")
+        print("You may kill every monster in the dungeons and caverns.")
+        print("Here you got some of the locations where some people have been sighting these creatures")
+        caverns = input("Where do you want to go?: ")
+        castle = input("Where do you want to go?: ")
+        swamp = input("Where do you want to go?: ")
 
     def hamlet_general(self):
 
@@ -50,5 +48,6 @@ class Hamlet:
         print("You have the following attacks:")
         for keys in attacks:
             print(keys)
+
 
 hamlet = Hamlet()
