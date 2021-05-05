@@ -131,13 +131,13 @@ class RandomEnemy:
             self.stun_resist = AssassinWorm.cavern_enemies_stats["cavern_enemies_stun_resistance"]
             self.bleed_resist = AssassinWorm.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
 
-        if self.picked_enemy == CaveSpider:
+        elif self.picked_enemy == CaveSpider:
             self.enemy_name = "Cave Spider"
             self.picked_enemy_health = CaveSpider.cavern_enemies_stats["cavern_enemies_health"]
             self.stun_resist = CaveSpider.cavern_enemies_stats["cavern_enemies_stun_resistance"]
             self.bleed_resist = CaveSpider.cavern_enemies_stats["cavern_enemies_bleed_resistance"]
 
-        if self.picked_enemy == Choletinia:
+        elif self.picked_enemy == Choletinia:
             self.enemy_name = "Choletinia"
             self.picked_enemy_health = Choletinia.cavern_enemies_stats["cavern_enemies_health"]
             self.stun_resist = Choletinia.cavern_enemies_stats["cavern_enemies_stun_resistance"]
