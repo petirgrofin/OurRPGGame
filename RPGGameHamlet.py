@@ -9,7 +9,7 @@ class Hamlet:
               "name is unknown, and power unmeasurable. You may attempt to kill the Beast at any given moment, but \n"
               "doing so poses a great risk. You must be prepared.")
         print(
-            "You may visit 4 other locations, all which hold a powerful king that treasures an ancient tablet written "
+            "You may visit 4 other locations, all which hold a powerful king that treasures an ancient tablet written"
             "\n "
             "in strange languages, that will give you more information about the Beast and how to defeat it")
         print(
@@ -20,17 +20,6 @@ class Hamlet:
         print(
             "You may also engage in training with certain captured enemies to try different strategies and attacks \n")
         print("If you want to check this introduction during your stay at the hamlet, simply input help")
-
-class Locations():
-
-    def world_locations(self):
-
-        print("There are many dangerous locations, where the monsters of the darkness live.")
-        print("You may kill every monster in the dungeons and caverns.")
-        print("Here you got some of the locations where some people have been sighting these creatures")
-        caverns = input("Where do you want to go?: ")
-        castle = input("Where do you want to go?: ")
-        swamp = input("Where do you want to go?: ")
 
     def hamlet_general(self):
 
@@ -49,5 +38,18 @@ class Locations():
         for keys in attacks:
             print(keys)
 
+    def world_locations(self):
+
+        print("There are four dangerous locations, plagued by dark and treacherous monsters, whose sole purpose is to"
+              "corrupt what these lands once were.")
+        print("You are tasked to kill every monster in the dungeons, the swamps, the caverns and the castle,"
+              "with the hope of bringing a slight glimmer of prosperity to the lands once well regarded.")
+        print("These abhorrent beasts grow ever stronger, and you must put an end to their feasts of"
+              "madness and bloodshed. ")
+
+        location_choose = input("Where do you want to go?: ")
+
 
 hamlet = Hamlet()
+hamlet.hamlet_introduction()
+
