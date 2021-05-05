@@ -115,7 +115,7 @@ def combat(enemy_group, enemy_number):
     bleed_dot_duration_for_second_enemy = None
     have_to_register_bleed_properties = True
     bleed_dot_damage_first_enemy = 0
-    bleed_dot_damage_second_enemy = 00
+    bleed_dot_damage_second_enemy = 0
     first_enemy_is_stunned = None
     second_enemy_is_stunned = None
     character_dead = False
