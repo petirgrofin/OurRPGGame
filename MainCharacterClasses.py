@@ -3,7 +3,7 @@ class Mage:
     mage_stats = {
         "mage_damage": 80,
         "mage_speed": 50,
-        "mage_health": 500,
+        "mage_health": 1000,
         "mage_defense": 50,
         "mage_class_name": "Mage"
     }
@@ -124,7 +124,7 @@ class ChosenClass:
                 self.bleed_capable_attack = True
                 self.bleed_chance = 100
                 self.base_bleed_damage = 50
-                self.bleed_duration = 3  # turns
+                self.bleed_duration = 3  # every time attack3 is chosen, this gets reset to 3, as intended.
             else:
                 self.bleed_capable_attack = False
         return self.base_bleed_damage

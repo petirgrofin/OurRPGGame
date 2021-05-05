@@ -9,7 +9,7 @@ class Hamlet:
               "name is unknown, and power unmeasurable. You may attempt to kill the Beast at any given moment, but \n"
               "doing so poses a great risk. You must be prepared.")
         print(
-            "You may visit 4 other locations, all which hold a powerful king that treasures an ancient tablet written "
+            "You may visit 4 other locations, all which hold a powerful king that treasures an ancient tablet written"
             "\n "
             "in strange languages, that will give you more information about the Beast and how to defeat it")
         print(
@@ -26,6 +26,7 @@ class Hamlet:
         moving_through_hamlet = input(">")
         if moving_through_hamlet == "guild":
             print("Welcome to the guild")
+            Hamlet().hamlet_guild()
         elif moving_through_hamlet == "sanatorium":
             print("Welcome to the sanatorium")
         elif moving_through_hamlet == "training room":
@@ -38,6 +39,19 @@ class Hamlet:
         for keys in attacks:
             print(keys)
 
+    def world_locations(self):
+
+        print("There are four dangerous locations, plagued by dark and treacherous monsters, whose sole purpose is to"
+              "corrupt what these lands once were.")
+        print("You are tasked to kill every monster in the dungeons, the swamps, the caverns and the castle,"
+              "with the hope of bringing a slight glimmer of prosperity to the lands once well regarded.")
+        print("These abhorrent beasts grow ever stronger, and you must put an end to their feasts of"
+              "madness and bloodshed.")
+
+        location_choose = input("Where do you want to go?: ")
+
 
 hamlet = Hamlet()
-hamlet.hamlet_guild()
+hamlet.hamlet_introduction()
+hamlet.hamlet_general()
+

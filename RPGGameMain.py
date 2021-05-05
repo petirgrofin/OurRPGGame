@@ -1,5 +1,6 @@
 import RPGGameCombat as Combat
 import MainCharacterClasses as MainClasses
+import RPGGameHamlet as Hamlet
 
 
 def introduction():
@@ -11,8 +12,10 @@ def introduction():
         if tutorial_question == "yes".lower():
             Combat.tutorial()
         elif tutorial_question == "no".lower():
-            Combat.combat()
-            print("You have slayed the foul beast, and now you head to the old hamlet.")
+            if not Combat.combat("Tutorial", 2):
+                Hamlet.hamlet.hamlet_introduction()
+            else:
+                print("Try again")
 
 
 MainClasses.chosen_class.class_choose(input("Select a class: "))
