@@ -15,7 +15,6 @@ class Marauder:
         "marauder_ballista_shot": marauder_stats["marauder_damage"] + 30
     }
 
-
 class Ectoplasm:
     ectoplasm_stats = {
         "ectoplasm_health": 800,
@@ -51,13 +50,11 @@ class AssassinWorm(CavernEnemies):
         "cavern_enemies_assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
     }
 
-
 class CaveSpider(CavernEnemies):
     cavern_enemies_cave_spider_attack = {
         "cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
         "cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40,
     }
-
 
 class Choletinia(CavernEnemies):
     cavern_enemies_choletinia_attack = {
@@ -65,6 +62,7 @@ class Choletinia(CavernEnemies):
         "choletinia_screech": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 30,
 
     }
+
 
 class CastleEnemies:
     castle_enemies_stats = {
@@ -78,12 +76,12 @@ class CastleEnemies:
         "castle_enemies_bleed_resistance": 30
     }
 
+
 class Skeleton(CastleEnemies):
     castle_enemies_skeleton_attack = {
         "skeleton_bow_shot": 30 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
         "skeleton_fire_arrow": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 40,
     }
-
 
 class ThePrincess(CastleEnemies):
     castle_enemies_the_princess_attack = {
@@ -91,12 +89,12 @@ class ThePrincess(CastleEnemies):
         "the_princess_rainbow_attack": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 50,
     }
 
-
 class TheKing(CastleEnemies):
     castle_enemies_the_king_attack = {
         "the_king_knife_cut": 10 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
         "the_king_knife_throw": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 30,
     }
+
 
 class RandomEnemy:
 
@@ -120,6 +118,9 @@ class RandomEnemy:
 
         self.additional_enemy_stun_resist = None
         self.additional_enemy_bleed_resist = None
+
+        self.enemy_stun_capable_attack = None
+        self.enemy_stun_chance = None
 
     def enemy_choose(self):
 
@@ -308,6 +309,43 @@ class RandomEnemy:
                 self.enemy_attack_name = "Knife Cut"
             elif self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]:
                 self.enemy_attack_name = "Knife Throwing Attack"
+
+    def enemy_stun_debuff(self):
+
+        if self.picked_enemy == Marauder:
+            if self.enemy_attack == Marauder.marauder_attacks["marauder_sword_swing"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+            if self.enemy_attack == Marauder.marauder_attacks["marauder_ballista_shot"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+        if self.picked_enemy == Ectoplasm:
+            if self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_bounce_attack"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+            if self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == AssassinWorm:
+            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+
+            if self.enemy_attack ==AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
+
 
 
 random_enemy = RandomEnemy()
