@@ -256,6 +256,7 @@ class RandomEnemy:
             elif self.additional_enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.additional_enemy_attack_name = "Pistol Shot"
 
+
         elif self.picked_enemy == AssassinWorm:
             self.enemy_attack = random.choice([AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
                                                AssassinWorm.cavern_enemies_assassin_worm_attack[
@@ -281,6 +282,32 @@ class RandomEnemy:
                 self.enemy_attack_name = "Massive Antennas"
             elif self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]:
                 self.enemy_attack_name = "Screech"
+
+
+        elif self.picked_enemy == Skeleton:
+            self.enemy_attack = random.choice([Skeleton.castle_enemies_skeleton_attack["skeleton_bow_shot"],
+                                               Skeleton.castle_enemies_skeleton_attack[ "skeleton_fire_arrow"]])
+            if self.enemy_attack == Skeleton.castle_enemies_skeleton_attack["skeleton_bow_shot"]:
+                self.enemy_attack_name = "Bow Shot"
+            elif self.enemy_attack == Skeleton.castle_enemies_skeleton_attack["skeleton_fire_arrow"]:
+                self.enemy_attack_name = "Fire Arrow"
+
+        elif self.picked_enemy == ThePrincess:
+
+            self.enemy_attack = random.choice([ThePrincess.castle_enemies_the_princess_attack["the_princess_magic_powder"],
+                                               ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]])
+            if self.enemy_attack == ThePrincess.castle_enemies_the_princess_attack["the_princess_magic_powder"]:
+                self.enemy_attack_name = "Magic Powder"
+            elif self.enemy_attack == ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]:
+                self.enemy_attack_name = "Rainbow Shot"
+
+        elif self.picked_enemy == TheKing:
+            self.enemy_attack = random.choice([TheKing.castle_enemies_the_king_attack["the_king_knife_cut"],
+                                               TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]])
+            if self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_cut"]:
+                self.enemy_attack_name = "Knife Cut"
+            elif self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]:
+                self.enemy_attack_name = "Knife Throwing Attack"
 
 
 random_enemy = RandomEnemy()
