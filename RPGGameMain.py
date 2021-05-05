@@ -15,7 +15,7 @@ def introduction():
             if not Combat.combat("Tutorial", 2):
                 Hamlet.hamlet.hamlet_introduction()
             else:
-                print("Try again")
+                print("You have lost")
 
 
 MainClasses.chosen_class.class_choose(input("Select a class: "))
