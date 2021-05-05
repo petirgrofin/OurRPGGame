@@ -128,6 +128,10 @@ def combat(enemy_group, enemy_number):
 
         Enemies.random_enemy.cavern_enemy_choose()
 
+    elif enemy_group == "Castle":
+
+        Enemies.random_enemy.castle_enemy_choose()
+
     if enemy_number == 1:
 
         debuffs = Debuffs(Enemies.random_enemy.stun_resist, None)
