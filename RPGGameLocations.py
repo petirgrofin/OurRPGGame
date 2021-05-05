@@ -1,10 +1,12 @@
 import random
+import RPGGameCombat as Combat
 
 
 class RandomRoomGeneration:
 
     def __init__(self):
         self.room_has_battle = None
+        self.first_value = None
 
     def random_room_generator(self):
 
@@ -39,10 +41,9 @@ class RandomRoomGeneration:
         prefix = "Room "  # adding prefix to current_dungeon_rooms_dict
         current_dungeon_rooms_dict_with_prefix = {prefix + str(key): val for key, val in current_dungeon_rooms_dict.items()}
 
-        for key, value in current_dungeon_rooms_dict_with_prefix.items():
-            if value:
-                pass
-
+        viewing_dict_values = current_dungeon_rooms_dict_with_prefix.values()
+        value_iterator = iter(viewing_dict_values)
+        self.first_value = next(value_iterator)
 
 
 class TheCaverns:
@@ -65,7 +66,14 @@ class TheCaverns:
 
             if loading_screen_end == "yes":
 
-                RandomRoomGeneration().random_room_generator()
+                random_room_generation = RandomRoomGeneration()
+                random_room_generation.random_room_generator()
+
+                choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
+                if choose_to_advance == "advance":
+                    print("You have advanced one room")
+                    if random_room_generation.first_value:
+                        Combat.combat("Cavern", 2)
 
 
 TheCaverns("apprentice level mission").first_mission()

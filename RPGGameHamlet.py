@@ -52,6 +52,4 @@ class Hamlet:
 
 
 hamlet = Hamlet()
-hamlet.hamlet_introduction()
-hamlet.hamlet_general()
 
