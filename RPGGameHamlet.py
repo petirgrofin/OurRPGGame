@@ -26,6 +26,7 @@ class Hamlet:
         moving_through_hamlet = input(">")
         if moving_through_hamlet == "guild":
             print("Welcome to the guild")
+            Hamlet().hamlet_guild()
         elif moving_through_hamlet == "sanatorium":
             print("Welcome to the sanatorium")
         elif moving_through_hamlet == "training room":
@@ -52,4 +53,5 @@ class Hamlet:
 
 hamlet = Hamlet()
 hamlet.hamlet_introduction()
+hamlet.hamlet_general()
 

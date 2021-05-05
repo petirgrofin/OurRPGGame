@@ -8,35 +8,41 @@ class RandomRoomGeneration:
 
     def random_room_generator(self):
 
-        room_amount = random.randint(5, 10)
+        possible_room_amount = random.randint(5, 10)
 
-        print(f"After scouting, you found that the dungeon will have {room_amount} rooms")
+        current_dungeon_rooms = []
 
-        rooms = 1
+        for number_of_rooms in range(1, possible_room_amount + 1):
+            current_dungeon_rooms.append(number_of_rooms)
 
-        A = list()
+        print(f"After one of the villagers handed you a map, you found that this dungeon will have {current_dungeon_rooms[-1]} rooms")
 
-        initial_value = 0
+        current_dungeon_rooms_dict = dict.fromkeys(current_dungeon_rooms)
 
-        for _ in range(1, room_amount + 1):
-            A.append(rooms)
-            rooms += 1
+        initial_value = 100
 
-        for _ in A:
+        for battle_check in current_dungeon_rooms:
 
             probability = random.randint(0, 100)
 
-            if probability > initial_value:
+            if probability < initial_value:
                 self.room_has_battle = True
             else:
                 self.room_has_battle = False
 
-            print(self.room_has_battle)
-            initial_value += 20
+            initial_value -= 20
 
-        rooms_dictionary = dict.fromkeys(rooms, self.room_has_battle)
+            updated_dict_value = {battle_check: self.room_has_battle}
 
-        print(rooms_dictionary)
+            current_dungeon_rooms_dict.update(updated_dict_value)
+
+        prefix = "Room "  # adding prefix to current_dungeon_rooms_dict
+        current_dungeon_rooms_dict_with_prefix = {prefix + str(key): val for key, val in current_dungeon_rooms_dict.items()}
+
+        for key, value in current_dungeon_rooms_dict_with_prefix.items():
+            if value:
+                pass
+
 
 
 class TheCaverns:

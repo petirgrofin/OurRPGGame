@@ -156,7 +156,6 @@ class RandomEnemy:
             self.additional_enemy_bleed_resist = Ectoplasm.ectoplasm_stats["ectoplasm_bleed_resistance"]
             self.additional_enemy_stun_resist = Ectoplasm.ectoplasm_stats["ectoplasm_stun_resistance"]
 
-
     def cavern_enemy_choose(self):
 
         self.picked_enemy = random.choice([AssassinWorm, CaveSpider, Choletinia])
