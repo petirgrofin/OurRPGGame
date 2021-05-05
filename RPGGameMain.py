@@ -1,6 +1,6 @@
 import RPGGameCombat as Combat
 import MainCharacterClasses as MainClasses
-import RPGGameHamlet
+import RPGGameHamlet as Hamlet
 
 
 def introduction():
@@ -13,7 +13,7 @@ def introduction():
             Combat.tutorial()
         elif tutorial_question == "no".lower():
             if not Combat.combat("Tutorial", 2):
-                hamlet.hamlet.hamlet_introduction()
+                Hamlet.hamlet.hamlet_introduction()
             else:
                 print("Try again")
 
