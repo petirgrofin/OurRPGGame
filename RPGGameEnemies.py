@@ -1,7 +1,5 @@
 import random
 
-print("cambio en enemies")
-
 class Marauder:
     marauder_stats = {
         "marauder_health": 800,
