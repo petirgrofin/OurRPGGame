@@ -1,6 +1,6 @@
 import RPGGameCombat as Combat
 import MainCharacterClasses as MainClasses
-import hamlet
+import RPGGameHamlet
 
 
 def introduction():
