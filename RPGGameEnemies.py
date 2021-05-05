@@ -124,14 +124,14 @@ class RandomEnemy:
 
     def enemy_choose(self):
 
+        self.picked_enemy = random.choice([Marauder, Ectoplasm])
+        self.additional_picked_enemy = random.choice([Marauder, Ectoplasm])  # starting to implement more enemies
+
         if self.picked_enemy == self.additional_picked_enemy:
             if self.picked_enemy == Marauder:
                 self.additional_picked_enemy = random.choice([Ectoplasm])
             if self.picked_enemy == Ectoplasm:
                 self.additional_picked_enemy = random.choice([Marauder])
-
-        self.picked_enemy = random.choice([Marauder, Ectoplasm])
-        self.additional_picked_enemy = random.choice([Marauder, Ectoplasm])  # starting to implement more enemies
 
         if self.picked_enemy == Marauder:
             self.enemy_name = "Marauder"
