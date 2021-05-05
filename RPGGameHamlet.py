@@ -45,7 +45,7 @@ class Hamlet:
         print("You are tasked to kill every monster in the dungeons, the swamps, the caverns and the castle,"
               "with the hope of bringing a slight glimmer of prosperity to the lands once well regarded.")
         print("These abhorrent beasts grow ever stronger, and you must put an end to their feasts of"
-              "madness and bloodshed. ")
+              "madness and bloodshed.")
 
         location_choose = input("Where do you want to go?: ")
 
