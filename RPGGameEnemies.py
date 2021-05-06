@@ -35,6 +35,7 @@ class CavernEnemies:
     cavern_enemies_stats = {
         "cavern_enemies_assassin_worm_name": "Assassin Worm",
         "cavern_enemies_cave_spider": "Cave Spider",
+        "cavern_enemies_choletinia": "Choletinia",
         "cavern_enemies_health": 1300,
         "cavern_enemies_damage": 90,
         "cavern_enemies_speed": 20,
@@ -68,6 +69,7 @@ class CastleEnemies:
     castle_enemies_stats = {
         "castle_enemies_skeleton": "Skeleton",
         "castle_enemies_the_princess": "The Princess",
+        "castle_enemies_the_king": "The King",
         "castle_enemies_health": 2000,
         "castle_enemies_damage": 80,
         "castle_enemies_speed": 30,
@@ -93,6 +95,43 @@ class TheKing(CastleEnemies):
     castle_enemies_the_king_attack = {
         "the_king_knife_cut": 10 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
         "the_king_knife_throwing_attack": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 30,
+    }
+
+
+
+class SwampEnemies:
+    swamp_enemies_stats = {
+        "swamp_enemies_slime": "Slime",
+        "swamp_enemies_mudman": "Mudman",
+        "swamp_enemies_swamp_crab": "Swamp Crab",
+        "swamp_enemies_health": 1700,
+        "swamp_enemies_damage": 70,
+        "swamp_enemies_speed": 10,
+        "swamp_enemies_defense": 20,
+        "swamp_enemies_stun_resistance": 60,
+        "swamp_enemies_bleed_resistance": 40
+    }
+
+
+class Slime(SwampEnemies):
+    swamp_enemies_slime_attack = {
+        "slime_acid_spit": 20 + SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"],
+        "slime_grow_attack": SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"] + 15,
+    }
+
+
+class Mudman(SwampEnemies):
+    swamp_enemies_mudman_attack = {
+        "mudman_mud_ball": 25 + SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"],
+        "mudman_grab_attack": SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"] + 30,
+        "mudman_poisonous_water": 35 + SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"],
+    }
+
+
+class SwampCrab(SwampEnemies):
+    swamp_enemies_swamp_crab_attack = {
+        "swamp_crab_scissors_attack": 20 + SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"],
+        "swamp_crab_toxic_algae": SwampEnemies.swamp_enemies_stats["swamp_enemies_damage"] + 10,
     }
 
 
@@ -220,6 +259,39 @@ class RandomEnemy:
             self.stun_resist = TheKing.castle_enemies_stats["castle_enemies_stun_resistance"]
             self.bleed_resist = TheKing.castle_enemies_stats["castle_enemies_bleed_resistance"]
 
+    def swamp_enemy_choose(self):
+
+        self.picked_enemy = random.choice([Slime, Mudman, SwampCrab])
+        self.additional_picked_enemy = random.choice([Slime, Mudman, SwampCrab])
+
+        if self.picked_enemy == self.additional_picked_enemy:
+            if self.picked_enemy == Slime:
+                self.additional_picked_enemy = random.choice([Mudman, SwampCrab])
+            if self.picked_enemy == Mudman:
+                self.additional_picked_enemy = random.choice([Slime, SwampCrab])
+            if self.picked_enemy == SwampCrab:
+                self.additional_picked_enemy = random.choice([Slime, Mudman])
+
+        if self.picked_enemy == Slime:
+            self.enemy_name = "Slime"
+            self.picked_enemy_health = Slime.swamp_enemies_stats["swamp_enemies_health"]
+            self.stun_resist = Slime.swamp_enemies_stats["swamp_enemies_stun_resistance"]
+            self.bleed_resist = Slime.swamp_enemies_stats["swamp_enemies_bleed_resistance"]
+
+        elif self.picked_enemy == Mudman:
+            self.enemy_name = "Mudman"
+            self.picked_enemy_health = Mudman.swamp_enemies_stats["swamp_enemies_health"]
+            self.stun_resist = Mudman.swamp_enemies_stats["swamp_enemies_stun_resistance"]
+            self.bleed_resist = Mudman.swamp_enemies_stats["swamp_enemies_bleed_resistance"]
+
+
+        elif self.picked_enemy == SwampCrab:
+            self.enemy_name = "Swamp Crab"
+            self.picked_enemy_health = SwampCrab.swamp_enemies_stats["swamp_enemies_health"]
+            self.stun_resist = SwampCrab.swamp_enemies_stats["swamp_enemies_stun_resistance"]
+            self.bleed_resist = SwampCrab.swamp_enemies_stats["swamp_enemies_bleed_resistance"]
+
+
     def enemy_attack_chooser(self):
 
         if self.picked_enemy == Marauder:
@@ -310,6 +382,35 @@ class RandomEnemy:
             elif self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]:
                 self.enemy_attack_name = "Knife Throwing Attack"
 
+
+        elif self.picked_enemy == Slime:
+            self.enemy_attack = random.choice([Slime.swamp_enemies_slime_attack["slime_acid_spit"],
+                                               Slime.swamp_enemies_slime_attack[ "slime_grow_attack"]])
+            if self.enemy_attack == Slime.swamp_enemies_slime_attack["slime_acid_spit"]:
+                self.enemy_attack_name = "Acid Spit"
+            elif self.enemy_attack == Slime.swamp_enemies_slime_attack["slime_grow_attack"]:
+                self.enemy_attack_name = "Grow Attack"
+
+        elif self.picked_enemy == Mudman:
+            self.enemy_attack = random.choice([Mudman.swamp_enemies_mudman_attack["mudman_mud_ball"],
+                                               Mudman.swamp_enemies_mudman_attack["mudman_grab_attack"],
+                                               Mudman.swamp_enemies_mudman_attack["mudman_poisonous_water"]])
+            if self.enemy_attack == Mudman.swamp_enemies_mudman_attack["mudman_mud_ball"]:
+                self.enemy_attack_name = "Mud Ball"
+            elif self.enemy_attack == Mudman.swamp_enemies_mudman_attack["mudman_grab_attack"]:
+                self.enemy_attack_name = "Grab Attack"
+            elif self.enemy_attack == Mudman.swamp_enemies_mudman_attack["mudman_poisonous_water"]:
+                self.enemy_attack_name = "Poisonous Water"
+
+        elif self.picked_enemy == SwampCrab:
+            self.enemy_attack = random.choice([SwampCrab.swamp_enemies_swamp_crab_attack["swamp_crab_scissors_attack"],
+                                               SwampCrab.swamp_enemies_swamp_crab_attack[ "swamp_crab_toxic_algae"]])
+            if self.enemy_attack == SwampCrab.swamp_enemies_swamp_crab_attack["swamp_crab_scissors_attack"]:
+                self.enemy_attack_name = "Scissors Attack"
+            elif self.enemy_attack == SwampCrab.swamp_enemies_swamp_crab_attack["swamp_crab_toxic_algae"]:
+                self.enemy_attack_name = "Toxic Algae"
+
+
     def enemy_stun_debuff(self):
 
         if self.picked_enemy == Marauder:
@@ -374,6 +475,32 @@ class RandomEnemy:
                 self.enemy_stun_chance = 100
             else:
                 self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == Slime:
+            if self.enemy_attack == Slime.swamp_enemies_slime_attack["slime_acid_spit"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+        if self.picked_enemy == Mudman:
+            if self.enemy_attack == Mudman.swamp_enemies_mudman_attack["mudman_poisonous_water"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == SwampCrab:
+            if self.enemy_attack == SwampCrab.swamp_enemies_swamp_crab_attack["swamp_crab_toxic_algae"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+
 
 
 random_enemy = RandomEnemy()
