@@ -12,6 +12,23 @@ def tutorial():
 
     combat("Tutorial", 1)
 
+class CharacterDebuffs:
+
+    def __init__(self, character_original_stun_resistance):
+
+        self.character_is_stunned = None
+
+        self.character_original_stun_resistance = None
+
+        self.character_is_bleeding = None
+        self.dot_bleed = None
+
+    def character_stuns_check(self):
+
+        Enemies.random_enemy.enemy_stun_debuff(self)
+
+        self.character_is_stunned = False
+        probability = random.randint(0, 100)
 
 class Debuffs:
 
@@ -25,6 +42,7 @@ class Debuffs:
 
         self.first_enemy_is_bleeding = None
         self.second_enemy_is_bleeding = None
+
         self.enemy_resisted_bleed = None
 
     def stuns_check(self, stun_target):
