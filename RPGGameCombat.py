@@ -314,7 +314,7 @@ def combat(enemy_group, enemy_number):
             print(
                 f"The {first_enemy_name} has {enemy_health_left} health left, and the {additional_enemy_name} has {additional_enemy_health_left} health left")
 
-        elif enemy_number > 1 and first_enemy_is_dead:
+        elif enemy_number > 1 and not additional_enemy_is_dead:
             print(
                 f"The {additional_enemy_name} has {additional_enemy_health_left} health left")
 
@@ -347,4 +347,4 @@ def combat(enemy_group, enemy_number):
 
         print("You have lost")
         character_dead = True
-        return character_dead
+    return character_dead
