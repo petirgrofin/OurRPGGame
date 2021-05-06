@@ -338,14 +338,12 @@ class RandomEnemy:
             else:
                 self.enemy_stun_capable_attack = False
 
-
         if self.picked_enemy == AssassinWorm:
             if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
                 self.enemy_stun_capable_attack = True
                 self.enemy_stun_chance = 100
-
-            if self.enemy_attack ==AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
-
+            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
+                pass
 
 
 random_enemy = RandomEnemy()
