@@ -143,7 +143,7 @@ def combat(enemy_group, enemy_number):
 
         Enemies.random_enemy.enemy_choose()
 
-    elif enemy_group == "Cavern":
+    elif enemy_group == "Cavern" or "Caverns":
 
         Enemies.random_enemy.cavern_enemy_choose()
 
@@ -294,13 +294,14 @@ def combat(enemy_group, enemy_number):
         elif enemy_number == 1:
 
             enemy_health_left -= MainClasses.chosen_class.chosen_attack
+            if enemy_health_left < 0:
+                print(f"The {first_enemy_is_dead} has died")
+                break
             print(f"The {first_enemy_name} has {enemy_health_left} health left")
 
         if enemy_health_left < 0 and not first_enemy_is_dead:  # check if first enemy is dead
             print(f"The {first_enemy_name} has died")
             first_enemy_is_dead = True
-            if enemy_number == 1:
-                break
 
         if enemy_number > 1 and additional_enemy_health_left < 0 and not additional_enemy_is_dead:  # check if second enemy is dead
             print(f"The {additional_enemy_name} has died")
@@ -310,9 +311,12 @@ def combat(enemy_group, enemy_number):
             print("You have killed the enemies")
             break
 
-        if enemy_number > 1 and not first_enemy_is_dead:
+        if enemy_number > 1 and not first_enemy_is_dead and not additional_enemy_is_dead:
             print(
                 f"The {first_enemy_name} has {enemy_health_left} health left, and the {additional_enemy_name} has {additional_enemy_health_left} health left")
+
+        elif enemy_number > 1 and not first_enemy_is_dead:
+            print(f"The {first_enemy_name} has {enemy_health_left} health left")
 
         elif enemy_number > 1 and not additional_enemy_is_dead:
             print(

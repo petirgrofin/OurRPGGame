@@ -6,7 +6,6 @@ class RandomRoomGeneration:
 
     def __init__(self):
         self.room_has_battle = None
-        self.first_value = None
 
     def random_room_generator(self):
 
@@ -38,12 +37,7 @@ class RandomRoomGeneration:
 
             current_dungeon_rooms_dict.update(updated_dict_value)
 
-        prefix = "Room "  # adding prefix to current_dungeon_rooms_dict
-        current_dungeon_rooms_dict_with_prefix = {prefix + str(key): val for key, val in current_dungeon_rooms_dict.items()}
-
-        viewing_dict_values = current_dungeon_rooms_dict_with_prefix.values()
-        value_iterator = iter(viewing_dict_values)
-        self.first_value = next(value_iterator)
+        return current_dungeon_rooms_dict
 
 
 class TheCaverns:
@@ -67,10 +61,20 @@ class TheCaverns:
             if loading_screen_end == "yes":
 
                 random_room_generation = RandomRoomGeneration()
-                random_room_generation.random_room_generator()
+                dungeon_rooms = random_room_generation.random_room_generator()
 
-                choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
-                if choose_to_advance == "advance":
-                    print("You have advanced one room")
-                    if random_room_generation.first_value:
+                for all_rooms, battle_rooms in dungeon_rooms.items():
+                    if battle_rooms:
                         Combat.combat("Cavern", 2)
+                    elif not battle_rooms:
+                        print("Room doesn't have anything")
+
+                    choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
+                    if choose_to_advance == "advance":
+                        print("You have advanced one room")
+                        if all_rooms == list(dungeon_rooms.keys())[-1]:
+                            print("You have finished the dungeon. Returning to hamlet...")
+                            break
+                        continue
+                    elif choose_to_advance == "hamlet":
+                        break
