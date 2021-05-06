@@ -74,6 +74,3 @@ class TheCaverns:
                     print("You have advanced one room")
                     if random_room_generation.first_value:
                         Combat.combat("Cavern", 2)
-
-
-TheCaverns("apprentice level mission").first_mission()
