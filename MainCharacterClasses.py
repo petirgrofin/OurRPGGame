@@ -19,7 +19,7 @@ class Swordsman:
 
     swordsman_stats = {
         "swordsman_damage": 20,
-        "swordsman_health": 40,
+        "swordsman_health": 400,
         "swordsman_defense": 100,
         "swordsman_speed": 10
     }
