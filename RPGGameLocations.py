@@ -16,7 +16,7 @@ class RandomRoomGeneration:
         for number_of_rooms in range(1, possible_room_amount + 1):
             current_dungeon_rooms.append(number_of_rooms)
 
-        print(f"After one of the villagers handed you a map, you found that this dungeon will have {current_dungeon_rooms[-1]} rooms")
+        print(f"After the hamlet's caretaker handed you a map, you found that this dungeon will have {current_dungeon_rooms[-1]} rooms")
 
         current_dungeon_rooms_dict = dict.fromkeys(current_dungeon_rooms)
 
@@ -31,7 +31,7 @@ class RandomRoomGeneration:
             else:
                 self.room_has_battle = False
 
-            initial_value -= 20
+            initial_value -= 10
 
             updated_dict_value = {battle_check: self.room_has_battle}
 
@@ -63,18 +63,29 @@ class TheCaverns:
                 random_room_generation = RandomRoomGeneration()
                 dungeon_rooms = random_room_generation.random_room_generator()
 
-                for all_rooms, battle_rooms in dungeon_rooms.items():
-                    if battle_rooms:
-                        Combat.combat("Cavern", 2)
-                    elif not battle_rooms:
-                        print("Room doesn't have anything")
+                start_dungeon = input("Do you wish to start the dungeon?")  # room 0
+                if start_dungeon == "yes":
 
-                    choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
-                    if choose_to_advance == "advance":
-                        print("You have advanced one room")
-                        if all_rooms == list(dungeon_rooms.keys())[-1]:
-                            print("You have finished the dungeon. Returning to hamlet...")
+                    for all_rooms, battle_rooms in dungeon_rooms.items():
+                        if battle_rooms:
+                            fight = Combat.combat("Cavern", 2)
+                            if not fight:
+                                print(f"Reality has broken out around you, and you have been pulled to a fracture in"
+                                      f"space and time. Mysterious, human-like and hooded entities have dragged you "
+                                      f"back to the Hamlet, "
+                                      f"but this journey felt excruciatingly long for your character...")
+                                print(f"New trait: have to make traits")
+                        elif not battle_rooms:
+                            print("Room doesn't have anything")
+
+                        choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
+
+                        if choose_to_advance == "advance":
+                            print(f"You have advanced one room, and you are currently in the room {all_rooms}")
+                            if all_rooms == list(dungeon_rooms.keys())[-1]:
+                                print("You have finished the dungeon. Returning to hamlet...")
+                                break
+                            continue
+
+                        elif choose_to_advance == "hamlet":
                             break
-                        continue
-                    elif choose_to_advance == "hamlet":
-                        break
