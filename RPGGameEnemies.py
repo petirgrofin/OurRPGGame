@@ -213,7 +213,6 @@ class RandomEnemy:
             self.stun_resist = ThePrincess.castle_enemies_stats["castle_enemies_stun_resistance"]
             self.bleed_resist = ThePrincess.castle_enemies_stats["castle_enemies_bleed_resistance"]
 
-
         elif self.picked_enemy == TheKing:
             self.enemy_name = "The King"
             self.picked_enemy_health = TheKing.castle_enemies_stats["castle_enemies_health"]
@@ -257,7 +256,6 @@ class RandomEnemy:
             elif self.additional_enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.additional_enemy_attack_name = "Pistol Shot"
 
-
         elif self.picked_enemy == AssassinWorm:
             self.enemy_attack = random.choice([AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
                                                AssassinWorm.cavern_enemies_assassin_worm_attack[
@@ -283,7 +281,6 @@ class RandomEnemy:
                 self.enemy_attack_name = "Massive Antennas"
             elif self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]:
                 self.enemy_attack_name = "Screech"
-
 
         elif self.picked_enemy == Skeleton:
             self.enemy_attack = random.choice([Skeleton.castle_enemies_skeleton_attack["skeleton_bow_shot"],
