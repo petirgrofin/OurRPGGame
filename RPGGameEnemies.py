@@ -46,8 +46,8 @@ class CavernEnemies:
 
 class AssassinWorm(CavernEnemies):
     cavern_enemies_assassin_worm_attack = {
-        "cavern_enemies_assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
-        "cavern_enemies_assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
+        "assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
+        "assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
     }
 
 class CaveSpider(CavernEnemies):
@@ -338,12 +338,15 @@ class RandomEnemy:
             else:
                 self.enemy_stun_capable_attack = False
 
+
         if self.picked_enemy == AssassinWorm:
-            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
+            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["cavern_enemies_assassin_worm_pounce"]:
                 self.enemy_stun_capable_attack = True
                 self.enemy_stun_chance = 100
-            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pistol_attack"]:
-                pass
+            else:
+                self.enemy_stun_capable_attack = False
+
+
 
 
 random_enemy = RandomEnemy()
