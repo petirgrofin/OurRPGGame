@@ -92,7 +92,7 @@ class ThePrincess(CastleEnemies):
 class TheKing(CastleEnemies):
     castle_enemies_the_king_attack = {
         "the_king_knife_cut": 10 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
-        "the_king_knife_throw": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 30,
+        "the_king_knife_throwing_attack": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 30,
     }
 
 
@@ -213,6 +213,7 @@ class RandomEnemy:
             self.stun_resist = ThePrincess.castle_enemies_stats["castle_enemies_stun_resistance"]
             self.bleed_resist = ThePrincess.castle_enemies_stats["castle_enemies_bleed_resistance"]
 
+
         elif self.picked_enemy == TheKing:
             self.enemy_name = "The King"
             self.picked_enemy_health = TheKing.castle_enemies_stats["castle_enemies_health"]
@@ -256,6 +257,7 @@ class RandomEnemy:
             elif self.additional_enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
                 self.additional_enemy_attack_name = "Pistol Shot"
 
+
         elif self.picked_enemy == AssassinWorm:
             self.enemy_attack = random.choice([AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"],
                                                AssassinWorm.cavern_enemies_assassin_worm_attack[
@@ -281,6 +283,7 @@ class RandomEnemy:
                 self.enemy_attack_name = "Massive Antennas"
             elif self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]:
                 self.enemy_attack_name = "Screech"
+
 
         elif self.picked_enemy == Skeleton:
             self.enemy_attack = random.choice([Skeleton.castle_enemies_skeleton_attack["skeleton_bow_shot"],
@@ -310,17 +313,12 @@ class RandomEnemy:
     def enemy_stun_debuff(self):
 
         if self.picked_enemy == Marauder:
-            if self.enemy_attack == Marauder.marauder_attacks["marauder_sword_swing"]:
-                self.enemy_stun_capable_attack = True
-                self.enemy_stun_chance = 100
-            else:
-                self.enemy_stun_capable_attack = False
-
             if self.enemy_attack == Marauder.marauder_attacks["marauder_ballista_shot"]:
                 self.enemy_stun_capable_attack = True
                 self.enemy_stun_chance = 100
             else:
                 self.enemy_stun_capable_attack = False
+
 
         if self.picked_enemy == Ectoplasm:
             if self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_bounce_attack"]:
@@ -329,19 +327,53 @@ class RandomEnemy:
             else:
                 self.enemy_stun_capable_attack = False
 
-            if self.enemy_attack == Ectoplasm.ectoplasm_attacks["ectoplasm_pistol_shot"]:
-                self.enemy_stun_capable_attack = True
-                self.enemy_stun_chance = 100
-            else:
-                self.enemy_stun_capable_attack = False
-
 
         if self.picked_enemy == AssassinWorm:
-            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["cavern_enemies_assassin_worm_pounce"]:
+            if self.enemy_attack == AssassinWorm.cavern_enemies_assassin_worm_attack["assassin_worm_pounce"]:
                 self.enemy_stun_capable_attack = True
                 self.enemy_stun_chance = 100
             else:
                 self.enemy_stun_capable_attack = False
 
-                
+
+        if self.picked_enemy == CaveSpider:
+            if self.enemy_attack == CaveSpider.cavern_enemies_cave_spider_attack["cave_spider_venom_sting"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == Choletinia:
+            if self.enemy_attack == Choletinia.cavern_enemies_choletinia_attack["choletinia_screech"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == Skeleton:
+            if self.enemy_attack == Skeleton.castle_enemies_skeleton_attack["skeleton_fire_arrow"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == ThePrincess:
+            if self.enemy_attack == ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
+        if self.picked_enemy == TheKing:
+            if self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]:
+                self.enemy_stun_capable_attack = True
+                self.enemy_stun_chance = 100
+            else:
+                self.enemy_stun_capable_attack = False
+
+
 random_enemy = RandomEnemy()
