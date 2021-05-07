@@ -48,6 +48,7 @@ class TheCaverns:
         self.mission_choose = mission_choose
         self.initial_health_chosen = False
         self.health = health
+        self.fight = None
         self.health_left = 0
 
     def first_mission(self):
@@ -73,13 +74,13 @@ class TheCaverns:
                     for all_rooms, battle_rooms in dungeon_rooms.items():
 
                         if battle_rooms and not self.initial_health_chosen:
-                            fight = Combat.combat("Cavern", 2, self.health)
+                            self.fight = Combat.combat("Cavern", 2, self.health)
                             self.initial_health_chosen = True
 
                         elif battle_rooms and self.initial_health_chosen:
-                            fight = Combat.combat("Cavern", 2, self.health_left)
+                            self.fight = Combat.combat("Cavern", 2, self.health_left)
 
-                        if battle_rooms and fight[1]:
+                        if battle_rooms and self.fight[1]:
 
                             print(f"Reality has broken out around you, and you have been pulled to a fracture in"
                                     f"space and time. Mysterious, human-like and hooded entities have dragged you "
@@ -88,10 +89,10 @@ class TheCaverns:
                             print(f"New trait: have to make traits")
                             break
 
-                        elif battle_rooms and not fight[1]:
+                        elif battle_rooms and not self.fight[1]:
 
-                                print(f"For the next fight, you will have {fight[0]} health")
-                                self.health_left = fight[0]
+                                print(f"For the next fight, you will have {self.fight[0]} health")
+                                self.health_left = self.fight[0]
 
                         elif not battle_rooms:
                             print("Room doesn't have anything")
