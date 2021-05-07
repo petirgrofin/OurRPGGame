@@ -12,7 +12,8 @@ def introduction():
         if tutorial_question == "yes".lower():
             Combat.tutorial()
         elif tutorial_question == "no".lower():
-            if not Combat.combat("Tutorial", 2):
+            fight = Combat.combat("Tutorial", 2, MainClasses.chosen_class.picked_class_health)
+            if not fight[1]:
                 Hamlet.hamlet.hamlet_introduction()
                 Hamlet.hamlet.hamlet_general()
             else:

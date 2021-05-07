@@ -53,7 +53,7 @@ class Hamlet:
 
         location_choose = input("Where do you want to go?: ")
         if location_choose == "The Caverns":
-            the_caverns = Locations.TheCaverns("apprentice level mission")
+            the_caverns = Locations.TheCaverns("apprentice level mission", MainClasses.chosen_class.picked_class_health)
             the_caverns.first_mission()
 
 
