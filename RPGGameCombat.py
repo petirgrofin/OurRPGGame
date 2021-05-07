@@ -359,7 +359,7 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
                 print(
                     f"The {additional_enemy_name} has dealt {Enemies.random_enemy.additional_enemy_attack - character_defense} damage with his {Enemies.random_enemy.additional_enemy_attack_name}")
 
-        character_debuffs.character_stuns_check()
+        character_debuffs.character_stuns_check()  # while loop o for loop con alguna condición
 
         if character_debuffs.character_is_stunned:
             print("You have been stunned")
@@ -371,6 +371,7 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
 
         if Enemies.random_enemy.stun_resist != debuffs.additional_enemy_original_stun_resistance and not second_enemy_is_stunned:
             Enemies.random_enemy.additional_enemy_stun_resist -= 50
+
 
     else:
 
