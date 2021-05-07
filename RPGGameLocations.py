@@ -1,5 +1,6 @@
 import random
 import RPGGameCombat as Combat
+import MainCharacterClasses as MainClasses
 
 
 class RandomRoomGeneration:
@@ -42,9 +43,12 @@ class RandomRoomGeneration:
 
 class TheCaverns:
 
-    def __init__(self, mission_choose):
+    def __init__(self, mission_choose, health):
 
         self.mission_choose = mission_choose
+        self.initial_health_chosen = False
+        self.health = health
+        self.health_left = 0
 
     def first_mission(self):
 
@@ -63,18 +67,32 @@ class TheCaverns:
                 random_room_generation = RandomRoomGeneration()
                 dungeon_rooms = random_room_generation.random_room_generator()
 
-                start_dungeon = input("Do you wish to start the dungeon?")  # room 0
+                start_dungeon = input("Do you wish to start the dungeon?: ")  # room 0
                 if start_dungeon == "yes":
 
                     for all_rooms, battle_rooms in dungeon_rooms.items():
-                        if battle_rooms:
-                            fight = Combat.combat("Cavern", 2)
-                            if not fight:
-                                print(f"Reality has broken out around you, and you have been pulled to a fracture in"
-                                      f"space and time. Mysterious, human-like and hooded entities have dragged you "
-                                      f"back to the Hamlet, "
-                                      f"but this journey felt excruciatingly long for your character...")
-                                print(f"New trait: have to make traits")
+
+                        if battle_rooms and not self.initial_health_chosen:
+                            fight = Combat.combat("Cavern", 2, self.health)
+                            self.initial_health_chosen = True
+
+                        elif battle_rooms and self.initial_health_chosen:
+                            fight = Combat.combat("Cavern", 2, self.health_left)
+
+                        if battle_rooms and fight[1]:
+
+                            print(f"Reality has broken out around you, and you have been pulled to a fracture in"
+                                    f"space and time. Mysterious, human-like and hooded entities have dragged you "
+                                    f"back to the Hamlet, "
+                                    f"but this journey felt excruciatingly long for your character...")
+                            print(f"New trait: have to make traits")
+                            break
+
+                        elif battle_rooms and not fight[1]:
+
+                                print(f"For the next fight, you will have {fight[0]} health")
+                                self.health_left = fight[0]
+
                         elif not battle_rooms:
                             print("Room doesn't have anything")
 

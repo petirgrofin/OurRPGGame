@@ -10,7 +10,7 @@ def tutorial():
     print("You can debuff an enemy, but this mechanic depends on several factors.")
     print("Try it yourself:")
 
-    combat("Tutorial", 1)
+    combat("Tutorial", 1, MainClasses.chosen_class.picked_class_health)
 
 class CharacterDebuffs:
 
@@ -111,9 +111,11 @@ class Debuffs:
                     if probability < MainClasses.chosen_class.bleed_chance - Enemies.random_enemy.additional_enemy_bleed_resist:
 
                         self.second_enemy_is_bleeding = True
+                        self.enemy_resisted_bleed = False
 
                     else:
                         print("The enemy resisted against the hemorrhage")
+                        self.enemy_resisted_bleed = True
                 else:
                     print("Bleed ineffective because enemy bleed resistance is too high")
 
@@ -121,7 +123,7 @@ class Debuffs:
         pass
 
 
-def combat(enemy_group, enemy_number):
+def combat(enemy_group, enemy_number, health_for_next_fight):
 
     select_who_to_attack = any
     targeted_enemy_name = None
@@ -162,7 +164,7 @@ def combat(enemy_group, enemy_number):
     first_enemy_name = Enemies.random_enemy.enemy_name
     additional_enemy_name = Enemies.random_enemy.additional_enemy_name
 
-    character_health_total = MainClasses.chosen_class.picked_class_health
+    character_health_total = health_for_next_fight
     character_defense = MainClasses.chosen_class.picked_class_defense
 
     enemy_health_left = Enemies.random_enemy.picked_enemy_health
@@ -231,14 +233,14 @@ def combat(enemy_group, enemy_number):
                 additional_enemy_health_left -= MainClasses.chosen_class.chosen_attack
                 second_enemy_is_stunned = True
 
-        if debuffs.first_enemy_is_bleeding:
-
-            if have_to_register_bleed_properties:
-                bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
-                bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
-                have_to_register_bleed_properties = False
+        if debuffs.first_enemy_is_bleeding or debuffs.second_enemy_is_bleeding:
 
             if MainClasses.chosen_class.bleed_capable_attack and not debuffs.enemy_resisted_bleed:  # accumulative property
+
+                if have_to_register_bleed_properties:
+                    bleed_dot_duration_for_first_enemy = MainClasses.chosen_class.bleed_duration
+                    bleed_dot_duration_for_second_enemy = MainClasses.chosen_class.bleed_duration
+                    have_to_register_bleed_properties = False
 
                 if targeted_first_enemy:
                     bleed_dot_damage_first_enemy += MainClasses.chosen_class.base_bleed_damage
@@ -309,7 +311,8 @@ def combat(enemy_group, enemy_number):
 
         if additional_enemy_is_dead and first_enemy_is_dead:  # check if both dead
             print("You have killed the enemies")
-            break
+            health_for_next_fight = character_health_total
+            return health_for_next_fight, character_dead
 
         if enemy_number > 1 and not first_enemy_is_dead and not additional_enemy_is_dead:
             print(
@@ -351,4 +354,4 @@ def combat(enemy_group, enemy_number):
 
         print("You have lost")
         character_dead = True
-    return character_dead
+        return health_for_next_fight, character_dead
