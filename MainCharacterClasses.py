@@ -5,7 +5,8 @@ class Mage:
         "mage_speed": 50,
         "mage_health": 1000,
         "mage_defense": 50,
-        "mage_class_name": "Mage"
+        "mage_class_name": "Mage",
+        "stun_resistance": 99
     }
 
     mage_attacks = {
@@ -57,6 +58,7 @@ class ChosenClass:
 
         self.picked_class_health = None
         self.picked_class_defense = None
+        self.picked_class_stun_resistance = None
 
         self.stun_capable_attack = None
         self.stun_chance = None
@@ -74,6 +76,7 @@ class ChosenClass:
             print("You have chosen the Mage")
             self.picked_class_health = Mage.mage_stats["mage_health"]
             self.picked_class_defense = Mage.mage_stats["mage_defense"]
+            self.picked_class_stun_resistance = Mage.mage_stats["stun_resistance"]
         elif choose_a_class_question == "ranged".lower():
             self.picked_class = Ranged
             print("You have chosen the Ranged class")

@@ -2,6 +2,7 @@ import MainCharacterClasses as MainClasses
 import RPGGameEnemies as Enemies
 import random
 
+
 def tutorial():
     print("All classes have 2 attacks: attack1, and attack2.")
     print("To input an attack, simply say attack1 or attack2.")
@@ -12,23 +13,67 @@ def tutorial():
 
     combat("Tutorial", 1, MainClasses.chosen_class.picked_class_health)
 
+
 class CharacterDebuffs:
 
     def __init__(self, character_original_stun_resistance):
 
         self.character_is_stunned = None
 
-        self.character_original_stun_resistance = None
+        self.character_original_stun_resistance = character_original_stun_resistance
 
         self.character_is_bleeding = None
         self.dot_bleed = None
 
+        self.first_enemy_failed_stun = False
+        self.second_enemy_failed_stun = False
+        self.enemies_failed_stun = False
+
     def character_stuns_check(self):
 
-        Enemies.random_enemy.enemy_stun_debuff(self)
+        Enemies.random_enemy.enemy_stun_debuff()
 
-        self.character_is_stunned = False
         probability = random.randint(0, 100)
+
+        if Enemies.random_enemy.enemy_stun_capable_attack and not self.first_enemy_failed_stun:
+
+            if Enemies.random_enemy.enemy_stun_chance > MainClasses.chosen_class.picked_class_stun_resistance:
+
+                if probability < Enemies.random_enemy.enemy_stun_chance - MainClasses.chosen_class.picked_class_stun_resistance:
+
+                    self.character_is_stunned = True
+                    self.enemies_failed_stun = False
+                    MainClasses.chosen_class.picked_class_stun_resistance += 50
+
+                else:
+
+                    self.character_is_stunned = False
+                    self.first_enemy_failed_stun = True
+                    print(f"You resisted the {Enemies.random_enemy.enemy_name}'s stun")
+
+        elif Enemies.random_enemy.additional_enemy_stun_capable_attack and not self.second_enemy_failed_stun:
+
+            if Enemies.random_enemy.additional_enemy_stun_chance > MainClasses.chosen_class.picked_class_stun_resistance:
+
+                if Enemies.random_enemy.additional_enemy_stun_chance > MainClasses.chosen_class.picked_class_stun_resistance:
+
+                    if probability < Enemies.random_enemy.additional_enemy_stun_chance - MainClasses.chosen_class.picked_class_stun_resistance:
+
+                        self.character_is_stunned = True
+                        self.enemies_failed_stun = False
+                        MainClasses.chosen_class.picked_class_stun_resistance += 50
+
+                    else:
+
+                        self.character_is_stunned = False
+                        self.second_enemy_failed_stun = True
+                        print(f"You resisted the {Enemies.random_enemy.additional_enemy_name}'s stun")
+
+        else:
+            self.first_enemy_failed_stun = False  # resetting values
+            self.second_enemy_failed_stun = False
+            self.enemies_failed_stun = True
+
 
 class Debuffs:
 
@@ -124,7 +169,6 @@ class Debuffs:
 
 
 def combat(enemy_group, enemy_number, health_for_next_fight):
-
     select_who_to_attack = any
     targeted_enemy_name = None
     targeted_first_enemy = None
@@ -173,6 +217,7 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
 
     enemy_health_left = Enemies.random_enemy.picked_enemy_health
     additional_enemy_health_left = Enemies.random_enemy.additional_enemy_health
+    character_debuffs = CharacterDebuffs(MainClasses.chosen_class.picked_class_stun_resistance)
 
     if enemy_number == 1:
 
@@ -184,46 +229,48 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
 
     while character_health_total > 0:
 
-        if enemy_number == 1:
+        if not character_debuffs.character_is_stunned:
 
-            MainClasses.chosen_class.attack_choose(input("Select an attack: "))  # choose an attack
+            if enemy_number == 1:
 
-            targeted_enemy_name = first_enemy_name
-
-        elif enemy_number == 2:
-
-            select_who_to_attack = input("Who do you wish to attack?: ")
-
-            if select_who_to_attack == first_enemy_name:
-
-                MainClasses.chosen_class.attack_choose(input("Select an attack: "))
+                MainClasses.chosen_class.attack_choose(input("Select an attack: "))  # choose an attack
 
                 targeted_enemy_name = first_enemy_name
 
-                targeted_first_enemy = True
-                targeted_additional_enemy = False
+            elif enemy_number == 2:
 
-            elif select_who_to_attack == additional_enemy_name:
+                select_who_to_attack = input("Who do you wish to attack?: ")
 
-                MainClasses.chosen_class.attack_choose(input("Select an attack: "))
+                if select_who_to_attack == first_enemy_name:
 
-                targeted_enemy_name = additional_enemy_name
+                    MainClasses.chosen_class.attack_choose(input("Select an attack: "))
 
-                targeted_additional_enemy = True
-                targeted_first_enemy = False
+                    targeted_enemy_name = first_enemy_name
 
-            else:
-                select_who_to_attack = None
+                    targeted_first_enemy = True
+                    targeted_additional_enemy = False
 
-        if MainClasses.chosen_class.chosen_attack is None or select_who_to_attack is None:
-            print("Invalid input")
-            continue
+                elif select_who_to_attack == additional_enemy_name:
 
-        print(f"You have dealt {MainClasses.chosen_class.chosen_attack} damage to the {targeted_enemy_name}")
+                    MainClasses.chosen_class.attack_choose(input("Select an attack: "))
 
-        debuffs.stuns_check(targeted_enemy_name)
+                    targeted_enemy_name = additional_enemy_name
 
-        debuffs.bleed_check(targeted_enemy_name)
+                    targeted_additional_enemy = True
+                    targeted_first_enemy = False
+
+                else:
+                    select_who_to_attack = None
+
+            if MainClasses.chosen_class.chosen_attack is None or select_who_to_attack is None:
+                print("Invalid input")
+                continue
+
+            print(f"You have dealt {MainClasses.chosen_class.chosen_attack} damage to the {targeted_enemy_name}")
+
+            debuffs.stuns_check(targeted_enemy_name)
+
+            debuffs.bleed_check(targeted_enemy_name)
 
         if debuffs.first_enemy_is_stunned or debuffs.second_enemy_is_stunned:
 
@@ -287,19 +334,24 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
             if not debuffs.second_enemy_is_bleeding and not debuffs.first_enemy_is_bleeding:
                 have_to_register_bleed_properties = True
 
-        if enemy_number > 1:
+        if enemy_number > 1:  # enemy turn
 
-            if targeted_first_enemy:  # enemy turn
+            if not character_debuffs.character_is_stunned:
 
-                enemy_health_left -= MainClasses.chosen_class.chosen_attack
+                if targeted_first_enemy:
 
-            elif targeted_additional_enemy:
+                    enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
-                additional_enemy_health_left -= MainClasses.chosen_class.chosen_attack
+                elif targeted_additional_enemy:
+
+                    additional_enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
         elif enemy_number == 1:
 
-            enemy_health_left -= MainClasses.chosen_class.chosen_attack
+            if not character_debuffs.character_is_stunned:
+
+                enemy_health_left -= MainClasses.chosen_class.chosen_attack
+
             if enemy_health_left < 0:
                 print(f"The {first_enemy_is_dead} has died")
                 break
@@ -332,7 +384,6 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
         Enemies.random_enemy.enemy_attack_chooser()
 
         if not first_enemy_is_stunned and not first_enemy_is_dead:
-
             character_health_total -= Enemies.random_enemy.enemy_attack - character_defense
 
             print(
@@ -346,13 +397,28 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
                 print(
                     f"The {additional_enemy_name} has dealt {Enemies.random_enemy.additional_enemy_attack - character_defense} damage with his {Enemies.random_enemy.additional_enemy_attack_name}")
 
-        print(f"You have {character_health_total} health left")
+        while not character_debuffs.enemies_failed_stun:
+
+            character_debuffs.character_stuns_check()
+
+            if character_debuffs.character_is_stunned:
+                break
+        else:
+            print("Stuns failed")
+
+        if character_debuffs.character_is_stunned:
+            print("You have been stunned")
+            print(character_debuffs.character_is_stunned)
 
         if Enemies.random_enemy.stun_resist != debuffs.first_enemy_original_stun_resistance and not first_enemy_is_stunned:
-            Enemies.random_enemy.first_enemy_original_stun_resistance -= 50
+            Enemies.random_enemy.stun_resist -= 50
+        else:
+            first_enemy_is_stunned = False
 
         if Enemies.random_enemy.stun_resist != debuffs.additional_enemy_original_stun_resistance and not second_enemy_is_stunned:
             Enemies.random_enemy.additional_enemy_stun_resist -= 50
+        else:
+            second_enemy_is_stunned = False
 
     else:
 
