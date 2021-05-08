@@ -1,5 +1,4 @@
-test = []
-for x in range(1, 9 + 1):
-    test.append(x)
 
-print(test)
+weight = float(input("Weight (lb): "))
+lb_to_kgs = weight * 0.45
+print(f"Your weight is {lb_to_kgs} kgs")

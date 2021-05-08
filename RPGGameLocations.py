@@ -90,7 +90,6 @@ class TheCaverns:
                             break
 
                         elif battle_rooms and not self.fight[1]:
-
                                 print(f"For the next fight, you will have {self.fight[0]} health")
                                 self.health_left = self.fight[0]
 

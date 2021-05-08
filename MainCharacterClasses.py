@@ -6,7 +6,7 @@ class Mage:
         "mage_health": 1000,
         "mage_defense": 50,
         "mage_class_name": "Mage",
-        "stun_resistance": 75
+        "stun_resistance": 99
     }
 
     mage_attacks = {
