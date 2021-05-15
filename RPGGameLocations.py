@@ -74,11 +74,11 @@ class TheCaverns:
                     for all_rooms, battle_rooms in dungeon_rooms.items():
 
                         if battle_rooms and not self.initial_health_chosen:
-                            self.fight = Combat.combat("Cavern", 2, self.health)
+                            self.fight = Combat.combat("Cavern", 2, self.health, MainClasses.chosen_class.gold_pieces)
                             self.initial_health_chosen = True
 
                         elif battle_rooms and self.initial_health_chosen:
-                            self.fight = Combat.combat("Cavern", 2, self.health_left)
+                            self.fight = Combat.combat("Cavern", 2, self.health_left, MainClasses.chosen_class.gold_pieces)
 
                         if battle_rooms and self.fight[1]:
 

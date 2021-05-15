@@ -166,7 +166,7 @@ class Debuffs:
         pass
 
 
-def combat(enemy_group, enemy_number, health_for_next_fight):
+def combat(enemy_group, enemy_number, health_for_next_fight, gold_ammount):
     select_who_to_attack = any
     targeted_enemy_name = None
     targeted_first_enemy = None
@@ -361,7 +361,9 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
         if additional_enemy_is_dead and first_enemy_is_dead:  # check if both dead
             print("You have killed the enemies")
             health_for_next_fight = character_health_total
-            return health_for_next_fight, character_dead
+            gold_ammount += Enemies.random_enemy.first_enemy_drops + Enemies.random_enemy.second_enemy_drops
+            print(f"You currently have {gold_ammount} pieces of gold")
+            return health_for_next_fight, character_dead, gold_ammount
 
         if enemy_number > 1 and not first_enemy_is_dead and not additional_enemy_is_dead:
             print(

@@ -1,5 +1,6 @@
 import MainCharacterClasses as MainClasses
 import RPGGameLocations as Locations
+import RPGGameCombat as Combat
 
 
 class Hamlet:
@@ -37,10 +38,33 @@ class Hamlet:
 
     def hamlet_guild(self):
 
+        upgrading_attacks_price = {
+
+            "apprentice_level_attack_upgrade_price": 50
+
+        }
+
         attacks = list(MainClasses.Mage.mage_attacks.keys())
         print("You have the following attacks:")
         for keys in attacks:
             print(keys)
+
+        upgrading_skills = MainClasses.chosen_class.attack_choose(input("Choose a skill to upgrade, or exit the guild: "))
+
+        while True:
+            if upgrading_skills == "attack1":
+                print(f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attacks_upgrade_price']} pieces of gold. Do you wish to continue?")
+                if upgrading_skills == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
+                    upgrading_skills[0] += 100
+                    print(f"Your skill has been upgraded, and it now has {upgrading_skills[0]} damage")
+                elif MainClasses.chosen_class.gold_pieces < upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
+                    print("You currently don't have enough gold pieces to upgrade this skill")
+                    continue
+            elif upgrading_skills == "exit" or "quit" or "break":
+                print("You are exiting the guild")
+                break
+
+        hamlet.hamlet_general()
 
     def world_locations(self):
 

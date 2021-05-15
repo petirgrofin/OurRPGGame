@@ -1,11 +1,6 @@
-is_hot = False
-is_cold = True
+def outer_func():
+    def inner_func():
+        print("Hello, World!")
+    inner_func()
 
-if is_hot:
-    print("Test")
-
-elif is_cold:
-    print("Test2")
-
-else:
-    print("Test3")
+outer_func()

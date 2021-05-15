@@ -10,6 +10,10 @@ class Marauder:
         "marauder_bleed_resistance": 10
     }
 
+    marauder_possible_drops = {
+        "gold": 50
+    }
+
     marauder_attacks = {
         "marauder_sword_swing": 50 + marauder_stats["marauder_damage"],
         "marauder_ballista_shot": marauder_stats["marauder_damage"] + 30
@@ -28,6 +32,10 @@ class Ectoplasm:
     ectoplasm_attacks = {
         "ectoplasm_bounce_attack": 50 + ectoplasm_stats["ectoplasm_damage"],
         "ectoplasm_pistol_shot": 40 + ectoplasm_stats["ectoplasm_damage"]
+    }
+
+    ectoplasm_possible_drops = {
+        "gold": 50
     }
 
 
@@ -107,6 +115,8 @@ class RandomEnemy:
         self.enemy_attack = None
         self.enemy_attack_name = None
         self.picked_enemy_health = None
+        self.first_enemy_drops = None
+        self.second_enemy_drops = None
 
         self.stun_resist = None
         self.bleed_resist = None
@@ -140,24 +150,28 @@ class RandomEnemy:
             self.picked_enemy_health = Marauder.marauder_stats["marauder_health"]
             self.stun_resist = Marauder.marauder_stats["marauder_stun_resistance"]
             self.bleed_resist = Marauder.marauder_stats["marauder_bleed_resistance"]
+            self.first_enemy_drops = Marauder.marauder_possible_drops["gold"]
 
         elif self.picked_enemy == Ectoplasm:
             self.enemy_name = "Ectoplasm"
             self.picked_enemy_health = Ectoplasm.ectoplasm_stats["ectoplasm_health"]
             self.stun_resist = Ectoplasm.ectoplasm_stats["ectoplasm_stun_resistance"]
             self.bleed_resist = Ectoplasm.ectoplasm_stats["ectoplasm_bleed_resistance"]
+            self.first_enemy_drops = Ectoplasm.ectoplasm_possible_drops["gold"]
 
         if self.additional_picked_enemy == Marauder:
             self.additional_enemy_name = "Marauder"
             self.additional_enemy_health = Marauder.marauder_stats["marauder_health"]
             self.additional_enemy_bleed_resist = Marauder.marauder_stats["marauder_bleed_resistance"]
             self.additional_enemy_stun_resist = Marauder.marauder_stats["marauder_stun_resistance"]
+            self.second_enemy_drops = Marauder.marauder_possible_drops["gold"]
 
         elif self.additional_picked_enemy == Ectoplasm:
             self.additional_enemy_name = "Ectoplasm"
             self.additional_enemy_health = Ectoplasm.ectoplasm_stats["ectoplasm_health"]
             self.additional_enemy_bleed_resist = Ectoplasm.ectoplasm_stats["ectoplasm_bleed_resistance"]
             self.additional_enemy_stun_resist = Ectoplasm.ectoplasm_stats["ectoplasm_stun_resistance"]
+            self.second_enemy_drops = Ectoplasm.ectoplasm_possible_drops["gold"]
 
     def cavern_enemy_choose(self):
 
