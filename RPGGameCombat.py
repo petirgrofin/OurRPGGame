@@ -362,6 +362,7 @@ def combat(enemy_group, enemy_number, health_for_next_fight, gold_ammount):
             print("You have killed the enemies")
             health_for_next_fight = character_health_total
             gold_ammount += Enemies.random_enemy.first_enemy_drops + Enemies.random_enemy.second_enemy_drops
+            MainClasses.chosen_class.gold_pieces += gold_ammount
             print(f"You currently have {gold_ammount} pieces of gold")
             return health_for_next_fight, character_dead, gold_ammount
 

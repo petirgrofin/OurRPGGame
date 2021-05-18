@@ -1,6 +1,5 @@
 import MainCharacterClasses as MainClasses
 import RPGGameLocations as Locations
-import RPGGameCombat as Combat
 
 
 class Hamlet:
@@ -44,24 +43,26 @@ class Hamlet:
 
         }
 
-        attacks = {keys: values for keys, values in MainClasses.Mage.mage_attacks.items()}
-
         print("You have the following attacks: ")
 
-        for key, value in attacks.items():
+        for key, value in MainClasses.Mage.mage_attacks.items():
             print(str(key) + ", damage: " + str(value))
+
+        print(f"You have {MainClasses.chosen_class.gold_pieces} gold pieces")
 
         upgrading_skills = MainClasses.chosen_class.attack_choose(input("Choose a skill to upgrade, or exit the guild: "))
 
         while True:
-            if upgrading_skills == "attack1":
-                print(f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attacks_upgrade_price']} pieces of gold. Do you wish to continue?")
-                if upgrading_skills == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
-                    upgrading_skills += 100
-                    print(f"Your skill has been upgraded, and it now has {upgrading_skills[0]} damage")
+            if upgrading_skills == MainClasses.Mage.mage_attacks["mage_blizzard"]:
+                continue_question = input(f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attack_upgrade_price']} pieces of gold. Do you wish to continue?")
+                if continue_question == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
+                    MainClasses.chosen_class.chosen_attack += 100
+                    print(f"Your skill has been upgraded, and it now has {MainClasses.chosen_class.chosen_attack} damage")
+                    MainClasses.chosen_class.gold_pieces -= upgrading_attacks_price["apprentice_level_attack_upgrade_price"]
+                    break
                 elif MainClasses.chosen_class.gold_pieces < upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
                     print("You currently don't have enough gold pieces to upgrade this skill")
-                    continue
+                    break  # have to reset value too
             elif upgrading_skills == "exit" or "quit" or "break":
                 print("You are exiting the guild")
                 break
