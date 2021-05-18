@@ -44,10 +44,12 @@ class Hamlet:
 
         }
 
-        attacks = list(MainClasses.Mage.mage_attacks.keys())
-        print("You have the following attacks:")
-        for keys in attacks:
-            print(keys)
+        attacks = {keys: values for keys, values in MainClasses.Mage.mage_attacks.items()}
+
+        print("You have the following attacks: ")
+
+        for key, value in attacks.items():
+            print(str(key) + ", damage: " + str(value))
 
         upgrading_skills = MainClasses.chosen_class.attack_choose(input("Choose a skill to upgrade, or exit the guild: "))
 
@@ -55,7 +57,7 @@ class Hamlet:
             if upgrading_skills == "attack1":
                 print(f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attacks_upgrade_price']} pieces of gold. Do you wish to continue?")
                 if upgrading_skills == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
-                    upgrading_skills[0] += 100
+                    upgrading_skills += 100
                     print(f"Your skill has been upgraded, and it now has {upgrading_skills[0]} damage")
                 elif MainClasses.chosen_class.gold_pieces < upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
                     print("You currently don't have enough gold pieces to upgrade this skill")
