@@ -42,7 +42,7 @@ class RandomRoomGeneration:
         return current_dungeon_rooms_dict
 
 
-class TheCaverns:
+class Dungeons:
 
     def __init__(self, mission_choose, health):
 

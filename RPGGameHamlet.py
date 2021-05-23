@@ -85,7 +85,7 @@ class Hamlet:
               "madness and bloodshed.")
 
         location_choose = input("Where do you want to go?: ")
-        veteran_access = Locations.TheCaverns.missions
+        veteran_access = Locations.Dungeons.missions
         if location_choose == "The Caverns":
             all_locations = {"apprentice level": True,
                              "veteran level": veteran_access}
@@ -98,7 +98,7 @@ class Hamlet:
 
             mission_level_choose = input("Choose a mission: ")
             if mission_level_choose == "apprentice level":
-                mission = Locations.TheCaverns("apprentice level mission", MainClasses.chosen_class.picked_class_health)
+                mission = Locations.Dungeons("apprentice level mission", MainClasses.chosen_class.picked_class_health)
                 cavern_mission = mission.missions("Caverns")
                 dungeon_completed_dictionary = {keys: cavern_mission for keys in all_locations.keys()}
                 all_locations.update(dungeon_completed_dictionary)
