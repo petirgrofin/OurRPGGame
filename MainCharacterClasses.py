@@ -1,7 +1,7 @@
 class Mage:
 
     mage_stats = {
-        "mage_damage": 99999,
+        "mage_damage": 1000,
         "mage_speed": 50,
         "mage_health": 1000,
         "mage_defense": 50,

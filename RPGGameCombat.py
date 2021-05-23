@@ -11,7 +11,7 @@ def tutorial():
     print("You can debuff an enemy, but this mechanic depends on several factors.")
     print("Try it yourself:")
 
-    combat("Tutorial", 1, MainClasses.chosen_class.picked_class_health)
+    combat("Tutorial", 1, MainClasses.chosen_class.picked_class_health, MainClasses.chosen_class.gold_pieces)
 
 
 class CharacterDebuffs:
@@ -406,9 +406,12 @@ def combat(enemy_group, enemy_number, health_for_next_fight, gold_ammount):
 
         if character_debuffs.character_is_stunned:
             print("You have been stunned")
-            print(character_debuffs.character_is_stunned)
 
         print(F"You have {character_health_total} health left")
+
+        if character_debuffs.character_is_stunned:
+            character_debuffs.character_is_stunned = False
+            character_debuffs.character_original_stun_resistance += 50
 
         if Enemies.random_enemy.stun_resist != debuffs.first_enemy_original_stun_resistance and not first_enemy_is_stunned:
             Enemies.random_enemy.stun_resist -= 50

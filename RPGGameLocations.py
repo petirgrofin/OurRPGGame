@@ -1,6 +1,7 @@
 import random
 import RPGGameCombat as Combat
 import MainCharacterClasses as MainClasses
+import RPGGameHamlet as Hamlet
 
 
 class RandomRoomGeneration:
@@ -12,10 +13,7 @@ class RandomRoomGeneration:
 
         possible_room_amount = random.randint(5, 10)
 
-        current_dungeon_rooms = []
-
-        for number_of_rooms in range(1, possible_room_amount + 1):
-            current_dungeon_rooms.append(number_of_rooms)
+        current_dungeon_rooms = [number_of_rooms for number_of_rooms in range(1, possible_room_amount + 1)]
 
         print(f"After the hamlet's caretaker handed you a map, you found that this dungeon will have {current_dungeon_rooms[-1]} rooms")
 
@@ -32,11 +30,14 @@ class RandomRoomGeneration:
             else:
                 self.room_has_battle = False
 
-            initial_value -= 10
+            initial_value -= 20
 
             updated_dict_value = {battle_check: self.room_has_battle}
 
             current_dungeon_rooms_dict.update(updated_dict_value)
+
+            if initial_value == 0:
+                initial_value = 100
 
         return current_dungeon_rooms_dict
 
@@ -51,7 +52,7 @@ class TheCaverns:
         self.fight = None
         self.health_left = 0
 
-    def first_mission(self):
+    def missions(self, location):
 
         if self.mission_choose == "apprentice level mission":
 
@@ -74,11 +75,17 @@ class TheCaverns:
                     for all_rooms, battle_rooms in dungeon_rooms.items():
 
                         if battle_rooms and not self.initial_health_chosen:
-                            self.fight = Combat.combat("Cavern", 2, self.health, MainClasses.chosen_class.gold_pieces)
+                            if location == "Caverns":  # can probably find a way to optimize this, but will work for now
+                                self.fight = Combat.combat("Cavern", 2, self.health, MainClasses.chosen_class.gold_pieces)
+                            elif location == "Tutorial":
+                                self.fight = Combat.combat("Tutorial", 2, self.health, MainClasses.chosen_class.gold_pieces)
                             self.initial_health_chosen = True
 
                         elif battle_rooms and self.initial_health_chosen:
-                            self.fight = Combat.combat("Cavern", 2, self.health_left, MainClasses.chosen_class.gold_pieces)
+                            if location == "Caverns":
+                                self.fight = Combat.combat("Cavern", 2, self.health_left, MainClasses.chosen_class.gold_pieces)
+                            elif location == "Tutorial":
+                                self.fight = Combat.combat("Tutorial", 2, self.health_left, MainClasses.chosen_class.gold_pieces)
 
                         if battle_rooms and self.fight[1]:
 
@@ -101,9 +108,13 @@ class TheCaverns:
                         if choose_to_advance == "advance":
                             print(f"You have advanced one room, and you are currently in the room {all_rooms}")
                             if all_rooms == list(dungeon_rooms.keys())[-1]:
-                                print("You have finished the dungeon. Returning to hamlet...")
-                                break
+                                print("You have finished the dungeon. You have unlocked the first key. Returning to "
+                                      "hamlet...")
+                                veteran_access = True
+                                Hamlet.hamlet.hamlet_general()
+                                return veteran_access
+
                             continue
 
                         elif choose_to_advance == "hamlet":
-                            break
+                            Hamlet.hamlet.hamlet_general()

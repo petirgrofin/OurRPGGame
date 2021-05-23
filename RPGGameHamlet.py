@@ -50,17 +50,23 @@ class Hamlet:
 
         print(f"You have {MainClasses.chosen_class.gold_pieces} gold pieces")
 
-        upgrading_skills = MainClasses.chosen_class.attack_choose(input("Choose a skill to upgrade, or exit the guild: "))
+        upgrading_skills = MainClasses.chosen_class.attack_choose(
+            input("Choose a skill to upgrade, or exit the guild: "))
 
         while True:
             if upgrading_skills == MainClasses.Mage.mage_attacks["mage_blizzard"]:
-                continue_question = input(f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attack_upgrade_price']} pieces of gold. Do you wish to continue?")
-                if continue_question == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
+                continue_question = input(
+                    f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attack_upgrade_price']} pieces of gold. Do you wish to continue?")
+                if continue_question == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price[
+                    "apprentice_level_attack_upgrade_price"]:
                     MainClasses.chosen_class.chosen_attack += 100
-                    print(f"Your skill has been upgraded, and it now has {MainClasses.chosen_class.chosen_attack} damage")
-                    MainClasses.chosen_class.gold_pieces -= upgrading_attacks_price["apprentice_level_attack_upgrade_price"]
+                    print(
+                        f"Your skill has been upgraded, and it now has {MainClasses.chosen_class.chosen_attack} damage")
+                    MainClasses.chosen_class.gold_pieces -= upgrading_attacks_price[
+                        "apprentice_level_attack_upgrade_price"]
                     break
-                elif MainClasses.chosen_class.gold_pieces < upgrading_attacks_price["apprentice_level_attack_upgrade_price"]:
+                elif MainClasses.chosen_class.gold_pieces < upgrading_attacks_price[
+                    "apprentice_level_attack_upgrade_price"]:
                     print("You currently don't have enough gold pieces to upgrade this skill")
                     break  # have to reset value too
             elif upgrading_skills == "exit" or "quit" or "break":
@@ -79,10 +85,23 @@ class Hamlet:
               "madness and bloodshed.")
 
         location_choose = input("Where do you want to go?: ")
+        veteran_access = Locations.TheCaverns.missions
         if location_choose == "The Caverns":
-            the_caverns = Locations.TheCaverns("apprentice level mission", MainClasses.chosen_class.picked_class_health)
-            the_caverns.first_mission()
+            all_locations = {"apprentice level": True,
+                             "veteran level": veteran_access}
+
+            print(F"You have access to the following dungeons:")
+
+            for location, accessible in all_locations.items():
+                if accessible is True:
+                    print(location)
+
+            mission_level_choose = input("Choose a mission: ")
+            if mission_level_choose == "apprentice level":
+                mission = Locations.TheCaverns("apprentice level mission", MainClasses.chosen_class.picked_class_health)
+                cavern_mission = mission.missions("Caverns")
+                dungeon_completed_dictionary = {keys: cavern_mission for keys in all_locations.keys()}
+                all_locations.update(dungeon_completed_dictionary)
 
 
 hamlet = Hamlet()
-
