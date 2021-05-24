@@ -4,6 +4,13 @@ import RPGGameLocations as Locations
 
 class Hamlet:
 
+    def __init__(self):  # only run once throughout all of the game.
+
+        self.all_locations = {"apprentice level": True,  # Hamlet gets instantiated and initialized once, so whatever
+                              # is put here can be modified freely throughout the course of the game, without fear of
+                              # values getting reset.
+                              "veteran level": None}
+
     def hamlet_introduction(self):
 
         print("Welcome to the old hamlet, once prosperous, now in ruins. Your mission is to end with the Beast, whose\n"
@@ -85,14 +92,11 @@ class Hamlet:
               "madness and bloodshed.")
 
         location_choose = input("Where do you want to go?: ")
-        veteran_access = Locations.Dungeons.missions
         if location_choose == "The Caverns":
-            all_locations = {"apprentice level": True,
-                             "veteran level": veteran_access}
 
             print(F"You have access to the following dungeons:")
 
-            for location, accessible in all_locations.items():
+            for location, accessible in self.all_locations.items():
                 if accessible is True:
                     print(location)
 
@@ -100,8 +104,9 @@ class Hamlet:
             if mission_level_choose == "apprentice level":
                 mission = Locations.Dungeons("apprentice level mission", MainClasses.chosen_class.picked_class_health)
                 cavern_mission = mission.missions("Caverns")
-                dungeon_completed_dictionary = {keys: cavern_mission for keys in all_locations.keys()}
-                all_locations.update(dungeon_completed_dictionary)
+                dungeon_completed_dictionary = {keys: cavern_mission for keys in self.all_locations.keys()}
+                self.all_locations.update(dungeon_completed_dictionary)
+                hamlet.hamlet_general()
 
 
 hamlet = Hamlet()
