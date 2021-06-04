@@ -4,7 +4,7 @@ import RPGGameLocations as Locations
 
 class Hamlet:
 
-    def __init__(self):  # only run once throughout all of the game.
+    def __init__(self):  # only run once for instantiation of the class
 
         self.all_locations = {"apprentice level": True,  # Hamlet gets instantiated and initialized once, so whatever
                               # is put here can be modified freely throughout the course of the game, without fear of
@@ -103,10 +103,15 @@ class Hamlet:
             mission_level_choose = input("Choose a mission: ")
             if mission_level_choose == "apprentice level":
                 mission = Locations.Dungeons("apprentice level mission", MainClasses.chosen_class.picked_class_health)
-                cavern_mission = mission.missions("Caverns")
-                dungeon_completed_dictionary = {keys: cavern_mission for keys in self.all_locations.keys()}
-                self.all_locations.update(dungeon_completed_dictionary)
-                hamlet.hamlet_general()
+
+            elif mission_level_choose == "veteran level":
+                mission = Locations.Dungeons("veteran level mission", MainClasses.chosen_class.picked_class_health)
+
+            cavern_mission = mission.missions("Caverns")
+
+            dungeon_completed_dictionary = {keys: cavern_mission for keys in self.all_locations.keys()}
+            self.all_locations.update(dungeon_completed_dictionary)
+            hamlet.hamlet_general()
 
 
 hamlet = Hamlet()

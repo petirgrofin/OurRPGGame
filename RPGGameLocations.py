@@ -11,41 +11,44 @@ class RandomRoomGeneration:
 
     def random_room_generator(self, level):
 
+        possible_room_amount = 0
+
         if level == "apprentice":
 
-            possible_room_amount = random.randint(1, 1)
+            possible_room_amount = random.randint(5, 10)
 
-            current_dungeon_rooms = [number_of_rooms for number_of_rooms in range(1, possible_room_amount + 1)]
+        elif level == "veteran":
 
-            print(
-                f"After the hamlet's caretaker handed you a map, you found that this dungeon will have {current_dungeon_rooms[-1]} rooms")
+            possible_room_amount = random.randint(8, 12)
 
-            current_dungeon_rooms_dict = dict.fromkeys(current_dungeon_rooms)
+        current_dungeon_rooms = [number_of_rooms for number_of_rooms in range(1, possible_room_amount + 1)]
 
-            initial_value = 100
+        print(
+            f"After the hamlet's caretaker handed you a map, you found that this dungeon will have {current_dungeon_rooms[-1]} rooms")
 
-            for battle_check in current_dungeon_rooms:
+        current_dungeon_rooms_dict = dict.fromkeys(current_dungeon_rooms)
 
-                probability = random.randint(0, 100)
+        initial_value = 100
 
-                if probability < initial_value:
-                    self.room_has_battle = True
-                else:
-                    self.room_has_battle = False
+        for battle_check in current_dungeon_rooms:
 
-                initial_value -= 20
+            probability = random.randint(0, 100)
 
-                updated_dict_value = {battle_check: self.room_has_battle}
+            if probability < initial_value:
+                self.room_has_battle = True
+            else:
+                self.room_has_battle = False
 
-                current_dungeon_rooms_dict.update(updated_dict_value)
+            initial_value -= 20
 
-                if initial_value == 0:
-                    initial_value = 100
+            updated_dict_value = {battle_check: self.room_has_battle}
 
-            return current_dungeon_rooms_dict
+            current_dungeon_rooms_dict.update(updated_dict_value)
 
-        else:
-            print("Work in progress")
+            if initial_value == 0:
+                initial_value = 100
+
+        return current_dungeon_rooms_dict
 
 
 class Dungeons:
@@ -64,67 +67,71 @@ class Dungeons:
 
         if self.mission_choose == "apprentice level mission":
 
-            dungeon_fights = Combat.combat
+            random_room_generation = RandomRoomGeneration()
+            dungeon_rooms = random_room_generation.random_room_generator("apprentice")
 
-            print("Loading apprentice level mission...")
+        elif self.mission_choose == "veteran level mission":
 
-            print("In this mission, you must advance through a series of rooms containing enemies to reach a key.")
+            random_room_generation = RandomRoomGeneration()
+            dungeon_rooms = random_room_generation.random_room_generator("veteran")
 
-            print("This key grants access to the veteran chamber, where you will face ever more dangerous foes.")
+        dungeon_fights = Combat.combat
 
-            loading_screen_end = input("Do you wish to continue?: ")
+        print(dungeon_fights)
 
-            if loading_screen_end == "yes":
-                random_room_generation = RandomRoomGeneration()
-                dungeon_rooms = random_room_generation.random_room_generator("apprentice")
+        print("Loading apprentice level mission...")
 
-            start_dungeon = input("Do you wish to start the dungeon?: ")  # starting at room 0
+        print("In this mission, you must advance through a series of rooms containing enemies to reach a key.")
 
-            if start_dungeon == "yes":
+        print("This key grants access to the veteran chamber, where you will face ever more dangerous foes.")
 
-                for all_rooms, battle_rooms in dungeon_rooms.items():
+        start_dungeon = input("Do you wish to start the dungeon?: ")  # starting at room 0
 
-                    if battle_rooms and not self.initial_health_chosen:
-                        if location == "Caverns":  # can probably find a way to optimize this
-                            self.fight_outcome = dungeon_fights("Caverns", 2,
-                                                                gold_ammount=MainClasses.chosen_class.gold_pieces,
-                                                                health_for_next_fight=MainClasses.chosen_class.picked_class_health)
-                        self.initial_health_chosen = True
+        if start_dungeon == "yes":
 
-                    elif battle_rooms and self.initial_health_chosen:
-                        if location == "Caverns":
-                            self.fight_outcome = dungeon_fights("Caverns", 2,
-                                                                gold_ammount=MainClasses.chosen_class.gold_pieces,
-                                                                health_for_next_fight=self.health_left)
+            for all_rooms, battle_rooms in dungeon_rooms.items():
 
-                    if battle_rooms and self.fight_outcome[1]:
+                if battle_rooms and not self.initial_health_chosen:
+                    if location == "Caverns":  # can probably find a way to optimize this
+                        self.fight_outcome = dungeon_fights("Caverns", 2,
+                                                            gold_ammount=MainClasses.chosen_class.gold_pieces,
+                                                            health_for_next_fight=MainClasses.chosen_class.picked_class_health)
+                    self.initial_health_chosen = True
 
-                        print(f"Reality has broken out around you, and you have been pulled to a fracture in"
-                              f"space and time. Mysterious, human-like and hooded entities have dragged you "
-                              f"back to the Hamlet, "
-                              f"but this journey felt excruciatingly long for your character...")
-                        print(f"New trait: have to make traits")
-                        break
+                elif battle_rooms and self.initial_health_chosen:
+                    if location == "Caverns":
+                        self.fight_outcome = dungeon_fights("Caverns", 2,
+                                                            gold_ammount=MainClasses.chosen_class.gold_pieces,
+                                                            health_for_next_fight=self.health_left)
 
-                    elif battle_rooms and not self.fight_outcome[1]:
-                        print(f"For the next fight, you will have {self.fight_outcome[0]} health")
-                        self.health_left = self.fight_outcome[0]
+                if battle_rooms and self.fight_outcome[1]:
 
-                    elif not battle_rooms:
-                        print("Room doesn't have anything")
+                    print(f"Reality has broken out around you, and you have been pulled to a fracture in"
+                          f"space and time. Mysterious, human-like and hooded entities have dragged you "
+                          f"back to the Hamlet, "
+                          f"but this journey felt excruciatingly long for your character...")
+                    print(f"New trait: have to make traits")
+                    break
 
-                    choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
+                elif battle_rooms and not self.fight_outcome[1]:
+                    print(f"For the next fight, you will have {self.fight_outcome[0]} health")
+                    self.health_left = self.fight_outcome[0]
 
-                    if choose_to_advance == "advance":
-                        print(f"You have advanced one room, and you are currently in the room {all_rooms}")
-                        if all_rooms == list(dungeon_rooms.keys())[-1]:
-                            print("You have finished the dungeon. You have unlocked the first key. Returning to "
-                                  "hamlet...")
-                            veteran_access = True
-                            return veteran_access
+                elif not battle_rooms:
+                    print("Room doesn't have anything")
 
-                        continue
+                choose_to_advance = input("Do you wish to advance, or return to the hamlet?: ")
 
-                    elif choose_to_advance == "hamlet":
-                        Hamlet.hamlet.hamlet_general()
-                        break
+                if choose_to_advance == "advance":
+                    print(f"You have advanced one room, and you are currently in the room {all_rooms}")
+                    if all_rooms == list(dungeon_rooms.keys())[-1]:
+                        print("You have finished the dungeon. You have unlocked a key. Returning to "
+                              "hamlet...")
+                        veteran_access = True
+                        return veteran_access
+
+                    continue
+
+                elif choose_to_advance == "hamlet":
+                    Hamlet.hamlet.hamlet_general()
+                    break
