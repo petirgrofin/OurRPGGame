@@ -4,6 +4,13 @@ import RPGGameLocations as Locations
 
 class Hamlet:
 
+    def __init__(self):  # only run once for instantiation of the class
+
+        self.all_locations = {"apprentice level": True,  # Hamlet gets instantiated and initialized once, so whatever
+                              # is put here can be modified freely throughout the course of the game, without fear of
+                              # values getting reset.
+                              "veteran level": None}
+
     def hamlet_introduction(self):
 
         print("Welcome to the old hamlet, once prosperous, now in ruins. Your mission is to end with the Beast, whose\n"
@@ -37,10 +44,43 @@ class Hamlet:
 
     def hamlet_guild(self):
 
-        attacks = list(MainClasses.Mage.mage_attacks.keys())
-        print("You have the following attacks:")
-        for keys in attacks:
-            print(keys)
+        upgrading_attacks_price = {
+
+            "apprentice_level_attack_upgrade_price": 50
+
+        }
+
+        print("You have the following attacks: ")
+
+        for key, value in MainClasses.Mage.mage_attacks.items():
+            print(str(key) + ", damage: " + str(value))
+
+        print(f"You have {MainClasses.chosen_class.gold_pieces} gold pieces")
+
+        upgrading_skills = MainClasses.chosen_class.attack_choose(
+            input("Choose a skill to upgrade, or exit the guild: "))
+
+        while True:
+            if upgrading_skills == MainClasses.Mage.mage_attacks["mage_blizzard"]:
+                continue_question = input(
+                    f"This upgrade will cost you {upgrading_attacks_price['apprentice_level_attack_upgrade_price']} pieces of gold. Do you wish to continue?")
+                if continue_question == "yes" and MainClasses.chosen_class.gold_pieces > upgrading_attacks_price[
+                    "apprentice_level_attack_upgrade_price"]:
+                    MainClasses.chosen_class.chosen_attack += 100
+                    print(
+                        f"Your skill has been upgraded, and it now has {MainClasses.chosen_class.chosen_attack} damage")
+                    MainClasses.chosen_class.gold_pieces -= upgrading_attacks_price[
+                        "apprentice_level_attack_upgrade_price"]
+                    break
+                elif MainClasses.chosen_class.gold_pieces < upgrading_attacks_price[
+                    "apprentice_level_attack_upgrade_price"]:
+                    print("You currently don't have enough gold pieces to upgrade this skill")
+                    break  # have to reset value too
+            elif upgrading_skills == "exit" or "quit" or "break":
+                print("You are exiting the guild")
+                break
+
+        hamlet.hamlet_general()
 
     def world_locations(self):
 
@@ -53,9 +93,25 @@ class Hamlet:
 
         location_choose = input("Where do you want to go?: ")
         if location_choose == "The Caverns":
-            the_caverns = Locations.TheCaverns("apprentice level mission", MainClasses.chosen_class.picked_class_health)
-            the_caverns.first_mission()
+
+            print(F"You have access to the following dungeons:")
+
+            for location, accessible in self.all_locations.items():
+                if accessible is True:
+                    print(location)
+
+            mission_level_choose = input("Choose a mission: ")
+            if mission_level_choose == "apprentice level":
+                mission = Locations.Dungeons("apprentice level mission", MainClasses.chosen_class.picked_class_health)
+
+            elif mission_level_choose == "veteran level":
+                mission = Locations.Dungeons("veteran level mission", MainClasses.chosen_class.picked_class_health)
+
+            cavern_mission = mission.missions("Caverns")
+
+            dungeon_completed_dictionary = {keys: cavern_mission for keys in self.all_locations.keys()}
+            self.all_locations.update(dungeon_completed_dictionary)
+            hamlet.hamlet_general()
 
 
 hamlet = Hamlet()
-

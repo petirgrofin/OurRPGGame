@@ -11,7 +11,7 @@ def tutorial():
     print("You can debuff an enemy, but this mechanic depends on several factors.")
     print("Try it yourself:")
 
-    combat("Tutorial", 1, MainClasses.chosen_class.picked_class_health)
+    combat("Tutorial", 1, MainClasses.chosen_class.picked_class_health, MainClasses.chosen_class.gold_pieces)
 
 
 class CharacterDebuffs:
@@ -55,19 +55,17 @@ class CharacterDebuffs:
 
             if Enemies.random_enemy.additional_enemy_stun_chance > MainClasses.chosen_class.picked_class_stun_resistance:
 
-                if Enemies.random_enemy.additional_enemy_stun_chance > MainClasses.chosen_class.picked_class_stun_resistance:
+                if probability < Enemies.random_enemy.additional_enemy_stun_chance - MainClasses.chosen_class.picked_class_stun_resistance:
 
-                    if probability < Enemies.random_enemy.additional_enemy_stun_chance - MainClasses.chosen_class.picked_class_stun_resistance:
+                    self.character_is_stunned = True
+                    self.enemies_failed_stun = False
+                    MainClasses.chosen_class.picked_class_stun_resistance += 50
 
-                        self.character_is_stunned = True
-                        self.enemies_failed_stun = False
-                        MainClasses.chosen_class.picked_class_stun_resistance += 50
+                else:
 
-                    else:
-
-                        self.character_is_stunned = False
-                        self.second_enemy_failed_stun = True
-                        print(f"You resisted the {Enemies.random_enemy.additional_enemy_name}'s stun")
+                    self.character_is_stunned = False
+                    self.second_enemy_failed_stun = True
+                    print(f"You resisted the {Enemies.random_enemy.additional_enemy_name}'s stun")
 
         else:
             self.first_enemy_failed_stun = False  # resetting values
@@ -168,7 +166,7 @@ class Debuffs:
         pass
 
 
-def combat(enemy_group, enemy_number, health_for_next_fight):
+def combat(enemy_group, enemy_number, health_for_next_fight, gold_ammount):
     select_who_to_attack = any
     targeted_enemy_name = None
     targeted_first_enemy = None
@@ -349,7 +347,6 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
         elif enemy_number == 1:
 
             if not character_debuffs.character_is_stunned:
-
                 enemy_health_left -= MainClasses.chosen_class.chosen_attack
 
             if enemy_health_left < 0:
@@ -368,7 +365,10 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
         if additional_enemy_is_dead and first_enemy_is_dead:  # check if both dead
             print("You have killed the enemies")
             health_for_next_fight = character_health_total
-            return health_for_next_fight, character_dead
+            gold_ammount += Enemies.random_enemy.first_enemy_drops + Enemies.random_enemy.second_enemy_drops
+            MainClasses.chosen_class.gold_pieces += gold_ammount
+            print(f"You currently have {gold_ammount} pieces of gold")
+            return health_for_next_fight, character_dead, gold_ammount
 
         if enemy_number > 1 and not first_enemy_is_dead and not additional_enemy_is_dead:
             print(
@@ -403,12 +403,19 @@ def combat(enemy_group, enemy_number, health_for_next_fight):
 
             if character_debuffs.character_is_stunned:
                 break
+
         else:
             print("Stuns failed")
+            character_debuffs.enemies_failed_stun = False  # resetting value so that stun check happens in next turn
 
         if character_debuffs.character_is_stunned:
             print("You have been stunned")
-            print(character_debuffs.character_is_stunned)
+
+        print(F"You have {character_health_total} health left")
+
+        if character_debuffs.character_is_stunned:
+            character_debuffs.character_is_stunned = False
+            character_debuffs.character_original_stun_resistance += 50
 
         if Enemies.random_enemy.stun_resist != debuffs.first_enemy_original_stun_resistance and not first_enemy_is_stunned:
             Enemies.random_enemy.stun_resist -= 50

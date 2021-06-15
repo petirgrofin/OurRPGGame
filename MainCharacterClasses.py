@@ -1,7 +1,7 @@
 class Mage:
 
     mage_stats = {
-        "mage_damage": 200,
+        "mage_damage": 3000,
         "mage_speed": 50,
         "mage_health": 1000,
         "mage_defense": 50,
@@ -54,6 +54,7 @@ class ChosenClass:
     def __init__(self):
 
         self.picked_class = None
+        self.gold_pieces = None
         self.chosen_attack = None
 
         self.picked_class_health = None
@@ -88,7 +89,10 @@ class ChosenClass:
             self.picked_class_health = Swordsman.swordsman_stats["swordsman_health"]
             self.picked_class_defense = Swordsman.swordsman_stats["swordsman_defense"]
 
+        self.gold_pieces = 0
+
     def attack_choose(self, choose_an_attack_question):
+
         if self.picked_class == Mage:  # block of code to define chosen_attack
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Mage.mage_attacks["mage_blizzard"]
@@ -120,6 +124,7 @@ class ChosenClass:
                 self.chosen_attack = Ranged.ranged_attacks["ranged_healing"]
             else:
                 self.chosen_attack = None
+
         return self.chosen_attack
 
     def stun_debuffs(self):
