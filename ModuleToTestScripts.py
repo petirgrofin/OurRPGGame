@@ -1,34 +1,41 @@
-import MainCharacterClasses as MainClasses
-import RPGGameEnemies as Enemies
+
+class Dog:
+
+    def __init__(self, name, is_loyal):
+        self.name = name
+        self.is_loyal = is_loyal
+
+    def checking_dog_characteristics(self):
+
+        print(f"The dog is named {self.name}")
+        print(f"The dog is loyal: {self.is_loyal}")
 
 
-class Debuffs:
-
-    def __init__(self, original_stun_resistance, original_bleed_duration, accumulative_bleed_damage):
-
-        self.original_stun_resistance = original_stun_resistance
-        self.original_bleed_duration = original_bleed_duration
-        self.accumulative_bleed_damage = accumulative_bleed_damage
+akira_dog = Dog(name="Akira", is_loyal=True)
 
 
-MainClasses.chosen_class.class_choose(input("Select a class: "))
-MainClasses.chosen_class.attack_choose(input("Select an attack: "))
-Enemies.random_enemy.enemy_choose()  # select an enemy
-MainClasses.chosen_class.stun_debuffs()  # then check for stuns
-MainClasses.chosen_class.bleed_debuffs()  # then check for bleeds
+class Cats:
+
+    are_cute = True  # always
+    legs = 4  # hopefully always
+    head = 1
+
+    def __init__(self, name, breed, owner):
+        self.name = name
+        self.breed = breed
+        self.owner = owner
+
+    def checking_cat_characteristics(self):
+
+        print(f"The cat is named {self.name}")
+        print(f"The cat is cute: {Cats.are_cute}")
+        print(f"The cat's owner is: {self.owner}")
+        print(f"The cat has {Cats.legs} legs and {Cats.head} head")
+        print(f"The cat is of a {self.breed} race")
 
 
-def value_returner():
+kiu_cat = Cats(name="Kiu", breed="mixed", owner="Sofi")
+oliver_cat = Cats(name="Oliver", breed="unknown", owner="Sofi")
 
-    debuffs = Debuffs(Enemies.random_enemy.stun_resist, MainClasses.chosen_class.bleed_duration, MainClasses.chosen_class.base_bleed_damage)
-
-    print(f"The debuff resistance is {debuffs.original_stun_resistance}, the bleed duration is {debuffs.original_bleed_duration} and the accumulative bleed damage is {debuffs.accumulative_bleed_damage}")
-    bleed_damage = MainClasses.chosen_class.base_bleed_damage
-    bleed_duration = MainClasses.chosen_class.base_bleed_damage
-    stun_resist = Enemies.random_enemy.stun_resist
-    print(bleed_damage, bleed_duration, stun_resist)
-    bleed_damage += MainClasses.chosen_class.base_bleed_damage
-    print(bleed_damage)
-
-
-value_returner()
+kiu_cat.checking_cat_characteristics()
+oliver_cat.checking_cat_characteristics()
