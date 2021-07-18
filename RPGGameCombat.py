@@ -167,6 +167,7 @@ class Debuffs:
 
 
 def combat(enemy_group, enemy_number, health_for_next_fight, gold_ammount):
+
     select_who_to_attack = any
     targeted_enemy_name = None
     targeted_first_enemy = None

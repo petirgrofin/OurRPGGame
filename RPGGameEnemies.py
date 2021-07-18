@@ -1,5 +1,6 @@
 import random
 
+
 class Marauder:
     marauder_stats = {
         "marauder_health": 800,
@@ -18,6 +19,7 @@ class Marauder:
         "marauder_sword_swing": 50 + marauder_stats["marauder_damage"],
         "marauder_ballista_shot": marauder_stats["marauder_damage"] + 30
     }
+
 
 class Ectoplasm:
     ectoplasm_stats = {
@@ -40,6 +42,7 @@ class Ectoplasm:
 
 
 class CavernEnemies:
+
     cavern_enemies_stats = {
         "cavern_enemies_assassin_worm_name": "Assassin Worm",
         "cavern_enemies_cave_spider": "Cave Spider",
@@ -52,18 +55,42 @@ class CavernEnemies:
         "cavern_enemies_bleed_resistance": 30
     }
 
+    @staticmethod
+    def stats_increase(increase_or_decrease):
+
+        original_cavern_enemies_stats = CavernEnemies.cavern_enemies_stats
+
+        if increase_or_decrease == "increase":
+
+            dictionary_of_stats = {key: value for key, value in CavernEnemies.cavern_enemies_stats.items()
+                                   if "health" in key or "damage" in key or "speed" in key or "defense" in key or "stun"
+                                   in key or "bleed" in key}
+
+            updated_values = {key: value + 300 for key, value in dictionary_of_stats.items()}
+
+            CavernEnemies.cavern_enemies_stats.update(updated_values)
+
+            print(CavernEnemies.cavern_enemies_stats)
+
+        else:
+
+            CavernEnemies.cavern_enemies_stats.update(original_cavern_enemies_stats)
+
 
 class AssassinWorm(CavernEnemies):
+
     cavern_enemies_assassin_worm_attack = {
         "assassin_worm_pounce": 30 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
         "assassin_worm_pistol_attack": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 20,
     }
+
 
 class CaveSpider(CavernEnemies):
     cavern_enemies_cave_spider_attack = {
         "cave_spider_bite": 20 + CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"],
         "cave_spider_venom_sting": CavernEnemies.cavern_enemies_stats["cavern_enemies_damage"] + 40,
     }
+
 
 class Choletinia(CavernEnemies):
     cavern_enemies_choletinia_attack = {
@@ -93,11 +120,13 @@ class Skeleton(CastleEnemies):
         "skeleton_fire_arrow": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 40,
     }
 
+
 class ThePrincess(CastleEnemies):
     castle_enemies_the_princess_attack = {
         "the_princess_magic_powder": 20 + CastleEnemies.castle_enemies_stats["castle_enemies_damage"],
         "the_princess_rainbow_attack": CastleEnemies.castle_enemies_stats["castle_enemies_damage"] + 50,
     }
+
 
 class TheKing(CastleEnemies):
     castle_enemies_the_king_attack = {
@@ -180,9 +209,9 @@ class RandomEnemy:
 
         if self.picked_enemy == self.additional_picked_enemy:
             if self.picked_enemy == Marauder:
-                self.additional_picked_enemy = random.choice([Ectoplasm])
+                self.additional_picked_enemy = Ectoplasm
             if self.picked_enemy == Ectoplasm:
-                self.additional_picked_enemy = random.choice([Marauder])
+                self.additional_picked_enemy = Marauder
 
         if self.picked_enemy == Marauder:
             self.enemy_name = "Marauder"
@@ -375,7 +404,7 @@ class RandomEnemy:
 
         elif self.picked_enemy == Skeleton:
             self.enemy_attack = random.choice([Skeleton.castle_enemies_skeleton_attack["skeleton_bow_shot"],
-                                               Skeleton.castle_enemies_skeleton_attack[ "skeleton_fire_arrow"]])
+                                               Skeleton.castle_enemies_skeleton_attack["skeleton_fire_arrow"]])
             if self.enemy_attack == Skeleton.castle_enemies_skeleton_attack["skeleton_bow_shot"]:
                 self.enemy_attack_name = "Bow Shot"
             elif self.enemy_attack == Skeleton.castle_enemies_skeleton_attack["skeleton_fire_arrow"]:
@@ -383,8 +412,9 @@ class RandomEnemy:
 
         elif self.picked_enemy == ThePrincess:
 
-            self.enemy_attack = random.choice([ThePrincess.castle_enemies_the_princess_attack["the_princess_magic_powder"],
-                                               ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]])
+            self.enemy_attack = random.choice(
+                [ThePrincess.castle_enemies_the_princess_attack["the_princess_magic_powder"],
+                 ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]])
             if self.enemy_attack == ThePrincess.castle_enemies_the_princess_attack["the_princess_magic_powder"]:
                 self.enemy_attack_name = "Magic Powder"
             elif self.enemy_attack == ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]:
@@ -392,7 +422,8 @@ class RandomEnemy:
 
         elif self.picked_enemy == TheKing:
             self.enemy_attack = random.choice([TheKing.castle_enemies_the_king_attack["the_king_knife_cut"],
-                                               TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]])
+                                               TheKing.castle_enemies_the_king_attack[
+                                                   "the_king_knife_throwing_attack"]])
             if self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_cut"]:
                 self.enemy_attack_name = "Knife Cut"
             elif self.enemy_attack == TheKing.castle_enemies_the_king_attack["the_king_knife_throwing_attack"]:
@@ -528,7 +559,8 @@ class RandomEnemy:
                 self.additional_enemy_stun_capable_attack = False
 
         if self.additional_picked_enemy == ThePrincess:
-            if self.additional_enemy_attack == ThePrincess.castle_enemies_the_princess_attack["the_princess_rainbow_shot"]:
+            if self.additional_enemy_attack == ThePrincess.castle_enemies_the_princess_attack[
+                "the_princess_rainbow_shot"]:
                 self.additional_enemy_stun_capable_attack = True
                 self.additional_enemy_stun_chance = 100
             else:
@@ -542,30 +574,4 @@ class RandomEnemy:
                 self.additional_enemy_stun_capable_attack = False
 
 
-        if self.picked_enemy == Slime:
-            if self.enemy_attack == Slime.swamp_enemies_slime_attack["slime_acid_spit"]:
-                self.enemy_stun_capable_attack = True
-                self.enemy_stun_chance = 100
-            else:
-                self.enemy_stun_capable_attack = False
 
-        if self.picked_enemy == Mudman:
-            if self.enemy_attack == Mudman.swamp_enemies_mudman_attack["mudman_poisonous_water"]:
-                self.enemy_stun_capable_attack = True
-                self.enemy_stun_chance = 100
-            else:
-                self.enemy_stun_capable_attack = False
-
-
-        if self.picked_enemy == SwampCrab:
-            if self.enemy_attack == SwampCrab.swamp_enemies_swamp_crab_attack["swamp_crab_toxic_algae"]:
-                self.enemy_stun_capable_attack = True
-                self.enemy_stun_chance = 100
-            else:
-                self.enemy_stun_capable_attack = False
-
-
-
-
-
-random_enemy = RandomEnemy()

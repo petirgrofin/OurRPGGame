@@ -1,15 +1,15 @@
 import MainCharacterClasses as MainClasses
 import RPGGameLocations as Locations
-
+import RPGGameEnemies as Enemies
 
 class Hamlet:
 
     def __init__(self):  # only run once for instantiation of the class
 
-        self.all_locations = {"apprentice level": True,  # Hamlet gets instantiated and initialized once, so whatever
-                              # is put here can be modified freely throughout the course of the game, without fear of
-                              # values getting reset.
-                              "veteran level": None}
+        self.unlocked_cavern_dungeons = {"apprentice level": True,  # Hamlet gets instantiated and initialized once,
+                                         # so whatever is put here can be modified freely throughout the course of
+                                         # the game, without fear of values getting reset.
+                                         "veteran level": None}
 
     def hamlet_introduction(self):
 
@@ -96,7 +96,7 @@ class Hamlet:
 
             print(F"You have access to the following dungeons:")
 
-            for location, accessible in self.all_locations.items():
+            for location, accessible in self.unlocked_cavern_dungeons.items():
                 if accessible is True:
                     print(location)
 
@@ -106,11 +106,12 @@ class Hamlet:
 
             elif mission_level_choose == "veteran level":
                 mission = Locations.Dungeons("veteran level mission", MainClasses.chosen_class.picked_class_health)
+                Enemies.CavernEnemies().stats_increase()
 
             cavern_mission = mission.missions("Caverns")
 
-            dungeon_completed_dictionary = {keys: cavern_mission for keys in self.all_locations.keys()}
-            self.all_locations.update(dungeon_completed_dictionary)
+            dungeon_completed_dictionary = {keys: cavern_mission for keys in self.unlocked_cavern_dungeons.keys()}
+            self.unlocked_cavern_dungeons.update(dungeon_completed_dictionary)
             hamlet.hamlet_general()
 
 
