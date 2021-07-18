@@ -574,4 +574,7 @@ class RandomEnemy:
                 self.additional_enemy_stun_capable_attack = False
 
 
+random_enemy = RandomEnemy()
+
+
 
