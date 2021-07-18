@@ -196,6 +196,10 @@ def combat(enemy_group, enemy_number, health_for_next_fight, gold_ammount):
 
         Enemies.random_enemy.castle_enemy_choose()
 
+    elif enemy_group == "Swamp":
+
+        Enemies.random_enemy.swamp_enemy_choose()
+
     if enemy_number == 1:
 
         debuffs = Debuffs(Enemies.random_enemy.stun_resist, None)

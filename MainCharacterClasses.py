@@ -12,7 +12,8 @@ class Mage:
     mage_attacks = {
         "mage_blizzard": 40 + mage_stats["mage_damage"],
         "mage_lightning": 20 + mage_stats["mage_damage"],
-        "mage_stab": 50 + mage_stats["mage_damage"]
+        "mage_stab": 50 + mage_stats["mage_damage"],
+        "mage_healing": 200
     }
 
 
@@ -27,7 +28,8 @@ class Swordsman:
 
     swordsman_attacks = {
         "swordsman_axe_swing": swordsman_stats["swordsman_damage"] + 60,
-        "swordsman_arrow": swordsman_stats["swordsman_damage"] + 30
+        "swordsman_arrow": swordsman_stats["swordsman_damage"] + 30,
+        "swordsman_healing": 150
     }
 
 
@@ -42,7 +44,8 @@ class Ranged:
 
     ranged_attacks = {
         "ranged_bullet_attack": 100 + ranged_stats["ranged_damage"],
-        "ranged_crossbow_attack": 50 + ranged_stats["ranged_damage"]
+        "ranged_crossbow_attack": 50 + ranged_stats["ranged_damage"],
+        "ranged_healing": 75
     }
 
 
@@ -97,20 +100,28 @@ class ChosenClass:
                 self.chosen_attack = Mage.mage_attacks["mage_lightning"]
             elif choose_an_attack_question == "attack3".lower():
                 self.chosen_attack = Mage.mage_attacks["mage_stab"]
+            elif choose_an_attack_question == "heal".lower():
+                self.chosen_attack = Mage.mage_attacks["mage_healing"]
             else:
                 self.chosen_attack = None
+
         if self.picked_class == Swordsman:
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Swordsman.swordsman_attacks["swordsman_axe_swing"]
             elif choose_an_attack_question == "attack2".lower():
                 self.chosen_attack = Swordsman.swordsman_attacks["swordsman_arrow"]
+            elif choose_an_attack_question == "heal".lower():
+                self.chosen_attack = Swordsman.swordsman_attacks["swordsman_healing"]
             else:
                 self.chosen_attack = None
+
         if self.picked_class == Ranged:
             if choose_an_attack_question == "attack1".lower():
                 self.chosen_attack = Ranged.ranged_attacks["ranged_bullet_attack"]
             elif choose_an_attack_question == "attack2".lower():
                 self.chosen_attack = Ranged.ranged_attacks["ranged_crossbow_attack"]
+            elif choose_an_attack_question == "heal".lower():
+                self.chosen_attack = Ranged.ranged_attacks["ranged_healing"]
             else:
                 self.chosen_attack = None
 
